@@ -58,7 +58,7 @@ extern "C" {
  *
  * Cameras have a representation in the node graph and can be animated.
  * An important aspect is that the camera itself is also part of the
- * scenegraph. This means, any values such as the look-at vector are not
+ * scene-graph. This means, any values such as the look-at vector are not
  * *absolute*, they're <b>relative</b> to the coordinate system defined
  * by the node which corresponds to the camera. This allows for camera
  * animations. For static cameras parameters like the 'look-at' or 'up' vectors
@@ -79,7 +79,8 @@ extern "C" {
  *      matrix cur
  *      if (is-animated(nd))
  *         cur = eval-animation(nd)
- *      else cur = nd->mTransformation;
+ *      else 
+ *         cur = nd->mTransformation
  *      cmt = mult-matrices( cmt, cur )
  *    end for
  *
@@ -90,7 +91,7 @@ extern "C" {
  *
  * @note some file formats (such as 3DS, ASE) export a "target point" -
  * the point the camera is looking at (it can even be animated). Assimp
- * writes the target point as a subnode of the camera's main node,
+ * writes the target point as a sub-node of the camera's main node,
  * called "<camName>.Target". However this is just additional information
  * then the transformation tracks of the camera main node make the
  * camera already look in the right direction.
@@ -100,7 +101,7 @@ struct aiCamera
 {
     /** The name of the camera.
      *
-     *  There must be a node in the scenegraph with the same name.
+     *  There must be a node in the scene-graph with the same name.
      *  This node specifies the position of the camera in the scene
      *  hierarchy and can be animated.
      */
@@ -186,7 +187,7 @@ struct aiCamera
      */
     void GetCameraMatrix (aiMatrix4x4& out) const
     {
-        /** todo: test ... should work, but i'm not absolutely sure */
+        /** todo: test ... should work, but I'm not absolutely sure */
 
         /** We don't know whether these vectors are already normalized ...*/
         aiVector3D zaxis = mLookAt;     zaxis.Normalize();
@@ -213,12 +214,12 @@ struct aiCamera
         out.d4 = 1.f;
     }
 
-#endif
+#endif // __cplusplus
 };
 
 
 #ifdef __cplusplus
 }
-#endif
+#endif // __cplusplus
 
 #endif // AI_CAMERA_H_INC

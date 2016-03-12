@@ -74,7 +74,9 @@ using namespace Util;
     // XXX vc9's debugger won't step into anonymous namespaces
 //namespace {
 
-/** Dummy class to encapsulate the conversion process */
+/**
+ *  Dummy class to encapsulate the conversion process
+ */
 class Converter
 {
 public:
@@ -169,8 +171,13 @@ private:
     std::vector<unsigned int> ConvertMesh( const MeshGeometry& mesh, const Model& model,
         const aiMatrix4x4& node_global_transform );
 
+<<<<<<< 19769eef8b9612a82fdb55c245db871476e7f178
     // ------------------------------------------------------------------------------------------------
     aiMesh* SetupEmptyMesh( const MeshGeometry& mesh );
+=======
+                if(model) {
+                    nodes_chain.resize( 0 );
+>>>>>>> Configured precision: first steps.
 
     // ------------------------------------------------------------------------------------------------
     unsigned int ConvertMeshSingleMaterial( const MeshGeometry& mesh, const Model& model,

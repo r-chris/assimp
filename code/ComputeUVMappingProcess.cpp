@@ -81,8 +81,8 @@ bool ComputeUVMappingProcess::IsActive( unsigned int pFlags) const
 inline bool PlaneIntersect(const aiRay& ray, const aiVector3D& planePos,
     const aiVector3D& planeNormal, aiVector3D& pos)
 {
-    const float b = planeNormal * (planePos - ray.pos);
-    float h = ray.dir * planeNormal;
+    const ai_real b = planeNormal * (planePos - ray.pos);
+    ai_real h = ray.dir * planeNormal;
     if ((h < 10e-5f && h > -10e-5f) || (h = b/h) < 0)
         return false;
 

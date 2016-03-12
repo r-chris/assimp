@@ -340,17 +340,17 @@ struct Texture
     }
 
     //! Specifies the blend factor for the texture
-    float mTextureBlend;
+    ai_real mTextureBlend;
 
     //! Specifies the filename of the texture
     std::string mMapName;
 
     //! Specifies texture coordinate offsets/scaling/rotations
-    float mOffsetU;
-    float mOffsetV;
-    float mScaleU;
-    float mScaleV;
-    float mRotation;
+    ai_real mOffsetU;
+    ai_real mOffsetV;
+    ai_real mScaleU;
+    ai_real mScaleV;
+    ai_real mRotation;
 
     //! Specifies the mapping mode to be used for the texture
     aiTextureMapMode mMapMode;

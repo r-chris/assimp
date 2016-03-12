@@ -44,7 +44,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ProcessHelper.h"
 
-
 #include <limits>
 
 namespace Assimp {
@@ -91,7 +90,7 @@ void FindAABBTransformed (const aiMesh* mesh, aiVector3D& min, aiVector3D& max,
 void FindMeshCenter (aiMesh* mesh, aiVector3D& out, aiVector3D& min, aiVector3D& max)
 {
     ArrayBounds(mesh->mVertices,mesh->mNumVertices, min,max);
-    out = min + (max-min)*0.5f;
+    out = min + (max-min)*( ai_real )0.5f;
 }
 
 // -------------------------------------------------------------------------------
@@ -114,7 +113,7 @@ void FindSceneCenter (aiScene* scene, aiVector3D& out, aiVector3D& min, aiVector
         if (max[1] < tmax[1]) max[1] = tmax[1];
         if (max[2] < tmax[2]) max[2] = tmax[2];
     }
-    out = min + (max-min)*0.5f;
+    out = min + (max-min)*( ai_real )0.5f;
 }
 
 
@@ -123,7 +122,7 @@ void FindMeshCenterTransformed (aiMesh* mesh, aiVector3D& out, aiVector3D& min,
     aiVector3D& max, const aiMatrix4x4& m)
 {
     FindAABBTransformed(mesh,min,max,m);
-    out = min + (max-min)*0.5f;
+    out = min + (max-min)*( ai_real )0.5f;
 }
 
 // -------------------------------------------------------------------------------

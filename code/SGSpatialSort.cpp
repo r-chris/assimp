@@ -67,7 +67,7 @@ void SGSpatialSort::Add(const aiVector3D& vPosition, unsigned int index,
     unsigned int smoothingGroup)
 {
     // store position by index and distance
-    float distance = vPosition * mPlaneNormal;
+    ai_real distance = vPosition * mPlaneNormal;
     mPositions.push_back( Entry( index, vPosition,
         distance, smoothingGroup));
 }
@@ -85,8 +85,8 @@ void SGSpatialSort::FindPositions( const aiVector3D& pPosition,
     std::vector<unsigned int>& poResults,
     bool exactMatch /*= false*/) const
 {
-    float dist = pPosition * mPlaneNormal;
-    float minDist = dist - pRadius, maxDist = dist + pRadius;
+    ai_real dist = pPosition * mPlaneNormal;
+    ai_real minDist = dist - pRadius, maxDist = dist + pRadius;
 
     // clear the array in this strange fashion because a simple clear() would also deallocate
     // the array which we want to avoid

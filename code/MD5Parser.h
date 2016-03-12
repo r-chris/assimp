@@ -257,7 +257,7 @@ inline void ConvertQuaternion (const aiVector3D& in, aiQuaternion& out) {
     out.y = in.y;
     out.z = in.z;
 
-    const float t = 1.0f - (in.x*in.x) - (in.y*in.y) - (in.z*in.z);
+    const ai_real t = 1.0f - (in.x*in.x) - (in.y*in.y) - (in.z*in.z);
 
     if (t < 0.0f)
         out.w = 0.0f;

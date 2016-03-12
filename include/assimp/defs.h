@@ -48,26 +48,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef AI_DEFINES_H_INC
 #define AI_DEFINES_H_INC
 
-    //////////////////////////////////////////////////////////////////////////
-    /* Define ASSIMP_BUILD_NO_XX_IMPORTER to disable a specific
-     * file format loader. The loader is be excluded from the
-     * build in this case. 'XX' stands for the most common file
-     * extension of the file format. E.g.:
-     * ASSIMP_BUILD_NO_X_IMPORTER disables the X loader.
-     *
-     * If you're unsure about that, take a look at the implementation of the
-     * import plugin you wish to disable. You'll find the right define in the
-     * first lines of the corresponding unit.
-     *
-     * Other (mixed) configuration switches are listed here:
-     *    ASSIMP_BUILD_NO_COMPRESSED_X
-     *      - Disable support for compressed X files (zip)
-     *    ASSIMP_BUILD_NO_COMPRESSED_BLEND
-     *      - Disable support for compressed Blender files (zip)
-     *    ASSIMP_BUILD_NO_COMPRESSED_IFC
-     *      - Disable support for IFCZIP files (unzip)
-     */
-    //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+/* Define ASSIMP_BUILD_NO_XX_IMPORTER to disable a specific
+    * file format loader. The loader is be excluded from the
+    * build in this case. 'XX' stands for the most common file
+    * extension of the file format. E.g.:
+    * ASSIMP_BUILD_NO_X_IMPORTER disables the X loader.
+    *
+    * If you're unsure about that, take a look at the implementation of the
+    * import plugin you wish to disable. You'll find the right define in the
+    * first lines of the corresponding unit.
+    *
+    * Other (mixed) configuration switches are listed here:
+    *    ASSIMP_BUILD_NO_COMPRESSED_X
+    *      - Disable support for compressed X files (zip)
+    *    ASSIMP_BUILD_NO_COMPRESSED_BLEND
+    *      - Disable support for compressed Blender files (zip)
+    *    ASSIMP_BUILD_NO_COMPRESSED_IFC
+    *      - Disable support for IFCZIP files (unzip)
+    */
+//////////////////////////////////////////////////////////////////////////
 
 #ifndef ASSIMP_BUILD_NO_COMPRESSED_X
 #   define ASSIMP_BUILD_NEED_Z_INFLATE
@@ -87,37 +87,37 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #   define ASSIMP_BUILD_NEED_UNZIP
 #endif
 
-    //////////////////////////////////////////////////////////////////////////
-    /* Define ASSIMP_BUILD_NO_XX_PROCESS to disable a specific
-     * post processing step. This is the current list of process names ('XX'):
-     * CALCTANGENTS
-     * JOINVERTICES
-     * TRIANGULATE
-     * GENFACENORMALS
-     * GENVERTEXNORMALS
-     * REMOVEVC
-     * SPLITLARGEMESHES
-     * PRETRANSFORMVERTICES
-     * LIMITBONEWEIGHTS
-     * VALIDATEDS
-     * IMPROVECACHELOCALITY
-     * FIXINFACINGNORMALS
-     * REMOVE_REDUNDANTMATERIALS
-     * OPTIMIZEGRAPH
-     * SORTBYPTYPE
-     * FINDINVALIDDATA
-     * TRANSFORMTEXCOORDS
-     * GENUVCOORDS
-     * ENTITYMESHBUILDER
-     * MAKELEFTHANDED
-     * FLIPUVS
-     * FLIPWINDINGORDER
-     * OPTIMIZEMESHES
-     * OPTIMIZEANIMS
-     * OPTIMIZEGRAPH
-     * GENENTITYMESHES
-     * FIXTEXTUREPATHS */
-    //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+/* Define ASSIMP_BUILD_NO_XX_PROCESS to disable a specific
+* post processing step. This is the current list of process names ('XX'):
+* CALCTANGENTS
+* JOINVERTICES
+* TRIANGULATE
+* GENFACENORMALS
+* GENVERTEXNORMALS
+* REMOVEVC
+* SPLITLARGEMESHES
+* PRETRANSFORMVERTICES
+* LIMITBONEWEIGHTS
+* VALIDATEDS
+* IMPROVECACHELOCALITY
+* FIXINFACINGNORMALS
+* REMOVE_REDUNDANTMATERIALS
+* OPTIMIZEGRAPH
+* SORTBYPTYPE
+* FINDINVALIDDATA
+* TRANSFORMTEXCOORDS
+* GENUVCOORDS
+* ENTITYMESHBUILDER
+* MAKELEFTHANDED
+* FLIPUVS
+* FLIPWINDINGORDER
+* OPTIMIZEMESHES
+* OPTIMIZEANIMS
+* OPTIMIZEGRAPH
+* GENENTITYMESHES
+* FIXTEXTUREPATHS */
+//////////////////////////////////////////////////////////////////////////
 
 #ifdef _MSC_VER
 #   undef ASSIMP_API
@@ -185,19 +185,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     ENABLE_PREPROCESSING   = YES
     MACRO_EXPANSION        = YES
     EXPAND_ONLY_PREDEF     = YES
-    SEARCH_INCLUDES        = YES
-    INCLUDE_PATH           =
-    INCLUDE_FILE_PATTERNS  =
-    PREDEFINED             = ASSIMP_DOXYGEN_BUILD=1
-    EXPAND_AS_DEFINED      = C_STRUCT C_ENUM
-    SKIP_FUNCTION_MACROS   = YES
+SEARCH_INCLUDES = YES
+INCLUDE_PATH =
+INCLUDE_FILE_PATTERNS =
+PREDEFINED = ASSIMP_DOXYGEN_BUILD = 1
+EXPAND_AS_DEFINED = C_STRUCT C_ENUM
+SKIP_FUNCTION_MACROS = YES
 #endif
-    //////////////////////////////////////////////////////////////////////////
-    /* Doxygen gets confused if we use c-struct typedefs to avoid
-     * the explicit 'struct' notation. This trick here has the same
-     * effect as the TYPEDEF_HIDES_STRUCT option, but we don't need
-     * to typedef all structs/enums. */
-     //////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+/* Doxygen gets confused if we use c-struct typedefs to avoid
+ * the explicit 'struct' notation. This trick here has the same
+ * effect as the TYPEDEF_HIDES_STRUCT option, but we don't need
+ * to typedef all structs/enums. */
+ //////////////////////////////////////////////////////////////////////////
 #   if (defined ASSIMP_DOXYGEN_BUILD)
 #       define C_STRUCT
 #       define C_ENUM
@@ -269,5 +269,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #define AI_MAX_ALLOC(type) ((256U * 1024 * 1024) / sizeof(type))
 
+#define AI_DOUBLE_PRECISION
+
+#ifdef AI_DOUBLE_PRECISION
+    typedef double ai_real;
+#else
+    typedef float ai_real;
+#endif // AI_SINGLEPRECISION
 
 #endif // !! AI_DEFINES_H_INC

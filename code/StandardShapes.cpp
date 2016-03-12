@@ -95,7 +95,7 @@ namespace Assimp    {
 void Subdivide(std::vector<aiVector3D>& positions)
 {
     // assume this to be constant - (fixme: must be 1.0? I think so)
-    const float fl1 = positions[0].Length();
+    const ai_real fl1 = positions[0].Length();
 
     unsigned int origSize = (unsigned int)positions.size();
     for (unsigned int i = 0 ; i < origSize ; i+=3)
@@ -194,8 +194,8 @@ unsigned int StandardShapes::MakeIcosahedron(std::vector<aiVector3D>& positions)
 {
     positions.reserve(positions.size()+60);
 
-    const float t = (1.f + 2.236067977f)/2.f;
-    const float s = std::sqrt(1.f + t*t);
+    const ai_real t = (1.f + 2.236067977f)/2.f;
+    const ai_real s = std::sqrt(1.f + t*t);
 
     const aiVector3D v0  = aiVector3D(t,1.f, 0.f)/s;
     const aiVector3D v1  = aiVector3D(-t,1.f, 0.f)/s;
@@ -337,7 +337,7 @@ unsigned int StandardShapes::MakeHexahedron(std::vector<aiVector3D>& positions,
     bool polygons /*= false*/)
 {
     positions.reserve(positions.size()+36);
-    const float length = 1.f/1.73205080f;
+    const ai_real length = 1.f/1.73205080f;
 
     const aiVector3D v0  = aiVector3D(-1.f,-1.f,-1.f)*length;
     const aiVector3D v1  = aiVector3D(1.f,-1.f,-1.f)*length;

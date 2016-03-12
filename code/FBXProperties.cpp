@@ -53,7 +53,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Assimp {
 namespace FBX {
 
-    using namespace Util;
+using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
 Property::Property()
@@ -101,11 +101,15 @@ Property* ReadTypedProperty(const Element& element)
         !strcmp(cs,"Lcl Rotation") ||
         !strcmp(cs,"Lcl Scaling")
         ) {
-        return new TypedProperty<aiVector3D>(aiVector3D(
+        Property *vec = new TypedProperty<aiVector3D>( aiVector3D(  ParseTokenAsFloat( *tok[ 4 ] ),
+            ParseTokenAsFloat( *tok[ 5 ] ),
+            ParseTokenAsFloat( *tok[ 6 ] ) ) );
+        /*return new TypedProperty<aiVector3D>(aiVector3D(
             ParseTokenAsFloat(*tok[4]),
             ParseTokenAsFloat(*tok[5]),
             ParseTokenAsFloat(*tok[6]))
-        );
+        );*/
+        return vec;
     }
     else if (!strcmp(cs,"double") || !strcmp(cs,"Number") || !strcmp(cs,"Float") || !strcmp(cs,"FieldOfView")) {
         return new TypedProperty<float>(ParseTokenAsFloat(*tok[4]));

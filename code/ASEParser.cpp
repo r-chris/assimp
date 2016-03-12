@@ -2102,7 +2102,7 @@ void Parser::ParseLV4MeshLongTriple(unsigned int* apOut, unsigned int& rIndexOut
     ParseLV4MeshLongTriple(apOut);
 }
 // ------------------------------------------------------------------------------------------------
-void Parser::ParseLV4MeshFloatTriple(float* apOut, unsigned int& rIndexOut)
+void Parser::ParseLV4MeshFloatTriple( ai_real* apOut, unsigned int& rIndexOut)
 {
     ai_assert(NULL != apOut);
 
@@ -2113,7 +2113,7 @@ void Parser::ParseLV4MeshFloatTriple(float* apOut, unsigned int& rIndexOut)
     ParseLV4MeshFloatTriple(apOut);
 }
 // ------------------------------------------------------------------------------------------------
-void Parser::ParseLV4MeshFloatTriple(float* apOut)
+void Parser::ParseLV4MeshFloatTriple( ai_real* apOut)
 {
     ai_assert(NULL != apOut);
 
@@ -2121,7 +2121,7 @@ void Parser::ParseLV4MeshFloatTriple(float* apOut)
         ParseLV4MeshFloat(apOut[i]);
 }
 // ------------------------------------------------------------------------------------------------
-void Parser::ParseLV4MeshFloat(float& fOut)
+void Parser::ParseLV4MeshFloat( ai_real& fOut)
 {
     // skip spaces and tabs
     if(!SkipSpaces(&filePtr))
@@ -2133,7 +2133,7 @@ void Parser::ParseLV4MeshFloat(float& fOut)
         return;
     }
     // parse the first float
-    filePtr = fast_atoreal_move<float>(filePtr,fOut);
+    filePtr = fast_atoreal_move<ai_real>(filePtr,fOut);
 }
 // ------------------------------------------------------------------------------------------------
 void Parser::ParseLV4MeshLong(unsigned int& iOut)

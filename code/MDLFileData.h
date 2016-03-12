@@ -376,7 +376,7 @@ struct Material_MDL7
     ColorValue_MDL7 Emissive;
 
     //! Phong power
-    float           Power;
+    ai_real           Power;
 } PACK_STRUCT;
 
 

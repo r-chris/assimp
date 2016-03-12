@@ -690,9 +690,9 @@ void PretransformVertices::Execute( aiScene* pScene)
 
         // find the dominant axis
         aiVector3D d = max-min;
-        const float div = std::max(d.x,std::max(d.y,d.z))*0.5f;
+        const ai_real div = std::max(d.x,std::max(d.y,d.z))*(ai_real)0.5f;
 
-        d = min+d*0.5f;
+        d = min+d*( ai_real )0.5f;
         for (unsigned int a = 0; a <  pScene->mNumMeshes; ++a) {
             aiMesh* m = pScene->mMeshes[a];
             for (unsigned int i = 0; i < m->mNumVertices;++i) {
@@ -704,19 +704,20 @@ void PretransformVertices::Execute( aiScene* pScene)
     // print statistics
     if (!DefaultLogger::isNullLogger())
     {
-        char buffer[4096];
+        static const size_t Size = 4096;
+        char buffer[ Size ];
 
         DefaultLogger::get()->debug("PretransformVerticesProcess finished");
 
-        ::ai_snprintf(buffer,4096,"Removed %u nodes and %u animation channels (%u output nodes)",
+        ::ai_snprintf(buffer, Size,"Removed %u nodes and %u animation channels (%u output nodes)",
             iOldNodes,iOldAnimationChannels,CountNodes(pScene->mRootNode));
         DefaultLogger::get()->info(buffer);
 
-        ai_snprintf(buffer, 4096,"Kept %u lights and %u cameras",
+        ai_snprintf(buffer, Size,"Kept %u lights and %u cameras",
             pScene->mNumLights,pScene->mNumCameras);
         DefaultLogger::get()->info(buffer);
 
-        ai_snprintf(buffer, 4096,"Moved %u meshes to WCS (number of output meshes: %u)",
+        ai_snprintf(buffer, Size,"Moved %u meshes to WCS (number of output meshes: %u)",
             iOldMeshes,pScene->mNumMeshes);
         DefaultLogger::get()->info(buffer);
     }

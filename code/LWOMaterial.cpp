@@ -159,7 +159,7 @@ bool LWOImporter::HandleTextures(aiMaterial* pcMat, const TextureList& in, aiTex
                 trafo.mScaling.x = texture.wrapAmountW;
                 trafo.mScaling.y = texture.wrapAmountH;
 
-                static_assert(sizeof(aiUVTransform)/sizeof(float) == 5, "sizeof(aiUVTransform)/sizeof(float) == 5");
+                static_assert(sizeof(aiUVTransform)/sizeof(ai_real) == 5, "sizeof(aiUVTransform)/sizeof(ai_real) == 5");
                 pcMat->AddProperty(&trafo,1,AI_MATKEY_UVTRANSFORM(type,cur));
             }
             DefaultLogger::get()->debug("LWO2: Setting up non-UV mapping");

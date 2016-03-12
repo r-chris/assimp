@@ -113,12 +113,12 @@ public:
     TReal w, x, y, z;
 } ;
 
-typedef aiQuaterniont<float> aiQuaternion;
+typedef aiQuaterniont<ai_real> aiQuaternion;
 
 #else
 
 struct aiQuaternion {
-    float w, x, y, z;
+    ai_real w, x, y, z;
 };
 
 #endif

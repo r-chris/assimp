@@ -475,7 +475,7 @@ void MD5Importer::LoadMD5MeshFile ()
                 *pv = aiVector3D();
 
                 // there are models which have weights which don't sum to 1 ...
-                float fSum = 0.0f;
+                ai_real fSum = 0.0f;
                 for (unsigned int jub = (*iter).mFirstWeight, w = jub; w < jub + (*iter).mNumWeights;++w)
                     fSum += meshSrc.mWeights[w].mWeight;
                 if (!fSum) {
@@ -493,7 +493,7 @@ void MD5Importer::LoadMD5MeshFile ()
                         continue;
                     }
 
-                    const float fNewWeight = desc.mWeight / fSum;
+                    const ai_real fNewWeight = desc.mWeight / fSum;
 
                     // transform the local position into worldspace
                     MD5::BoneDesc& boneSrc = meshParser.mJoints[desc.mBone];

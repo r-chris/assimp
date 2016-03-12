@@ -57,8 +57,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdint.h>
 
 // ---------------------------------------------------------------------------
-/** Data structure to represent the bit pattern of a 32 Bit
- *         IEEE 754 floating-point number. */
+/** 
+ *  Data structure to represent the bit pattern of a 32 Bit
+ *  IEEE 754 floating-point number. 
+ */
 union _IEEESingle
 {
     float Float;
@@ -73,7 +75,7 @@ union _IEEESingle
 // ---------------------------------------------------------------------------
 /** Check whether a given float is qNaN.
  *  @param in Input value */
-AI_FORCE_INLINE bool is_qnan(float in)
+AI_FORCE_INLINE bool is_qnan( float in)
 {
     // the straightforward solution does not work:
     //   return (in != in);
@@ -89,7 +91,7 @@ AI_FORCE_INLINE bool is_qnan(float in)
 // ---------------------------------------------------------------------------
 /** Check whether a float is NOT qNaN.
  *  @param in Input value */
-AI_FORCE_INLINE bool is_not_qnan(float in)
+AI_FORCE_INLINE bool is_not_qnan( float in)
 {
     return !is_qnan(in);
 }
@@ -99,16 +101,17 @@ AI_FORCE_INLINE bool is_not_qnan(float in)
  *
  *  Denorms return false, they're treated like normal values.
  *  @param in Input value */
-AI_FORCE_INLINE bool is_special_float(float in)
+AI_FORCE_INLINE bool is_special_float( float in)
 {
     return (reinterpret_cast<_IEEESingle*>(&in)->IEEE.Exp == (1u << 8)-1);
 }
 
 // ---------------------------------------------------------------------------
-/** @brief Get a fresh qnan.  */
-AI_FORCE_INLINE float get_qnan()
-{
-    return std::numeric_limits<float>::quiet_NaN();
+/** 
+ *   @brief Get a fresh qnan.  
+ */
+AI_FORCE_INLINE ai_real get_qnan() {
+    return std::numeric_limits<ai_real>::quiet_NaN();
 }
 
 #endif // !! AI_QNAN_H_INCLUDED

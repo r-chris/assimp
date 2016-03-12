@@ -83,7 +83,7 @@ KeyIterator::KeyIterator(const std::vector<aiVectorKey>* _objPos,
 
 // ------------------------------------------------------------------------------------------------
 template <class T>
-inline T Interpolate(const T& one, const T& two, float val)
+inline T Interpolate(const T& one, const T& two, ai_real val)
 {
     return one + (two-one)*val;
 }
@@ -220,7 +220,7 @@ void TargetAnimationHelper::Process(std::vector<aiVectorKey>* distanceTrack)
 
         // diff vector
         aiVector3D diff = tposition - position;
-        float f = diff.Length();
+        ai_real f = diff.Length();
 
         // output distance vector
         if (f)

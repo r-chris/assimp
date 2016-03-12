@@ -86,7 +86,6 @@ public:
     ~LazyObject();
 
 public:
-
     const Object* Get(bool dieOnError = false);
 
     template <typename T>
