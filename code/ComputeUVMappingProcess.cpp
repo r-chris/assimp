@@ -247,6 +247,7 @@ void ComputeUVMappingProcess::ComputeSphereMapping(aiMesh* mesh,const aiVector3D
 }
 
 // ------------------------------------------------------------------------------------------------
+// TODO! Refactor!
 void ComputeUVMappingProcess::ComputeCylinderMapping(aiMesh* mesh,const aiVector3D& axis, aiVector3D* out)
 {
     aiVector3D center, min, max;
@@ -257,7 +258,7 @@ void ComputeUVMappingProcess::ComputeCylinderMapping(aiMesh* mesh,const aiVector
     // thus changing the mapping axis)
     if (axis * base_axis_x >= angle_epsilon)    {
         FindMeshCenter(mesh, center, min, max);
-        const float diff = max.x - min.x;
+        const ai_real diff = max.x - min.x;
 
         // If the main axis is 'z', the z coordinate of a point 'p' is mapped
         // directly to the texture V axis. The other axis is derived from
@@ -273,7 +274,7 @@ void ComputeUVMappingProcess::ComputeCylinderMapping(aiMesh* mesh,const aiVector
     }
     else if (axis * base_axis_y >= angle_epsilon)   {
         FindMeshCenter(mesh, center, min, max);
-        const float diff = max.y - min.y;
+        const ai_real diff = max.y - min.y;
 
         // just the same ...
         for (unsigned int pnt = 0; pnt < mesh->mNumVertices;++pnt)  {
@@ -286,7 +287,7 @@ void ComputeUVMappingProcess::ComputeCylinderMapping(aiMesh* mesh,const aiVector
     }
     else if (axis * base_axis_z >= angle_epsilon)   {
         FindMeshCenter(mesh, center, min, max);
-        const float diff = max.z - min.z;
+        const ai_real diff = max.z - min.z;
 
         // just the same ...
         for (unsigned int pnt = 0; pnt < mesh->mNumVertices;++pnt)  {
@@ -302,7 +303,7 @@ void ComputeUVMappingProcess::ComputeCylinderMapping(aiMesh* mesh,const aiVector
         aiMatrix4x4 mTrafo;
         aiMatrix4x4::FromToMatrix(axis,base_axis_y,mTrafo);
         FindMeshCenterTransformed(mesh, center, min, max,mTrafo);
-        const float diff = max.y - min.y;
+        const ai_real diff = max.y - min.y;
 
         // again the same, except we're applying a transformation now
         for (unsigned int pnt = 0; pnt < mesh->mNumVertices;++pnt){
@@ -323,7 +324,7 @@ void ComputeUVMappingProcess::ComputeCylinderMapping(aiMesh* mesh,const aiVector
 // ------------------------------------------------------------------------------------------------
 void ComputeUVMappingProcess::ComputePlaneMapping(aiMesh* mesh,const aiVector3D& axis, aiVector3D* out)
 {
-    float diffu,diffv;
+    ai_real diffu,diffv;
     aiVector3D center, min, max;
 
     // If the axis is one of x,y,z run a faster code path. It's worth the extra effort ...

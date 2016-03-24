@@ -652,7 +652,7 @@ void Converter::ConvertLight( const Model& model, const Light& light )
 
     out_light->mName.Set( FixNodeName( model.Name() ) );
 
-    const float intensity = light.Intensity();
+    const ai_real intensity = light.Intensity();
     const aiVector3D& col = light.Color();
 
     out_light->mColorDiffuse = aiColor3D( col.x, col.y, col.z );
@@ -824,7 +824,7 @@ void Converter::GetRotationMatrix( Model::RotOrder mode, const aiVector3D& rotat
         return;
     }
 
-    const float angle_epsilon = 1e-6f;
+    const ai_real angle_epsilon = 1e-6;
 
     out = aiMatrix4x4();
 
@@ -912,7 +912,7 @@ bool Converter::NeedsComplexTransformationChain( const Model& model )
     const PropertyTable& props = model.Props();
     bool ok;
 
-    const float zero_epsilon = 1e-6f;
+    const ai_real zero_epsilon = 1e-6;
     for ( size_t i = 0; i < TransformationComp_MAXIMUM; ++i ) {
         const TransformationComp comp = static_cast< TransformationComp >( i );
 
@@ -948,7 +948,7 @@ void Converter::GenerateTransformationNodeChain( const Model& model,
     std::fill_n( chain, static_cast<unsigned int>( TransformationComp_MAXIMUM ), aiMatrix4x4() );
 
     // generate transformation matrices for all the different transformation components
-    const float zero_epsilon = 1e-6f;
+    const ai_real zero_epsilon = 1e-6;
     bool is_complex = false;
 
     const aiVector3D& PreRotation = PropertyGet<aiVector3D>( props, "PreRotation", ok );
@@ -1104,7 +1104,7 @@ void Converter::SetupNodeMetadata( const Model& model, aiNode& nd )
             data->Set( index++, prop.first, interpreted->Value() );
         else if ( const TypedProperty<uint64_t>* interpreted = prop.second->As<TypedProperty<uint64_t> >() )
             data->Set( index++, prop.first, interpreted->Value() );
-        else if ( const TypedProperty<float>* interpreted = prop.second->As<TypedProperty<float> >() )
+        else if ( const TypedProperty<ai_real>* interpreted = prop.second->As<TypedProperty<ai_real> >() )
             data->Set( index++, prop.first, interpreted->Value() );
         else if ( const TypedProperty<std::string>* interpreted = prop.second->As<TypedProperty<std::string> >() )
             data->Set( index++, prop.first, aiString( interpreted->Value() ) );
@@ -2072,7 +2072,7 @@ aiColor3D Converter::GetColorPropertyFromMaterial( const PropertyTable& props, c
     else {
         aiVector3D DiffuseColor = PropertyGet<aiVector3D>( props, baseName + "Color", ok );
         if ( ok ) {
-            float DiffuseFactor = PropertyGet<float>( props, baseName + "Factor", ok );
+            ai_real DiffuseFactor = PropertyGet<ai_real>( props, baseName + "Factor", ok );
             if ( ok ) {
                 DiffuseColor *= DiffuseFactor;
             }
@@ -2113,22 +2113,22 @@ void Converter::SetShadingPropertiesCommon( aiMaterial* out_mat, const PropertyT
         out_mat->AddProperty( &Specular, 1, AI_MATKEY_COLOR_SPECULAR );
     }
 
-    const float Opacity = PropertyGet<float>( props, "Opacity", ok );
+    const ai_real Opacity = PropertyGet<ai_real>( props, "Opacity", ok );
     if ( ok ) {
         out_mat->AddProperty( &Opacity, 1, AI_MATKEY_OPACITY );
     }
 
-    const float Reflectivity = PropertyGet<float>( props, "Reflectivity", ok );
+    const ai_real Reflectivity = PropertyGet<ai_real>( props, "Reflectivity", ok );
     if ( ok ) {
         out_mat->AddProperty( &Reflectivity, 1, AI_MATKEY_REFLECTIVITY );
     }
 
-    const float Shininess = PropertyGet<float>( props, "Shininess", ok );
+    const ai_real Shininess = PropertyGet<ai_real>( props, "Shininess", ok );
     if ( ok ) {
         out_mat->AddProperty( &Shininess, 1, AI_MATKEY_SHININESS_STRENGTH );
     }
 
-    const float ShininessExponent = PropertyGet<float>( props, "ShininessExponent", ok );
+    const ai_real ShininessExponent = PropertyGet<ai_real>( props, "ShininessExponent", ok );
     if ( ok ) {
         out_mat->AddProperty( &ShininessExponent, 1, AI_MATKEY_SHININESS );
     }
@@ -2192,7 +2192,7 @@ void Converter::ConvertAnimations()
 {
     // first of all determine framerate
     const FileGlobalSettings::FrameRate fps = doc.GlobalSettings().TimeMode();
-    const float custom = doc.GlobalSettings().CustomFrameRate();
+    const ai_real custom = doc.GlobalSettings().CustomFrameRate();
     anim_fps = FrameRateToDouble( fps, custom );
 
     const std::vector<const AnimationStack*>& animations = doc.AnimationStacks();
@@ -2685,7 +2685,7 @@ bool Converter::IsRedundantAnimationData( const Model& target,
         TransformationCompDefaultValue( comp )
         );
 
-    const float epsilon = 1e-6f;
+    const ai_real epsilon = 1e-6;
     return ( dyn_val - static_val ).SquareLength() < epsilon;
 }
 
@@ -3044,7 +3044,7 @@ void Converter::InterpolateKeys( aiVectorKey* valOut, const KeyTimeList& keys, c
     next_pos.resize( inputs.size(), 0 );
 
     for( KeyTimeList::value_type time : keys ) {
-        float result[ 3 ] = { def_value.x, def_value.y, def_value.z };
+        ai_real result[ 3 ] = { def_value.x, def_value.y, def_value.z };
 
         for ( size_t i = 0; i < count; ++i ) {
             const KeyFrameList& kfl = inputs[ i ];
@@ -3067,7 +3067,7 @@ void Converter::InterpolateKeys( aiVectorKey* valOut, const KeyTimeList& keys, c
             // do the actual interpolation in double-precision arithmetics
             // because it is a bit sensitive to rounding errors.
             const double factor = timeB == timeA ? 0. : static_cast<double>( ( time - timeA ) / ( timeB - timeA ) );
-            const float interpValue = static_cast<float>( valueA + ( valueB - valueA ) * factor );
+            const ai_real interpValue = static_cast<ai_real>( valueA + ( valueB - valueA ) * factor );
 
             result[ std::get<2>(kfl) ] = interpValue;
         }

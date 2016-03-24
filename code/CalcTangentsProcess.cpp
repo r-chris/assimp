@@ -140,12 +140,12 @@ bool CalcTangentsProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
         return false;
     }
 
-    const float angleEpsilon = 0.9999f;
+    const ai_real angleEpsilon = ( ai_real ) 0.9999f;
 
     std::vector<bool> vertexDone( pMesh->mNumVertices, false);
-    const float qnan = get_qnan();
+    static const ai_real qnan( get_qnan() );
 
-    // create space for the tangents and bitangents
+    // create space for the tangents and bi-tangents
     pMesh->mTangents = new aiVector3D[pMesh->mNumVertices];
     pMesh->mBitangents = new aiVector3D[pMesh->mNumVertices];
 
@@ -184,9 +184,9 @@ bool CalcTangentsProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
         aiVector3D v = meshPos[p1] - meshPos[p0], w = meshPos[p2] - meshPos[p0];
 
         // texture offset p1->p2 and p1->p3
-        float sx = meshTex[p1].x - meshTex[p0].x, sy = meshTex[p1].y - meshTex[p0].y;
-        float tx = meshTex[p2].x - meshTex[p0].x, ty = meshTex[p2].y - meshTex[p0].y;
-        float dirCorrection = (tx * sy - ty * sx) < 0.0f ? -1.0f : 1.0f;
+        ai_real sx = meshTex[p1].x - meshTex[p0].x, sy = meshTex[p1].y - meshTex[p0].y;
+        ai_real tx = meshTex[p2].x - meshTex[p0].x, ty = meshTex[p2].y - meshTex[p0].y;
+        ai_real dirCorrection = (tx * sy - ty * sx) < 0.0f ? -1.0f : 1.0f;
         // when t1, t2, t3 in same position in UV space, just use default UV direction.
         if ( 0 == sx && 0 ==sy && 0 == tx && 0 == ty ) {
             sx = 0.0; sy = 1.0;

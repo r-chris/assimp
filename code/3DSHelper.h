@@ -389,9 +389,9 @@ struct Material
     //! Diffuse color of the material
     aiColor3D mDiffuse;
     //! Specular exponent
-    float mSpecularExponent;
+    ai_real mSpecularExponent;
     //! Shininess strength, in percent
-    float mShininessStrength;
+    ai_real mShininessStrength;
     //! Specular color of the material
     aiColor3D mSpecular;
     //! Ambient color of the material
@@ -399,7 +399,7 @@ struct Material
     //! Shading type to be used
     Discreet3DS::shadetype3ds mShading;
     //! Opacity of the material
-    float mTransparency;
+    ai_real mTransparency;
     //! Diffuse texture channel
     Texture sTexDiffuse;
     //! Opacity texture channel
@@ -415,7 +415,7 @@ struct Material
     //! Shininess texture channel
     Texture sTexShininess;
     //! Scaling factor for the bump values
-    float mBumpHeight;
+    ai_real mBumpHeight;
     //! Emissive color
     aiColor3D mEmissive;
     //! Ambient texture channel

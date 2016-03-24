@@ -297,7 +297,6 @@ inline void Vec3NormalToLatLng( const aiVector3D& p_vIn, uint16_t& p_iOut )
     else
     {
         int a, b;
-
         a = int(57.2957795f * ( atan2f( p_vIn[1], p_vIn[0] ) ) * (255.0f / 360.0f ));
         a &= 0xff;
 

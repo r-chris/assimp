@@ -61,16 +61,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  Data structure to represent the bit pattern of a 32 Bit
  *  IEEE 754 floating-point number. 
  */
-union _IEEESingle
-{
+union _IEEESingle {
+    static const unsigned ExpBits = 8;
+
     float Float;
     struct
     {
         uint32_t Frac : 23;
-        uint32_t Exp  : 8;
+        uint32_t Exp  : _IEEESingle::ExpBits;
         uint32_t Sign : 1;
     } IEEE;
-} ;
+};
+
+// ---------------------------------------------------------------------------
+/**
+*  Data structure to represent the bit pattern of a 64 Bit
+*  IEEE 754 floating-point number.
+*/
+union _IEEEDouble {
+    static const unsigned ExpBits = 11;
+    double Double;
+    struct {
+        uint64_t Frac : 52;
+        uint64_t Exp  : _IEEEDouble::ExpBits;
+        uint64_t Sign : 1;
+    } IEEE;
+};
 
 // ---------------------------------------------------------------------------
 /** Check whether a given float is qNaN.
@@ -84,26 +100,59 @@ AI_FORCE_INLINE bool is_qnan( float in)
     //   compare <register-with-different-width> against <in>
 
     // FIXME: Use <float> stuff instead? I think fpclassify needs C99
-    return (reinterpret_cast<_IEEESingle*>(&in)->IEEE.Exp == (1u << 8)-1 &&
+    return (reinterpret_cast<_IEEESingle*>(&in)->IEEE.Exp == (1u << _IEEESingle::ExpBits )-1 &&
         reinterpret_cast<_IEEESingle*>(&in)->IEEE.Frac);
+}
+
+// ---------------------------------------------------------------------------
+/** 
+ *  @brief  Check whether a given double is qNaN.
+ *  @param  in Input value 
+ */
+AI_FORCE_INLINE bool is_qnan( double in )
+{
+    // the straightforward solution does not work:
+    //   return (in != in);
+    // compiler generates code like this
+    //   load <in> to <register-with-different-width>
+    //   compare <register-with-different-width> against <in>
+
+    // FIXME: Use <float> stuff instead? I think fpclassify needs C99
+    return ( reinterpret_cast<_IEEEDouble*>( &in )->IEEE.Exp == ( 1u << _IEEEDouble::ExpBits ) - 1 &&
+        reinterpret_cast<_IEEEDouble*>( &in )->IEEE.Frac );
 }
 
 // ---------------------------------------------------------------------------
 /** Check whether a float is NOT qNaN.
  *  @param in Input value */
-AI_FORCE_INLINE bool is_not_qnan( float in)
+template<class T>
+AI_FORCE_INLINE bool is_not_qnan( T in)
 {
     return !is_qnan(in);
 }
 
 // ---------------------------------------------------------------------------
-/** @brief check whether a float is either NaN or (+/-) INF.
+/** 
+ *  @brief check whether a float is either NaN or (+/-) INF.
  *
- *  Denorms return false, they're treated like normal values.
- *  @param in Input value */
+ *  Denormalizes return false, they're treated like normal values.
+ *  @param in Input value 
+ */
 AI_FORCE_INLINE bool is_special_float( float in)
 {
-    return (reinterpret_cast<_IEEESingle*>(&in)->IEEE.Exp == (1u << 8)-1);
+    return (reinterpret_cast<_IEEESingle*>(&in)->IEEE.Exp == (1u << _IEEESingle::ExpBits )-1);
+}
+
+// ---------------------------------------------------------------------------
+/**
+*  @brief check whether a double is either NaN or (+/-) INF.
+*
+*  Denormalizes return false, they're treated like normal values.
+*  @param in Input value
+*/
+AI_FORCE_INLINE bool is_special_float( double in )
+{
+    return ( reinterpret_cast<_IEEEDouble*>( &in )->IEEE.Exp == ( 1u << _IEEEDouble::ExpBits ) - 1 );
 }
 
 // ---------------------------------------------------------------------------

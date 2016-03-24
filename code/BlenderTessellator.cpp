@@ -477,12 +477,12 @@ PlaneP2T BlenderTessellatorP2T::FindLLSQPlane( const std::vector< PointP2T >& po
     }
     result.centre = sum * ( 1.0f / points.size( ) );
 
-    float sumXX = 0.0f;
-    float sumXY = 0.0f;
-    float sumXZ = 0.0f;
-    float sumYY = 0.0f;
-    float sumYZ = 0.0f;
-    float sumZZ = 0.0f;
+    ai_real sumXX = 0.0;
+    ai_real sumXY = 0.0;
+    ai_real sumXZ = 0.0;
+    ai_real sumYY = 0.0;
+    ai_real sumYZ = 0.0;
+    ai_real sumZZ = 0.0;
     for ( size_t i = 0; i < points.size( ); ++i )
     {
         aiVector3D offset = points[ i ].point3D - result.centre;

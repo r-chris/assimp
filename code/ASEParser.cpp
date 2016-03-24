@@ -431,7 +431,7 @@ void Parser::ParseLV1SoftSkinBlock()
                             ParseString(bone,"*MESH_SOFTSKINVERTS.Bone");
 
                             // Find the bone in the mesh's list
-                            std::pair<int,float> me;
+                            std::pair<int,ai_real> me;
                             me.first = -1;
 
                             for (unsigned int n = 0; n < curMesh->mBones.size();++n)

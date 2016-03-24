@@ -290,7 +290,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
     // check whether this is the NFF2 file format
     if (TokenMatch(buffer,"nff",3))
     {
-        const float qnan = get_qnan();
+        const ai_real qnan = get_qnan();
         const aiColor4D  cQNAN = aiColor4D (qnan,0.f,0.f,1.f);
         const aiVector3D vQNAN = aiVector3D(qnan,0.f,0.f);
 
@@ -965,7 +965,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
                 // compute the center point of the cone/cylinder -
                 // it is its local transformation origin
                 currentMesh.dir    =  center2-center1;
-                currentMesh.center =  center1+currentMesh.dir/2.f;
+                currentMesh.center =  center1+currentMesh.dir/2.;
 
                 float f;
                 if (( f = currentMesh.dir.Length()) < 10e-3f )
