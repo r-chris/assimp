@@ -132,25 +132,37 @@ bool FixInfacingNormalsProcess::ProcessMesh( aiMesh* pcMesh, unsigned int index)
         vMax0.z = std::max(vMax0.z,vWithNormal.z);
     }
 
-    const float fDelta0_x = (vMax0.x - vMin0.x);
-    const float fDelta0_y = (vMax0.y - vMin0.y);
-    const float fDelta0_z = (vMax0.z - vMin0.z);
+    const ai_real fDelta0_x = (vMax0.x - vMin0.x);
+    const ai_real fDelta0_y = (vMax0.y - vMin0.y);
+    const ai_real fDelta0_z = (vMax0.z - vMin0.z);
 
-    const float fDelta1_x = (vMax1.x - vMin1.x);
-    const float fDelta1_y = (vMax1.y - vMin1.y);
-    const float fDelta1_z = (vMax1.z - vMin1.z);
+    const ai_real fDelta1_x = (vMax1.x - vMin1.x);
+    const ai_real fDelta1_y = (vMax1.y - vMin1.y);
+    const ai_real fDelta1_z = (vMax1.z - vMin1.z);
 
     // Check whether the boxes are overlapping
-    if ((fDelta0_x > 0.0f) != (fDelta1_x > 0.0f))return false;
-    if ((fDelta0_y > 0.0f) != (fDelta1_y > 0.0f))return false;
-    if ((fDelta0_z > 0.0f) != (fDelta1_z > 0.0f))return false;
+    if ( ( fDelta0_x > 0.0f ) != ( fDelta1_x > 0.0f ) ) {
+        return false;
+    }
+    if ( ( fDelta0_y > 0.0f ) != ( fDelta1_y > 0.0f ) ) {
+        return false;
+    }
+    if ( ( fDelta0_z > 0.0f ) != ( fDelta1_z > 0.0f ) ) {
+        return false;
+    }
 
     // Check whether this is a planar surface
-    const float fDelta1_yz = fDelta1_y * fDelta1_z;
+    const ai_real fDelta1_yz = fDelta1_y * fDelta1_z;
 
-    if (fDelta1_x < 0.05f * sqrtf( fDelta1_yz ))return false;
-    if (fDelta1_y < 0.05f * sqrtf( fDelta1_z * fDelta1_x ))return false;
-    if (fDelta1_z < 0.05f * sqrtf( fDelta1_y * fDelta1_x ))return false;
+    if ( fDelta1_x < 0.05f * sqrtf( fDelta1_yz ) ) {
+        return false;
+    }
+    if ( fDelta1_y < 0.05f * sqrtf( fDelta1_z * fDelta1_x ) ) {
+        return false;
+    }
+    if ( fDelta1_z < 0.05f * sqrtf( fDelta1_y * fDelta1_x ) ) {
+        return false;
+    }
 
     // now compare the volumes of the bounding boxes
     if (std::fabs(fDelta0_x * fDelta0_y * fDelta0_z) <

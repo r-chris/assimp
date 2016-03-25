@@ -458,7 +458,7 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         camera->mLookAt.x = stream->GetF4() - camera->mPosition.x;
         camera->mLookAt.y = stream->GetF4() - camera->mPosition.y;
         camera->mLookAt.z = stream->GetF4() - camera->mPosition.z;
-        float len = camera->mLookAt.Length();
+        ai_real len = camera->mLookAt.Length();
         if (len < 1e-5f) {
 
             // There are some files with lookat == position. Don't know why or whether it's ok or not.
@@ -1167,7 +1167,7 @@ void Discreet3DSImporter::ParseMaterialChunk()
     case Discreet3DS::CHUNK_MAT_TRANSPARENCY:
         {
         // This is the material's transparency
-        float* pcf = &mScene->mMaterials.back().mTransparency;
+        ai_real* pcf = &mScene->mMaterials.back().mTransparency;
         *pcf = ParsePercentageChunk();
 
         // NOTE: transparency, not opacity
@@ -1189,31 +1189,31 @@ void Discreet3DSImporter::ParseMaterialChunk()
 
     case Discreet3DS::CHUNK_MAT_SHININESS:
         { // This is the shininess of the material
-        float* pcf = &mScene->mMaterials.back().mSpecularExponent;
-        *pcf = ParsePercentageChunk();
-        if (is_qnan(*pcf))
-            *pcf = 0.0f;
-        else *pcf *= (float)0xFFFF;
+            ai_real* pcf = &mScene->mMaterials.back().mSpecularExponent;
+            *pcf = ParsePercentageChunk();
+            if ( is_qnan( *pcf ) )
+                *pcf = 0.0f;
+            else *pcf *= ( ai_real ) 0xFFFF;
         }
         break;
 
     case Discreet3DS::CHUNK_MAT_SHININESS_PERCENT:
         { // This is the shininess strength of the material
-        float* pcf = &mScene->mMaterials.back().mShininessStrength;
-        *pcf = ParsePercentageChunk();
-        if (is_qnan(*pcf))
-            *pcf = 0.0f;
-        else *pcf *= (float)0xffff / 100.0f;
+            ai_real* pcf = &mScene->mMaterials.back().mShininessStrength;
+            *pcf = ParsePercentageChunk();
+            if ( is_qnan( *pcf ) )
+                *pcf = 0.0f;
+            else *pcf *= ( ai_real ) 0xffff / 100.0f;
         }
         break;
 
     case Discreet3DS::CHUNK_MAT_SELF_ILPCT:
         { // This is the self illumination strength of the material
-        float f = ParsePercentageChunk();
-        if (is_qnan(f))
-            f = 0.0f;
-        else f *= (float)0xFFFF / 100.0f;
-        mScene->mMaterials.back().mEmissive = aiColor3D(f,f,f);
+            ai_real f = ParsePercentageChunk();
+            if ( is_qnan( f ) )
+                f = 0.0f;
+            else f *= ( ai_real ) 0xFFFF / 100.0f;
+            mScene->mMaterials.back().mEmissive = aiColor3D( f, f, f );
         }
         break;
 
@@ -1336,7 +1336,7 @@ void Discreet3DSImporter::ParseTextureChunk(D3DS::Texture* pcOut)
 
 // ------------------------------------------------------------------------------------------------
 // Read a percentage chunk
-float Discreet3DSImporter::ParsePercentageChunk()
+ai_real Discreet3DSImporter::ParsePercentageChunk()
 {
     Discreet3DS::Chunk chunk;
     ReadChunk(&chunk);
@@ -1356,7 +1356,7 @@ void Discreet3DSImporter::ParseColorChunk(aiColor3D* out,
     ai_assert(out != NULL);
 
     // error return value
-    const float qnan = get_qnan();
+    const ai_real qnan = get_qnan();
     static const aiColor3D clrError = aiColor3D(qnan,qnan,qnan);
 
     Discreet3DS::Chunk chunk;

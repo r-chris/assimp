@@ -697,8 +697,8 @@ static void ReadLightInfo(aiLight* light, StreamReaderLE* stream)
     light->mColorDiffuse = ReadColor(stream);
     light->mColorAmbient = ReadColor(stream);
     light->mColorSpecular = ReadColor(stream);
-    float spotExponent = stream->GetF4();
-    float spotCutoff = stream->GetF4();
+    ai_real spotExponent = stream->GetF4();
+    ai_real spotCutoff = stream->GetF4();
     light->mAttenuationConstant = stream->GetF4();
     light->mAttenuationLinear = stream->GetF4();
     light->mAttenuationQuadratic = stream->GetF4();
@@ -709,9 +709,9 @@ static void ReadLightInfo(aiLight* light, StreamReaderLE* stream)
     // 99% and 1% percentiles.
     //    OpenGL: I = cos(angle)^E
     //   Solving: angle = acos(I^(1/E))
-    float E = 1.0f / std::max(spotExponent, 0.00001f);
-    float inner = acosf(powf(0.99f, E));
-    float outer = acosf(powf(0.01f, E));
+    ai_real E = 1.0 / std::max(spotExponent, 0.00001);
+    ai_real inner = acosf(powf(0.99f, E));
+    ai_real outer = acosf(powf(0.01f, E));
 
     // Apply the cutoff.
     outer = std::min(outer, AI_DEG_TO_RAD(spotCutoff));

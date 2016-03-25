@@ -219,7 +219,7 @@ struct WeightDesc
     unsigned int mBone;
 
     //! The weight value
-    float mWeight;
+    ai_real mWeight;
 
     //! The offset position of this weight
     // ! (in the coordinate system defined by the parent bone)

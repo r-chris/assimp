@@ -217,7 +217,7 @@ void HandleMouseInputLightIntensityAndColor( void )
             }
             else
             {
-                g_sCamera.vPos += (nYDiff / 120.0f) * g_sCamera.vLookAt.Normalize();
+                g_sCamera.vPos += (nYDiff / 120.0) * g_sCamera.vLookAt.Normalize();
             }
         }
     }

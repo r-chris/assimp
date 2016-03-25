@@ -819,10 +819,10 @@ void CopyASETexture(aiMaterial& mat, ASE::Texture& texture, aiTextureType type)
 
     // Setup the texture blend factor
     if (is_not_qnan(texture.mTextureBlend))
-        mat.AddProperty<float>( &texture.mTextureBlend, 1, AI_MATKEY_TEXBLEND(type,0));
+        mat.AddProperty<ai_real>( &texture.mTextureBlend, 1, AI_MATKEY_TEXBLEND(type,0));
 
     // Setup texture UV transformations
-    mat.AddProperty<float>(&texture.mOffsetU,5,AI_MATKEY_UVTRANSFORM(type,0));
+    mat.AddProperty<ai_real>(&texture.mOffsetU,5,AI_MATKEY_UVTRANSFORM(type,0));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -865,7 +865,7 @@ void ASEImporter::ConvertMaterial(ASE::Material& mat)
     }
 
     // opacity
-    mat.pcInstance->AddProperty<float>( &mat.mTransparency,1,AI_MATKEY_OPACITY);
+    mat.pcInstance->AddProperty<ai_real>( &mat.mTransparency,1,AI_MATKEY_OPACITY);
 
     // Two sided rendering?
     if (mat.mTwoSided)
@@ -990,9 +990,9 @@ void ASEImporter::ConvertMeshes(ASE::Mesh& mesh, std::vector<aiMesh*>& avOutMesh
                 p_pcOut->mNumFaces = (unsigned int)aiSplit[p].size();
 
                 // receive output vertex weights
-                std::vector<std::pair<unsigned int, float> > *avOutputBones = NULL;
+                std::vector<std::pair<unsigned int, ai_real> > *avOutputBones = NULL;
                 if (!mesh.mBones.empty())   {
-                    avOutputBones = new std::vector<std::pair<unsigned int, float> >[mesh.mBones.size()];
+                    avOutputBones = new std::vector<std::pair<unsigned int, ai_real> >[mesh.mBones.size()];
                 }
 
                 // allocate enough storage for faces
@@ -1025,7 +1025,7 @@ void ASEImporter::ConvertMeshes(ASE::Mesh& mesh, std::vector<aiMesh*>& avOutMesh
                                         blubb != mesh.mBoneVertices[iIndex2].mBoneWeights.end();++blubb)    {
 
                                         // NOTE: illegal cases have already been filtered out
-                                        avOutputBones[(*blubb).first].push_back(std::pair<unsigned int, float>(
+                                        avOutputBones[(*blubb).first].push_back(std::pair<unsigned int, ai_real>(
                                             iBase,(*blubb).second));
                                     }
                                 }

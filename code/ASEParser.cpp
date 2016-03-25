@@ -448,7 +448,7 @@ void Parser::ParseLV1SoftSkinBlock()
                                 me.first = (int)curMesh->mBones.size();
                                 curMesh->mBones.push_back(ASE::Bone(bone));
                             }
-                            ParseLV4MeshFloat( me.second );
+                            ParseLV4MeshReal( me.second );
 
                             // Add the new bone weight to list
                             vert.mBoneWeights.push_back(me);
@@ -475,14 +475,14 @@ void Parser::ParseLV1SceneBlock()
 
             {
                 // parse a color triple and assume it is really the bg color
-                ParseLV4MeshFloatTriple( &m_clrBackground.r );
+                ParseLV4MeshRealTriple( &m_clrBackground.r );
                 continue;
             }
             if (TokenMatch(filePtr,"SCENE_AMBIENT_STATIC",20))
 
             {
                 // parse a color triple and assume it is really the bg color
-                ParseLV4MeshFloatTriple( &m_clrAmbient.r );
+                ParseLV4MeshRealTriple( &m_clrAmbient.r );
                 continue;
             }
             if (TokenMatch(filePtr,"SCENE_FIRSTFRAME",16))
@@ -572,19 +572,19 @@ void Parser::ParseLV2MaterialBlock(ASE::Material& mat)
             // ambient material color
             if (TokenMatch(filePtr,"MATERIAL_AMBIENT",16))
             {
-                ParseLV4MeshFloatTriple(&mat.mAmbient.r);
+                ParseLV4MeshRealTriple(&mat.mAmbient.r);
                 continue;
             }
             // diffuse material color
             if (TokenMatch(filePtr,"MATERIAL_DIFFUSE",16) )
             {
-                ParseLV4MeshFloatTriple(&mat.mDiffuse.r);
+                ParseLV4MeshRealTriple(&mat.mDiffuse.r);
                 continue;
             }
             // specular material color
             if (TokenMatch(filePtr,"MATERIAL_SPECULAR",17))
             {
-                ParseLV4MeshFloatTriple(&mat.mSpecular.r);
+                ParseLV4MeshRealTriple(&mat.mSpecular.r);
                 continue;
             }
             // material shading type
@@ -617,14 +617,14 @@ void Parser::ParseLV2MaterialBlock(ASE::Material& mat)
             // material transparency
             if (TokenMatch(filePtr,"MATERIAL_TRANSPARENCY",21))
             {
-                ParseLV4MeshFloat(mat.mTransparency);
+                ParseLV4MeshReal(mat.mTransparency);
                 mat.mTransparency = 1.0f - mat.mTransparency;continue;
             }
             // material self illumination
             if (TokenMatch(filePtr,"MATERIAL_SELFILLUM",18))
             {
-                float f = 0.0f;
-                ParseLV4MeshFloat(f);
+                ai_real f = 0.0f;
+                ParseLV4MeshReal(f);
 
                 mat.mEmissive.r = f;
                 mat.mEmissive.g = f;
@@ -634,7 +634,7 @@ void Parser::ParseLV2MaterialBlock(ASE::Material& mat)
             // material shininess
             if (TokenMatch(filePtr,"MATERIAL_SHINE",14) )
             {
-                ParseLV4MeshFloat(mat.mSpecularExponent);
+                ParseLV4MeshReal(mat.mSpecularExponent);
                 mat.mSpecularExponent *= 15;
                 continue;
             }
@@ -647,7 +647,7 @@ void Parser::ParseLV2MaterialBlock(ASE::Material& mat)
             // material shininess strength
             if (TokenMatch(filePtr,"MATERIAL_SHINESTRENGTH",22))
             {
-                ParseLV4MeshFloat(mat.mShininessStrength);
+                ParseLV4MeshReal(mat.mShininessStrength);
                 continue;
             }
             // diffuse color map
@@ -779,37 +779,37 @@ void Parser::ParseLV3MapBlock(Texture& map)
             // offset on the u axis
             if (TokenMatch(filePtr,"UVW_U_OFFSET" ,12))
             {
-                ParseLV4MeshFloat(map.mOffsetU);
+                ParseLV4MeshReal(map.mOffsetU);
                 continue;
             }
             // offset on the v axis
             if (TokenMatch(filePtr,"UVW_V_OFFSET" ,12))
             {
-                ParseLV4MeshFloat(map.mOffsetV);
+                ParseLV4MeshReal(map.mOffsetV);
                 continue;
             }
             // tiling on the u axis
             if (TokenMatch(filePtr,"UVW_U_TILING" ,12))
             {
-                ParseLV4MeshFloat(map.mScaleU);
+                ParseLV4MeshReal(map.mScaleU);
                 continue;
             }
             // tiling on the v axis
             if (TokenMatch(filePtr,"UVW_V_TILING" ,12))
             {
-                ParseLV4MeshFloat(map.mScaleV);
+                ParseLV4MeshReal(map.mScaleV);
                 continue;
             }
             // rotation around the z-axis
             if (TokenMatch(filePtr,"UVW_ANGLE" ,9))
             {
-                ParseLV4MeshFloat(map.mRotation);
+                ParseLV4MeshReal(map.mRotation);
                 continue;
             }
             // map blending factor
             if (TokenMatch(filePtr,"MAP_AMOUNT" ,10))
             {
-                ParseLV4MeshFloat(map.mTextureBlend);
+                ParseLV4MeshReal(map.mTextureBlend);
                 continue;
             }
         }
@@ -989,17 +989,17 @@ void Parser::ParseLV2CameraSettingsBlock(ASE::Camera& camera)
             ++filePtr;
             if (TokenMatch(filePtr,"CAMERA_NEAR" ,11))
             {
-                ParseLV4MeshFloat(camera.mNear);
+                ParseLV4MeshReal(camera.mNear);
                 continue;
             }
             if (TokenMatch(filePtr,"CAMERA_FAR" ,10))
             {
-                ParseLV4MeshFloat(camera.mFar);
+                ParseLV4MeshReal(camera.mFar);
                 continue;
             }
             if (TokenMatch(filePtr,"CAMERA_FOV" ,10))
             {
-                ParseLV4MeshFloat(camera.mFOV);
+                ParseLV4MeshReal(camera.mFOV);
                 continue;
             }
         }
@@ -1019,22 +1019,22 @@ void Parser::ParseLV2LightSettingsBlock(ASE::Light& light)
             ++filePtr;
             if (TokenMatch(filePtr,"LIGHT_COLOR" ,11))
             {
-                ParseLV4MeshFloatTriple(&light.mColor.r);
+                ParseLV4MeshRealTriple(&light.mColor.r);
                 continue;
             }
             if (TokenMatch(filePtr,"LIGHT_INTENS" ,12))
             {
-                ParseLV4MeshFloat(light.mIntensity);
+                ParseLV4MeshReal(light.mIntensity);
                 continue;
             }
             if (TokenMatch(filePtr,"LIGHT_HOTSPOT" ,13))
             {
-                ParseLV4MeshFloat(light.mAngle);
+                ParseLV4MeshReal(light.mAngle);
                 continue;
             }
             if (TokenMatch(filePtr,"LIGHT_FALLOFF" ,13))
             {
-                ParseLV4MeshFloat(light.mFalloff);
+                ParseLV4MeshReal(light.mFalloff);
                 continue;
             }
         }
@@ -1159,7 +1159,7 @@ void Parser::ParseLV3ScaleAnimationBlock(ASE::Animation& anim)
             {
                 anim.akeyScaling.push_back(aiVectorKey());
                 aiVectorKey& key = anim.akeyScaling.back();
-                ParseLV4MeshFloatTriple(&key.mValue.x,iIndex);
+                ParseLV4MeshRealTriple(&key.mValue.x,iIndex);
                 key.mTime = (double)iIndex;
             }
         }
@@ -1205,7 +1205,7 @@ void Parser::ParseLV3PosAnimationBlock(ASE::Animation& anim)
             {
                 anim.akeyPositions.push_back(aiVectorKey());
                 aiVectorKey& key = anim.akeyPositions.back();
-                ParseLV4MeshFloatTriple(&key.mValue.x,iIndex);
+                ParseLV4MeshRealTriple(&key.mValue.x,iIndex);
                 key.mTime = (double)iIndex;
             }
         }
@@ -1251,9 +1251,10 @@ void Parser::ParseLV3RotAnimationBlock(ASE::Animation& anim)
             {
                 anim.akeyRotations.push_back(aiQuatKey());
                 aiQuatKey& key = anim.akeyRotations.back();
-                aiVector3D v;float f;
-                ParseLV4MeshFloatTriple(&v.x,iIndex);
-                ParseLV4MeshFloat(f);
+                aiVector3D v;
+                ai_real f;
+                ParseLV4MeshRealTriple(&v.x,iIndex);
+                ParseLV4MeshReal(f);
                 key.mTime = (double)iIndex;
                 key.mValue = aiQuaternion(v,f);
             }
@@ -1308,7 +1309,7 @@ void Parser::ParseLV2NodeTransformBlock(ASE::BaseNode& mesh)
                 // only information here that is interesting for targets
                 if (TokenMatch(filePtr,"TM_ROW3" ,7))
                 {
-                    ParseLV4MeshFloatTriple((mode == 1 ? mesh.mTransform[3] : &mesh.mTargetPosition.x));
+                    ParseLV4MeshRealTriple((mode == 1 ? mesh.mTransform[3] : &mesh.mTargetPosition.x));
                     continue;
                 }
                 if (mode == 1)
@@ -1316,19 +1317,19 @@ void Parser::ParseLV2NodeTransformBlock(ASE::BaseNode& mesh)
                     // first row of the transformation matrix
                     if (TokenMatch(filePtr,"TM_ROW0" ,7))
                     {
-                        ParseLV4MeshFloatTriple(mesh.mTransform[0]);
+                        ParseLV4MeshRealTriple(mesh.mTransform[0]);
                         continue;
                     }
                     // second row of the transformation matrix
                     if (TokenMatch(filePtr,"TM_ROW1" ,7))
                     {
-                        ParseLV4MeshFloatTriple(mesh.mTransform[1]);
+                        ParseLV4MeshRealTriple(mesh.mTransform[1]);
                         continue;
                     }
                     // third row of the transformation matrix
                     if (TokenMatch(filePtr,"TM_ROW2" ,7))
                     {
-                        ParseLV4MeshFloatTriple(mesh.mTransform[2]);
+                        ParseLV4MeshRealTriple(mesh.mTransform[2]);
                         continue;
                     }
                     // inherited position axes
@@ -1604,8 +1605,8 @@ void Parser::ParseLV4MeshBonesVertices(unsigned int iNumVertices,ASE::Mesh& mesh
                 }
 
                 // --- ignored
-                float afVert[3];
-                ParseLV4MeshFloatTriple(afVert);
+                ai_real afVert[3];
+                ParseLV4MeshRealTriple(afVert);
 
                 std::pair<int,float> pairOut;
                 while (true)
@@ -1651,7 +1652,7 @@ void Parser::ParseLV3MeshVertexListBlock(
 
                 aiVector3D vTemp;
                 unsigned int iIndex;
-                ParseLV4MeshFloatTriple(&vTemp.x,iIndex);
+                ParseLV4MeshRealTriple(&vTemp.x,iIndex);
 
                 if (iIndex >= iNumVertices)
                 {
@@ -1716,7 +1717,7 @@ void Parser::ParseLV3MeshTListBlock(unsigned int iNumVertices,
             {
                 aiVector3D vTemp;
                 unsigned int iIndex;
-                ParseLV4MeshFloatTriple(&vTemp.x,iIndex);
+                ParseLV4MeshRealTriple(&vTemp.x,iIndex);
 
                 if (iIndex >= iNumVertices)
                 {
@@ -1833,7 +1834,7 @@ void Parser::ParseLV3MeshCListBlock(unsigned int iNumVertices, ASE::Mesh& mesh)
                 aiColor4D vTemp;
                 vTemp.a = 1.0f;
                 unsigned int iIndex;
-                ParseLV4MeshFloatTriple(&vTemp.r,iIndex);
+                ParseLV4MeshRealTriple(&vTemp.r,iIndex);
 
                 if (iIndex >= iNumVertices)
                 {
@@ -1901,7 +1902,7 @@ void Parser::ParseLV3MeshNormalListBlock(ASE::Mesh& sMesh)
             ++filePtr;
             if (faceIdx != UINT_MAX && TokenMatch(filePtr,"MESH_VERTEXNORMAL",17))  {
                 aiVector3D vNormal;
-                ParseLV4MeshFloatTriple(&vNormal.x,index);
+                ParseLV4MeshRealTriple(&vNormal.x,index);
                 if (faceIdx >=  sMesh.mFaces.size())
                     continue;
 
@@ -1923,7 +1924,7 @@ void Parser::ParseLV3MeshNormalListBlock(ASE::Mesh& sMesh)
             }
             if (TokenMatch(filePtr,"MESH_FACENORMAL",15))   {
                 aiVector3D vNormal;
-                ParseLV4MeshFloatTriple(&vNormal.x,faceIdx);
+                ParseLV4MeshRealTriple(&vNormal.x,faceIdx);
 
                 if (faceIdx >= sMesh.mFaces.size()) {
                     DefaultLogger::get()->error("ASE: Invalid vertex index in MESH_FACENORMAL section");
@@ -2102,7 +2103,7 @@ void Parser::ParseLV4MeshLongTriple(unsigned int* apOut, unsigned int& rIndexOut
     ParseLV4MeshLongTriple(apOut);
 }
 // ------------------------------------------------------------------------------------------------
-void Parser::ParseLV4MeshFloatTriple( ai_real* apOut, unsigned int& rIndexOut)
+void Parser::ParseLV4MeshRealTriple( ai_real* apOut, unsigned int& rIndexOut)
 {
     ai_assert(NULL != apOut);
 
@@ -2110,18 +2111,18 @@ void Parser::ParseLV4MeshFloatTriple( ai_real* apOut, unsigned int& rIndexOut)
     ParseLV4MeshLong(rIndexOut);
 
     // parse the three others
-    ParseLV4MeshFloatTriple(apOut);
+    ParseLV4MeshRealTriple(apOut);
 }
 // ------------------------------------------------------------------------------------------------
-void Parser::ParseLV4MeshFloatTriple( ai_real* apOut)
+void Parser::ParseLV4MeshRealTriple( ai_real* apOut)
 {
     ai_assert(NULL != apOut);
 
     for (unsigned int i = 0; i < 3;++i)
-        ParseLV4MeshFloat(apOut[i]);
+        ParseLV4MeshReal(apOut[i]);
 }
 // ------------------------------------------------------------------------------------------------
-void Parser::ParseLV4MeshFloat( ai_real& fOut)
+void Parser::ParseLV4MeshReal( ai_real& fOut)
 {
     // skip spaces and tabs
     if(!SkipSpaces(&filePtr))

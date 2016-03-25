@@ -68,7 +68,7 @@ bool g_bMousePressed				= false;
 bool g_bMousePressedR				= false;
 bool g_bMousePressedM				= false;
 bool g_bMousePressedBoth			= false;
-float g_fElpasedTime				= 0.0f;
+ai_real g_fElpasedTime = 0.0;
 D3DCAPS9 g_sCaps;
 bool g_bLoadingFinished				= false;
 HANDLE g_hThreadHandle				= NULL;
@@ -395,8 +395,8 @@ int ScaleAsset(void)
     }
 
     aiVector3D vDelta = aiVecs[1]-aiVecs[0];
-    aiVector3D vHalf =  aiVecs[0] + (vDelta / 2.0f);
-    float fScale = 10.0f / vDelta.Length();
+    aiVector3D vHalf =  aiVecs[0] + (vDelta / 2.0);
+    ai_real fScale = 10.0 / vDelta.Length();
 
     g_mWorld =  aiMatrix4x4(
         1.0f,0.0f,0.0f,0.0f,

@@ -98,7 +98,7 @@ void AnimEvaluator::Evaluate( double pTime)
                 diffTime += mAnim->mDuration;
             if( diffTime > 0)
             {
-                float factor = float( (time - key.mTime) / diffTime);
+                ai_real factor = ai_real( (time - key.mTime) / diffTime);
                 presentPosition = key.mValue + (nextKey.mValue - key.mValue) * factor;
             } else
             {

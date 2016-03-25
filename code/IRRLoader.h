@@ -127,15 +127,15 @@ private:
 
 
         // common parameters
-        float speed;
+        ai_real speed;
         aiVector3D direction;
 
         // FLY_CIRCLE
         aiVector3D circleCenter;
-        float circleRadius;
+        ai_real circleRadius;
 
         // FOLLOW_SPLINE
-        float tightness;
+        ai_real tightness;
         std::vector<aiVectorKey> splineKeys;
 
         // ROTATION (angles given in direction)
@@ -202,7 +202,7 @@ private:
 
         // Animated meshes: frames per second
         // 0.f if not specified
-        float framesPerSecond;
+        ai_real framesPerSecond;
 
         // Meshes: path to the mesh to be loaded
         std::string meshPath;

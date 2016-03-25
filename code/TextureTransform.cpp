@@ -102,7 +102,7 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
      */
     if (info.mRotation)
     {
-        float out = info.mRotation;
+        ai_real out = info.mRotation;
         if ((rounded = (int)(info.mRotation / (float)AI_MATH_TWO_PI)))
         {
             out -= rounded*(float)AI_MATH_PI;
@@ -126,18 +126,18 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
      * offset 2 and 3)
      */
     if ((rounded  = (int)info.mTranslation.x))  {
-        float out = 0.0f;
+        ai_real out = 0.0f;
         szTemp[0] = 0;
         if (aiTextureMapMode_Wrap == info.mapU) {
             // Wrap - simple take the fraction of the field
-            out = info.mTranslation.x-(float)rounded;
+            out = info.mTranslation.x-( ai_real )rounded;
 			ai_snprintf(szTemp, 512, "[w] UV U offset %f can be simplified to %f", info.mTranslation.x, out);
         }
         else if (aiTextureMapMode_Mirror == info.mapU && 1 != rounded)  {
             // Mirror
             if (rounded % 2)
                 rounded--;
-            out = info.mTranslation.x-(float)rounded;
+            out = info.mTranslation.x-( ai_real )rounded;
 
             ai_snprintf(szTemp,512,"[m/d] UV U offset %f can be simplified to %f",info.mTranslation.x,out);
         }
@@ -159,18 +159,18 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
      * offset 2 and 3)
      */
     if ((rounded  = (int)info.mTranslation.y))  {
-        float out = 0.0f;
+        ai_real out = 0.0f;
         szTemp[0] = 0;
         if (aiTextureMapMode_Wrap == info.mapV) {
             // Wrap - simple take the fraction of the field
-            out = info.mTranslation.y-(float)rounded;
+            out = info.mTranslation.y-( ai_real )rounded;
             ::ai_snprintf(szTemp,512,"[w] UV V offset %f can be simplified to %f",info.mTranslation.y,out);
         }
         else if (aiTextureMapMode_Mirror == info.mapV  && 1 != rounded) {
             // Mirror
             if (rounded % 2)
                 rounded--;
-            out = info.mTranslation.x-(float)rounded;
+            out = info.mTranslation.x-( ai_real )rounded;
 
             ::ai_snprintf(szTemp,512,"[m/d] UV V offset %f can be simplified to %f",info.mTranslation.y,out);
         }

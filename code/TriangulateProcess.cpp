@@ -242,7 +242,7 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
                 diag.Normalize();
                 right.Normalize();
 
-                const float angle = std::acos(left*diag) + std::acos(right*diag);
+                const ai_real angle = std::acos(left*diag) + std::acos(right*diag);
                 if (angle > AI_MATH_PI_F) {
                     // this is the concave point
                     start_vertex = i;
@@ -297,9 +297,9 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
             }
 
             // Select largest normal coordinate to ignore for projection
-            const float ax = (n.x>0 ? n.x : -n.x);
-            const float ay = (n.y>0 ? n.y : -n.y);
-            const float az = (n.z>0 ? n.z : -n.z);
+            const ai_real ax = (n.x>0 ? n.x : -n.x);
+            const ai_real ay = (n.y>0 ? n.y : -n.y);
+            const ai_real az = (n.z>0 ? n.z : -n.z);
 
             unsigned int ac = 0, bc = 1; /* no z coord. projection to xy */
             float inv = n.z;

@@ -82,7 +82,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <time.h>
 
 // default movement speed
-#define MOVE_SPEED 3.f
+#define MOVE_SPEED 3.
 
 #include "AssetHelper.h"
 #include "Camera.h"
@@ -224,7 +224,7 @@ enum EClickPos
     extern bool g_bMousePressedR                /*= false*/;
     extern bool g_bMousePressedM                /*= false*/;
     extern bool g_bMousePressedBoth             /*= false*/;
-    extern float g_fElpasedTime                 /*= 0.0f*/;
+    extern ai_real g_fElpasedTime                 /*= 0.0f*/;
     extern D3DCAPS9 g_sCaps;
     extern bool g_bLoadingFinished              /*= false*/;
     extern HANDLE g_hThreadHandle               /*= NULL*/;

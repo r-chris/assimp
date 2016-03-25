@@ -229,6 +229,11 @@ AI_FORCE_INLINE bool EpsilonCompare(float n, float s, float epsilon) {
 }
 
 // ------------------------------------------------------------------------------------------------
+AI_FORCE_INLINE bool EpsilonCompare( double n, double s, float epsilon ) {
+    return std::fabs( n - s ) > epsilon;
+}
+
+// ------------------------------------------------------------------------------------------------
 template <>
 bool EpsilonCompare<aiVectorKey>(const aiVectorKey& n, const aiVectorKey& s, float epsilon) {
     return

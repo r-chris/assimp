@@ -337,7 +337,7 @@ MD5MeshParser::MD5MeshParser(SectionList& mSections)
                     WeightDesc& weight = desc.mWeights[idx];
                     weight.mBone = strtoul10(sz,&sz);
                     AI_MD5_SKIP_SPACES();
-                    sz = fast_atoreal_move<float>(sz,weight.mWeight);
+                    sz = fast_atoreal_move<ai_real>(sz,weight.mWeight);
                     AI_MD5_READ_TRIPLE(weight.vOffsetPosition);
                 }
             }

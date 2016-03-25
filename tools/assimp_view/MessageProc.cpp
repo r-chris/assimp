@@ -1442,7 +1442,7 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
                     }
                 else
                     {
-                    g_sCamera.vPos += (GET_WHEEL_DELTA_WPARAM(wParam) / 50.0f) *
+                    g_sCamera.vPos += (GET_WHEEL_DELTA_WPARAM(wParam) / 50.0) *
                         g_sCamera.vLookAt.Normalize();
                     }
             }

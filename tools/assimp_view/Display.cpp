@@ -1498,7 +1498,7 @@ int CDisplay::SetupStereoView()
             D3DCOLORWRITEENABLE_GREEN);
 
         // move the camera a little bit to the left
-        g_sCamera.vPos -= g_sCamera.vRight * 0.03f;
+        g_sCamera.vPos -= g_sCamera.vRight * 0.03;
     }
     return 1;
 }
@@ -1519,7 +1519,7 @@ int CDisplay::RenderStereoView(const aiMatrix4x4& m)
         g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER,0,1.0f,0);
 
         // move the camera a little bit to the right
-        g_sCamera.vPos += g_sCamera.vRight * 0.06f;
+        g_sCamera.vPos += g_sCamera.vRight * 0.06;
 
         RenderNode(g_pcAsset->pcScene->mRootNode,m,false);
         g_piDevice->SetRenderState(D3DRS_ZWRITEENABLE,FALSE);
@@ -1527,7 +1527,7 @@ int CDisplay::RenderStereoView(const aiMatrix4x4& m)
         g_piDevice->SetRenderState(D3DRS_ZWRITEENABLE,TRUE);
 
         // (move back to the original position)
-        g_sCamera.vPos -= g_sCamera.vRight * 0.03f;
+        g_sCamera.vPos -= g_sCamera.vRight * 0.03;
 
         // reenable all channels
         g_piDevice->SetRenderState(D3DRS_COLORWRITEENABLE,

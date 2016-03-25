@@ -211,7 +211,7 @@ bool GenVertexNormalsProcess::GenMeshVertexNormals (aiMesh* pMesh, unsigned int 
             vertexFinder->FindPositions( pMesh->mVertices[i] , posEpsilon, verticesFound);
 
             aiVector3D vr = pMesh->mNormals[i];
-            float vrlen = vr.Length();
+            ai_real vrlen = vr.Length();
 
             aiVector3D pcNor;
             for (unsigned int a = 0; a < verticesFound.size(); ++a) {

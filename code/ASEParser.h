@@ -544,13 +544,13 @@ private:
     //! (also works for MESH_TVERT, MESH_CFACE, MESH_VERTCOL  ...)
     //! \param apOut Output buffer (3 floats)
     //! \param rIndexOut Output index
-    void ParseLV4MeshFloatTriple( ai_real* apOut, unsigned int& rIndexOut);
+    void ParseLV4MeshRealTriple( ai_real* apOut, unsigned int& rIndexOut);
 
     // -------------------------------------------------------------------
     //! Parse a *MESH_VERT block in a file
     //! (also works for MESH_TVERT, MESH_CFACE, MESH_VERTCOL  ...)
     //! \param apOut Output buffer (3 floats)
-    void ParseLV4MeshFloatTriple( ai_real* apOut );
+    void ParseLV4MeshRealTriple( ai_real* apOut );
 
     // -------------------------------------------------------------------
     //! Parse a *MESH_TFACE block in a file
@@ -566,9 +566,9 @@ private:
     void ParseLV4MeshLongTriple(unsigned int* apOut);
 
     // -------------------------------------------------------------------
-    //! Parse a single float element
-    //! \param fOut Output float
-    void ParseLV4MeshFloat( ai_real& fOut);
+    //! Parse a single real element
+    //! \param fOut Output real
+    void ParseLV4MeshReal( ai_real& fOut);
 
     // -------------------------------------------------------------------
     //! Parse a single int element

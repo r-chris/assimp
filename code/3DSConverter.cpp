@@ -265,10 +265,10 @@ void Discreet3DSImporter::ConvertMaterial(D3DS::Material& oldMat,
     }
 
     // Opacity
-    mat.AddProperty<float>( &oldMat.mTransparency,1,AI_MATKEY_OPACITY);
+    mat.AddProperty<ai_real>( &oldMat.mTransparency,1,AI_MATKEY_OPACITY);
 
     // Bump height scaling
-    mat.AddProperty<float>( &oldMat.mBumpHeight,1,AI_MATKEY_BUMPSCALING);
+    mat.AddProperty<ai_real>( &oldMat.mBumpHeight,1,AI_MATKEY_BUMPSCALING);
 
     // Two sided rendering?
     if (oldMat.mTwoSided)

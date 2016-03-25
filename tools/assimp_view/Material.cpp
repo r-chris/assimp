@@ -78,7 +78,7 @@ extern bool g_bMousePressed                 /*= false*/;
 extern bool g_bMousePressedR                /*= false*/;
 extern bool g_bMousePressedM                /*= false*/;
 extern bool g_bMousePressedBoth             /*= false*/;
-extern float g_fElpasedTime                 /*= 0.0f*/;
+extern ai_real g_fElpasedTime                 /*= 0.0f*/;
 extern D3DCAPS9 g_sCaps;
 extern bool g_bLoadingFinished              /*= false*/;
 extern HANDLE g_hThreadHandle               /*= NULL*/;

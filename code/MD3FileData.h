@@ -259,15 +259,14 @@ struct Vertex
  */
 inline void LatLngNormalToVec3(uint16_t p_iNormal, ai_real* p_afOut)
 {
-    float lat = (float)(( p_iNormal >> 8u ) & 0xff);
-    float lng = (float)(( p_iNormal & 0xff ));
+    ai_real lat = (float)(( p_iNormal >> 8u ) & 0xff);
+    ai_real lng = (float)(( p_iNormal & 0xff ));
     lat *= 3.141926f/128.0f;
     lng *= 3.141926f/128.0f;
 
     p_afOut[0] = std::cos(lat) * std::sin(lng);
     p_afOut[1] = std::sin(lat) * std::sin(lng);
     p_afOut[2] = std::cos(lng);
-    return;
 }
 
 

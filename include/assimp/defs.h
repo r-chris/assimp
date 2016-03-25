@@ -243,8 +243,8 @@ SKIP_FUNCTION_MACROS = YES
 #define AI_MATH_HALF_PI_F   (AI_MATH_PI_F * 0.5f)
 
 /* Tiny macro to convert from radians to degrees and back */
-#define AI_DEG_TO_RAD(x) ((x)*0.0174532925f)
-#define AI_RAD_TO_DEG(x) ((x)*57.2957795f)
+#define AI_DEG_TO_RAD(x) ((x)*0.0174532925)
+#define AI_RAD_TO_DEG(x) ((x)*57.2957795)
 
 /* Support for big-endian builds */
 #if defined(__BYTE_ORDER__)
