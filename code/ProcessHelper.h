@@ -152,15 +152,21 @@ namespace Assimp {
 template <typename T>
 struct MinMaxChooser;
 
+static const float SingleLimit = 1e10f;
+
 template <> struct MinMaxChooser<float> {
-    void operator ()(float& min,float& max) {
-        max = -1e10f;
-        min =  1e10f;
-}};
+void operator ()(float& min,float& max) {
+    max = -SingleLimit;
+    min =  SingleLimit;
+}
+};
+
+static const double DoubleLimit = 1e10;
+
 template <> struct MinMaxChooser<double> {
     void operator ()(double& min,double& max) {
-        max = -1e10;
-        min =  1e10;
+        max = -DoubleLimit;
+        min = DoubleLimit;
 }};
 template <> struct MinMaxChooser<unsigned int> {
     void operator ()(unsigned int& min,unsigned int& max) {
@@ -170,24 +176,24 @@ template <> struct MinMaxChooser<unsigned int> {
 
 template <typename T> struct MinMaxChooser< aiVector3t<T> > {
     void operator ()(aiVector3t<T>& min,aiVector3t<T>& max) {
-        max = aiVector3t<T>(-1e10f,-1e10f,-1e10f);
-        min = aiVector3t<T>( 1e10f, 1e10f, 1e10f);
+        max = aiVector3t<T>(-SingleLimit,-SingleLimit,-SingleLimit );
+        min = aiVector3t<T>( SingleLimit, SingleLimit, SingleLimit );
 }};
 template <typename T> struct MinMaxChooser< aiVector2t<T> > {
     void operator ()(aiVector2t<T>& min,aiVector2t<T>& max) {
-        max = aiVector2t<T>(-1e10f,-1e10f);
-        min = aiVector2t<T>( 1e10f, 1e10f);
+        max = aiVector2t<T>(-SingleLimit,-SingleLimit );
+        min = aiVector2t<T>( SingleLimit, SingleLimit );
     }};
 template <typename T> struct MinMaxChooser< aiColor4t<T> > {
     void operator ()(aiColor4t<T>& min,aiColor4t<T>& max) {
-        max = aiColor4t<T>(-1e10f,-1e10f,-1e10f,-1e10f);
-        min = aiColor4t<T>( 1e10f, 1e10f, 1e10f, 1e10f);
+        max = aiColor4t<T>(-SingleLimit,-SingleLimit,-SingleLimit,-SingleLimit );
+        min = aiColor4t<T>( SingleLimit, SingleLimit, SingleLimit, SingleLimit );
 }};
 
 template <typename T> struct MinMaxChooser< aiQuaterniont<T> > {
     void operator ()(aiQuaterniont<T>& min,aiQuaterniont<T>& max) {
-        max = aiQuaterniont<T>(-1e10f,-1e10f,-1e10f,-1e10f);
-        min = aiQuaterniont<T>( 1e10f, 1e10f, 1e10f, 1e10f);
+        max = aiQuaterniont<T>(-SingleLimit - SingleLimit,-SingleLimit,-SingleLimit );
+        min = aiQuaterniont<T>( SingleLimit, SingleLimit, SingleLimit, SingleLimit );
 }};
 
 template <> struct MinMaxChooser<aiVectorKey> {
@@ -210,7 +216,7 @@ template <> struct MinMaxChooser<aiVertexWeight> {
 // -------------------------------------------------------------------------------
 /** @brief Find the min/max values of an array of Ts
  *  @param in Input array
- *  @param size Numebr of elements to process
+ *  @param size Number of elements to process
  *  @param[out] min minimum value
  *  @param[out] max maximum value
  */
@@ -231,20 +237,20 @@ inline void ArrayBounds(const T* in, unsigned int size, T& min, T& max)
  * @param pColor1 First color
  * @param pColor2 second color
  * @return Quadratic color difference */
-inline ai_real GetColorDifference( const aiColor4D& pColor1, const aiColor4D& pColor2)
+inline 
+ai_real GetColorDifference( const aiColor4D& pColor1, const aiColor4D& pColor2)
 {
     const aiColor4D c (pColor1.r - pColor2.r, pColor1.g - pColor2.g, pColor1.b - pColor2.b, pColor1.a - pColor2.a);
     return c.r*c.r + c.g*c.g + c.b*c.b + c.a*c.a;
 }
 
-
-// -------------------------------------------------------------------------------
-/** @brief Extract single strings from a list of identifiers
- *  @param in Input string list.
- *  @param out Receives a list of clean output strings
- *  @sdee #AI_CONFIG_PP_OG_EXCLUDE_LIST */
+/** ------------------------------------------------------------------------------- 
+ *  @brief  Extract single strings from a list of identifiers
+ *  @param  in Input string list.
+ *  @param  out Receives a list of clean output strings
+ *  @see    #AI_CONFIG_PP_OG_EXCLUDE_LIST 
+ */
 void ConvertListToStrings(const std::string& in, std::list<std::string>& out);
-
 
 // -------------------------------------------------------------------------------
 /** @brief Compute the AABB of a mesh after applying a given transform
@@ -253,7 +259,6 @@ void ConvertListToStrings(const std::string& in, std::list<std::string>& out);
  *  @param[out] max Receives maximum transformed vertex
  *  @param m Transformation matrix to be applied */
 void FindAABBTransformed (const aiMesh* mesh, aiVector3D& min, aiVector3D& max, const aiMatrix4x4& m);
-
 
 // -------------------------------------------------------------------------------
 /** @brief Helper function to determine the 'real' center of a mesh
@@ -275,55 +280,45 @@ void FindMeshCenter (aiMesh* mesh, aiVector3D& out, aiVector3D& min, aiVector3D&
  *  @param[out] out Center point */
 void FindSceneCenter (aiScene* scene, aiVector3D& out, aiVector3D& min, aiVector3D& max);
 
-
 // -------------------------------------------------------------------------------
 // Helper function to determine the 'real' center of a mesh after applying a given transform
 void FindMeshCenterTransformed (aiMesh* mesh, aiVector3D& out, aiVector3D& min,aiVector3D& max, const aiMatrix4x4& m);
-
 
 // -------------------------------------------------------------------------------
 // Helper function to determine the 'real' center of a mesh
 void FindMeshCenter (aiMesh* mesh, aiVector3D& out);
 
-
 // -------------------------------------------------------------------------------
 // Helper function to determine the 'real' center of a mesh after applying a given transform
 void FindMeshCenterTransformed (aiMesh* mesh, aiVector3D& out,const aiMatrix4x4& m);
 
-
 // -------------------------------------------------------------------------------
 // Compute a good epsilon value for position comparisons on a mesh
-float ComputePositionEpsilon(const aiMesh* pMesh);
-
+ai_real ComputePositionEpsilon(const aiMesh* pMesh);
 
 // -------------------------------------------------------------------------------
 // Compute a good epsilon value for position comparisons on a array of meshes
-float ComputePositionEpsilon(const aiMesh* const* pMeshes, size_t num);
-
+ai_real ComputePositionEpsilon(const aiMesh* const* pMeshes, size_t num);
 
 // -------------------------------------------------------------------------------
 // Compute an unique value for the vertex format of a mesh
 unsigned int GetMeshVFormatUnique(const aiMesh* pcMesh);
 
-
 // defs for ComputeVertexBoneWeightTable()
-typedef std::pair <unsigned int,float> PerVertexWeight;
+typedef std::pair <unsigned int, ai_real> PerVertexWeight;
 typedef std::vector <PerVertexWeight> VertexWeightTable;
 
 // -------------------------------------------------------------------------------
 // Compute a per-vertex bone weight table
 VertexWeightTable* ComputeVertexBoneWeightTable(const aiMesh* pMesh);
 
-
 // -------------------------------------------------------------------------------
 // Get a string for a given aiTextureType
 const char* TextureTypeToString(aiTextureType in);
 
-
 // -------------------------------------------------------------------------------
 // Get a string for a given aiTextureMapping
 const char* MappingTypeToString(aiTextureMapping in);
-
 
 // flags for MakeSubmesh()
 #define AI_SUBMESH_FLAGS_SANS_BONES 0x1
@@ -378,7 +373,6 @@ class DestroySpatialSortProcess : public BaseProcess
     }
 };
 
-
-
 } // ! namespace Assimp
+
 #endif // !! AI_PROCESS_HELPER_H_INCLUDED

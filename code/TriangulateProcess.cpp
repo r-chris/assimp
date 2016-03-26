@@ -302,7 +302,7 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
             const ai_real az = (n.z>0 ? n.z : -n.z);
 
             unsigned int ac = 0, bc = 1; /* no z coord. projection to xy */
-            float inv = n.z;
+            ai_real inv = n.z;
             if (ax > ay) {
                 if (ax > az) { /* no x coord. projection to yz */
                     ac = 1; bc = 2;
