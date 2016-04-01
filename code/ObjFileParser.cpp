@@ -57,7 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Assimp {
 
-const std::string ObjFileParser::DEFAULT_MATERIAL = AI_DEFAULT_MATERIAL_NAME;
+const std::string ObjFileParser::DEFAULT_MATERIAL( AI_DEFAULT_MATERIAL_NAME );
 
 // -------------------------------------------------------------------
 //  Constructor with loaded data and directories.

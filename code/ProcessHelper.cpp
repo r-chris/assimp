@@ -171,8 +171,7 @@ ai_real ComputePositionEpsilon(const aiMesh* const* pMeshes, size_t num)
     }
     return (maxVec - minVec).Length() * epsilon;
 }
-
-
+    
 // -------------------------------------------------------------------------------
 unsigned int GetMeshVFormatUnique(const aiMesh* pcMesh)
 {
