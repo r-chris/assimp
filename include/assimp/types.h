@@ -109,7 +109,7 @@ extern "C" {
 #endif // __cplusplus
 
 /**
- *  Maximum dimension for strings, ASSIMP strings are zero terminated. 
+ *  Maximum dimension for strings, ASSIMP strings are zero terminated.
  */
 #ifdef __cplusplus
 static const size_t MAXLEN = 1024;
@@ -120,7 +120,7 @@ static const size_t MAXLEN = 1024;
 #include "./Compiler/pushpack1.h"
 
 // ----------------------------------------------------------------------------------
-/** 
+/**
  *  Represents a plane in a three-dimensional, euclidean space
  */
 struct aiPlane
@@ -139,7 +139,7 @@ struct aiPlane
 } PACK_STRUCT; // !struct aiPlane
 
 // ----------------------------------------------------------------------------------
-/** 
+/**
  *  Represents a ray
  */
 struct aiRay
@@ -163,7 +163,7 @@ struct aiRay
 struct aiColor3D
 {
 #ifdef __cplusplus
-    aiColor3D () : r(0.0f), g(0.0f), b(0.0f) {}
+    aiColor3D () : r(0.0), g(0.0), b(0.0) {}
     aiColor3D ( ai_real _r, ai_real _g, ai_real _b) : r(_r), g(_g), b(_b) {}
     explicit aiColor3D ( ai_real _r) : r(_r), g(_r), b(_r) {}
     aiColor3D (const aiColor3D& o) : r(o.r), g(o.g), b(o.b) {}
@@ -220,7 +220,7 @@ struct aiColor3D
 
     /** Check whether a color is black */
     bool IsBlack() const {
-        static const ai_real epsilon = 10e-3f;
+        static const ai_real epsilon = 10e-3;
         return std::fabs( r ) < epsilon && std::fabs( g ) < epsilon && std::fabs( b ) < epsilon;
     }
 
