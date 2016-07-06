@@ -52,12 +52,12 @@ using namespace ::Assimp;
 class ImporterTest : public ::testing::Test
 {
 public:
-    virtual void SetUp() { 
-        pImp = new Importer(); 
+    virtual void SetUp() {
+        pImp = new Importer();
     }
-    
-    virtual void TearDown() { 
-        delete pImp; 
+
+    virtual void TearDown() {
+        delete pImp;
     }
 
 protected:
@@ -184,10 +184,10 @@ TEST_F(ImporterTest, testIntProperty)
 // ------------------------------------------------------------------------------------------------
 TEST_F(ImporterTest, testFloatProperty)
 {
-    bool b = pImp->SetPropertyFloat("quakquak",1503.f);
+    bool b = pImp->SetPropertyFloat("quakquak",1503.);
     EXPECT_TRUE(!b);
-    EXPECT_EQ(1503.f, pImp->GetPropertyFloat("quakquak",0.f));
-    EXPECT_EQ(314159.f, pImp->GetPropertyFloat("not_there",314159.f));
+    EXPECT_EQ(1503., pImp->GetPropertyFloat("quakquak",0.));
+    EXPECT_EQ(314159., pImp->GetPropertyFloat("not_there",314159.));
 }
 
 // ------------------------------------------------------------------------------------------------

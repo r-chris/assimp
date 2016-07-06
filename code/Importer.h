@@ -75,7 +75,7 @@ public:
     // typedefs for our four configuration maps.
     // We don't need more, so there is no need for a generic solution
     typedef std::map<KeyType, int> IntPropertyMap;
-    typedef std::map<KeyType, float> FloatPropertyMap;
+    typedef std::map<KeyType, ai_real> RealPropertyMap;
     typedef std::map<KeyType, std::string> StringPropertyMap;
     typedef std::map<KeyType, aiMatrix4x4> MatrixPropertyMap;
 
@@ -105,7 +105,7 @@ public:
     IntPropertyMap mIntProperties;
 
     /** List of floating-point properties */
-    FloatPropertyMap mFloatProperties;
+    RealPropertyMap mFloatProperties;
 
     /** List of string properties */
     StringPropertyMap mStringProperties;
@@ -146,7 +146,7 @@ public:
     struct PropertyMap
     {
         ImporterPimpl::IntPropertyMap     ints;
-        ImporterPimpl::FloatPropertyMap   floats;
+        ImporterPimpl::RealPropertyMap   floats;
         ImporterPimpl::StringPropertyMap  strings;
         ImporterPimpl::MatrixPropertyMap  matrices;
 

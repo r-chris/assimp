@@ -80,7 +80,7 @@ void CalcTangentsProcess::SetupProperties(const Importer* pImp)
     ai_assert( NULL != pImp );
 
     // get the current value of the property
-    configMaxAngle = pImp->GetPropertyFloat(AI_CONFIG_PP_CT_MAX_SMOOTHING_ANGLE,45.f);
+    configMaxAngle = pImp->GetPropertyFloat(AI_CONFIG_PP_CT_MAX_SMOOTHING_ANGLE,45.);
     configMaxAngle = std::max(std::min(configMaxAngle,45.0f),0.0f);
     configMaxAngle = AI_DEG_TO_RAD(configMaxAngle);
 

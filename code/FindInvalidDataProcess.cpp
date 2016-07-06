@@ -82,7 +82,7 @@ bool FindInvalidDataProcess::IsActive( unsigned int pFlags) const
 void FindInvalidDataProcess::SetupProperties(const Importer* pImp)
 {
     // Get the current value of AI_CONFIG_PP_FID_ANIM_ACCURACY
-    configEpsilon = (0 != pImp->GetPropertyFloat(AI_CONFIG_PP_FID_ANIM_ACCURACY,0.f));
+    configEpsilon = (0 != pImp->GetPropertyFloat(AI_CONFIG_PP_FID_ANIM_ACCURACY,0.));
 }
 
 // ------------------------------------------------------------------------------------------------
