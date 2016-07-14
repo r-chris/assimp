@@ -96,7 +96,8 @@ ASSIMP_API aiScene::aiScene()
 ASSIMP_API aiScene::~aiScene()
 {
     // delete all sub-objects recursively
-    delete mRootNode;
+    if (mRootNode)
+        delete mRootNode;
 
     // To make sure we won't crash if the data is invalid it's
     // much better to check whether both mNumXXX and mXXX are
@@ -133,4 +134,3 @@ ASSIMP_API aiScene::~aiScene()
 
     delete static_cast<Assimp::ScenePrivateData*>( mPrivate );
 }
-

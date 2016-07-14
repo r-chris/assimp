@@ -111,7 +111,7 @@ struct aiNode
     /** The number of meshes of this node. */
     unsigned int mNumMeshes;
 
-    /** The meshes of this node. Each entry is an index into the 
+    /** The meshes of this node. Each entry is an index into the
       * mesh list of the #aiScene.
       */
     unsigned int* mMeshes;
@@ -156,7 +156,7 @@ struct aiNode
     {
         // delete all children recursively
         // to make sure we won't crash if the data is invalid ...
-        if (mChildren && mNumChildren)
+        if (mNumChildren && mChildren)
         {
             for( unsigned int a = 0; a < mNumChildren; a++)
                 delete mChildren[a];
