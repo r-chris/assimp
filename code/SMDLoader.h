@@ -80,7 +80,7 @@ struct Vertex
 
     //! Links to bones: pair.first is the bone index,
     //! pair.second is the vertex weight.
-    //! WARN: The remaining weight (to reach 1.0f) is assigned
+    //! WARN: The remaining weight (to reach 1.0) is assigned
     //! to the parent node/bone
     std::vector<std::pair<unsigned int, float> > aiBoneLinks;
 };

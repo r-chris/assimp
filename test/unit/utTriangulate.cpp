@@ -91,7 +91,7 @@ void TriangulateProcessTest::SetUp()
 
         // construct fully convex input data in ccw winding, xy plane
             aiVector3D& v = pcMesh->mVertices[pcMesh->mNumVertices++];
-            v.z = 0.f;
+            v.z = 0.0;
             v.x = cos (p * (float)(AI_MATH_TWO_PI)/face.mNumIndices);
             v.y = sin (p * (float)(AI_MATH_TWO_PI)/face.mNumIndices);
         }

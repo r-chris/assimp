@@ -140,7 +140,7 @@ void TerragenImporter::InternReadFile( const std::string& pFile,
         throw DeadlyImportError( "TER: Magic string \'TERRAIN\' not found" );
 
     unsigned int x = 0,y = 0,mode = 0;
-    float rad  = 6370.f;
+    float rad  = 6370.0;
     (void)rad;
 
 
@@ -148,7 +148,7 @@ void TerragenImporter::InternReadFile( const std::string& pFile,
     root->mName.Set("<TERRAGEN.TERRAIN>");
 
     // Default scaling is 30
-    root->mTransformation.a1 = root->mTransformation.b2 = root->mTransformation.c3 = 30.f;
+    root->mTransformation.a1 = root->mTransformation.b2 = root->mTransformation.c3 = 30.0;
 
     // Now read all chunks until we're finished or an EOF marker is encountered
     reader.IncPtr(16);
@@ -219,11 +219,11 @@ void TerragenImporter::InternReadFile( const std::string& pFile,
             aiVector3D* pv = m->mVertices = new aiVector3D[m->mNumVertices = m->mNumFaces*4];
 
             aiVector3D *uv( NULL );
-            float step_y( 0.0f ), step_x( 0.0f );
+            float step_y( 0.0 ), step_x( 0.0 );
             if (configComputeUVs) {
                 uv = m->mTextureCoords[0] = new aiVector3D[m->mNumVertices];
-                step_y = 1.f/y;
-                step_x = 1.f/x;
+                step_y = 1.0/y;
+                step_x = 1.0/x;
             }
             const int16_t* data = (const int16_t*)reader.GetPtr();
 
@@ -240,10 +240,10 @@ void TerragenImporter::InternReadFile( const std::string& pFile,
 
                     // also make texture coordinates, if necessary
                     if (configComputeUVs) {
-                        *uv++ = aiVector3D( step_x*xx,     step_y*yy,     0.f );
-                        *uv++ = aiVector3D( step_x*xx,     step_y*(yy+1), 0.f );
-                        *uv++ = aiVector3D( step_x*(xx+1), step_y*(yy+1), 0.f );
-                        *uv++ = aiVector3D( step_x*(xx+1), step_y*yy,     0.f );
+                        *uv++ = aiVector3D( step_x*xx,     step_y*yy,     0.0 );
+                        *uv++ = aiVector3D( step_x*xx,     step_y*(yy+1), 0.0 );
+                        *uv++ = aiVector3D( step_x*(xx+1), step_y*(yy+1), 0.0 );
+                        *uv++ = aiVector3D( step_x*(xx+1), step_y*yy,     0.0 );
                     }
 
                     // make indices

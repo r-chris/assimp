@@ -234,7 +234,7 @@ void SMDImporter::LogWarning(const char* msg)
 void SMDImporter::FixTimeValues()
 {
     double dDelta = (double)iSmallestFrame;
-    double dMax = 0.0f;
+    double dMax = 0.0;
     for (std::vector<SMD::Bone>::iterator
         iBone =  asBones.begin();
         iBone != asBones.end();++iBone)
@@ -352,7 +352,7 @@ void SMDImporter::CreateOutputMeshes()
 
             for (unsigned int iVert = 0; iVert < 3;++iVert)
             {
-                float fSum = 0.0f;
+                float fSum = 0.0;
                 for (unsigned int iBone = 0;iBone < face.avVertices[iVert].aiBoneLinks.size();++iBone)
                 {
                     TempWeightListEntry& pairval = face.avVertices[iVert].aiBoneLinks[iBone];
@@ -401,7 +401,7 @@ void SMDImporter::CreateOutputMeshes()
                     else
                     {
                         aaiBones[face.avVertices[iVert].iParentNode].push_back(
-                            TempWeightListEntry(iNum,1.0f-fSum));
+                            TempWeightListEntry(iNum,1.0-fSum));
                     }
                 }
                 pcMesh->mFaces[iFace].mIndices[iVert] = iNum++;
@@ -677,7 +677,7 @@ void SMDImporter::CreateOutputMaterials()
         pcHelper->AddProperty<int>(&iMode, 1, AI_MATKEY_SHADING_MODEL);
 
         aiColor3D clr;
-        clr.b = clr.g = clr.r = 0.7f;
+        clr.b = clr.g = clr.r = 0.7;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -1135,7 +1135,7 @@ void SMDImporter::ParseVertex(const char* szCurrent,
     // all elements from now are fully optional, we don't need them
     unsigned int iSize = 0;
     if(!ParseUnsignedInt(szCurrent,&szCurrent,iSize))SMDI_PARSE_RETURN;
-    vertex.aiBoneLinks.resize(iSize,std::pair<unsigned int, float>(0,0.0f));
+    vertex.aiBoneLinks.resize(iSize,std::pair<unsigned int, float>(0,0.0));
 
     for (std::vector<std::pair<unsigned int, float> >::iterator
         i =  vertex.aiBoneLinks.begin();

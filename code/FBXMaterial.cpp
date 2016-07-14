@@ -146,7 +146,7 @@ Material::~Material()
 // ------------------------------------------------------------------------------------------------
 Texture::Texture(uint64_t id, const Element& element, const Document& doc, const std::string& name)
 : Object(id,element,name)
-, uvScaling(1.0f,1.0f)
+, uvScaling(1.0,1.0)
 , media(0)
 {
     const Scope& sc = GetRequiredScope(element);

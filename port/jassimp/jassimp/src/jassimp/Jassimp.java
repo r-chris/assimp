@@ -201,7 +201,7 @@ public final class Jassimp {
      * @return the wrapped color
      */
     static Object wrapColor3(float red, float green, float blue) {
-        return wrapColor4(red, green, blue, 1.0f);
+        return wrapColor4(red, green, blue, 1.0);
     }
     
     

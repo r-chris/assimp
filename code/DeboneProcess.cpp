@@ -197,7 +197,7 @@ bool DeboneProcess::ConsiderMesh(const aiMesh* pMesh)
         for(unsigned int j=0;j<pMesh->mBones[i]->mNumWeights;j++)   {
             float w = pMesh->mBones[i]->mWeights[j].mWeight;
 
-            if(w==0.0f) {
+            if(w==0.0) {
                 continue;
             }
 
@@ -269,7 +269,7 @@ void DeboneProcess::SplitMesh( const aiMesh* pMesh, std::vector< std::pair< aiMe
         for(unsigned int j=0;j<pMesh->mBones[i]->mNumWeights;j++)   {
             float w = pMesh->mBones[i]->mWeights[j].mWeight;
 
-            if(w==0.0f) {
+            if(w==0.0) {
                 continue;
             }
 

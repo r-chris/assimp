@@ -58,7 +58,7 @@ SpatialSort::SpatialSort( const aiVector3D* pPositions, unsigned int pNumPositio
 
     // define the reference plane. We choose some arbitrary vector away from all basic axises
     // in the hope that no model spreads all its vertices along this plane.
-    : mPlaneNormal(0.8523f, 0.34321f, 0.5736f)
+    : mPlaneNormal(0.8523, 0.34321, 0.5736)
 {
     mPlaneNormal.Normalize();
     Fill(pPositions,pNumPositions,pElementOffset);
@@ -66,7 +66,7 @@ SpatialSort::SpatialSort( const aiVector3D* pPositions, unsigned int pNumPositio
 
 // ------------------------------------------------------------------------------------------------
 SpatialSort :: SpatialSort()
-: mPlaneNormal(0.8523f, 0.34321f, 0.5736f)
+: mPlaneNormal(0.8523, 0.34321, 0.5736)
 {
     mPlaneNormal.Normalize();
 }
@@ -339,4 +339,3 @@ unsigned int SpatialSort::GenerateMappingTable(std::vector<unsigned int>& fill, 
 #endif
     return t;
 }
-

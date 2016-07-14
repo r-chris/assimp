@@ -48,21 +48,21 @@ TEST_F( utStringUtils, to_string_Test ) {
     std::string res = to_string( 1 );
     EXPECT_EQ( res, "1" );
 
-    res = to_string( 1.0f );
+    res = to_string( 1.0 );
     EXPECT_EQ( res, "1" );
 }
 
 TEST_F( utStringUtils, ai_strtofTest ) {
     float res = ai_strtof( nullptr, nullptr );
-    EXPECT_FLOAT_EQ( res, 0.0f );
+    EXPECT_FLOAT_EQ( res, 0.0 );
 
     std::string testStr1 = "200.0";
     res = ai_strtof( testStr1.c_str(), nullptr );
-    EXPECT_FLOAT_EQ( res, 200.0f );
+    EXPECT_FLOAT_EQ( res, 200.0 );
 
     std::string testStr2 = "200.0 xxx";
     const char *begin( testStr2.c_str() );
     const char *end( begin + 6 );
     res = ai_strtof( begin, end );
-    EXPECT_FLOAT_EQ( res, 200.0f );
+    EXPECT_FLOAT_EQ( res, 200.0 );
 }

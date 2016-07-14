@@ -109,16 +109,10 @@ public:
 public:
 
     // ---------------------------------------------------------------------
-    /** Write a float to the stream  */
-    void PutF4(float f)
+    /** Write a float or double to the stream  */
+    void PutF(ai_real f)
     {
         Put(f);
-    }
-
-    // ---------------------------------------------------------------------
-    /** Write a double to the stream  */
-    void PutF8(double d)    {
-        Put(d);
     }
 
     // ---------------------------------------------------------------------

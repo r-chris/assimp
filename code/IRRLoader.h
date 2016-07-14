@@ -116,10 +116,10 @@ private:
 
         explicit Animator(AT t = UNKNOWN)
             : type              (t)
-            , speed             (0.001f)
-            , direction         (0.f,1.f,0.f)
-            , circleRadius      (1.f)
-            , tightness         (0.5f)
+            , speed             (0.001)
+            , direction         (0.0,1.0,0.0)
+            , circleRadius      (1.0)
+            , tightness         (0.5)
             , loop              (true)
             , timeForWay        (100)
         {
@@ -166,11 +166,11 @@ private:
 
         explicit Node(ET t)
             :   type                (t)
-            ,   scaling             (1.f,1.f,1.f) // assume uniform scaling by default
+            ,   scaling             (1.0,1.0,1.0) // assume uniform scaling by default
             ,   parent()
-            ,   framesPerSecond     (0.f)
+            ,   framesPerSecond     (0.0)
             ,   id()
-            ,   sphereRadius        (1.f)
+            ,   sphereRadius        (1.0)
             ,   spherePolyCountX    (100)
             ,   spherePolyCountY    (100)
         {
@@ -201,7 +201,7 @@ private:
         Node* parent;
 
         // Animated meshes: frames per second
-        // 0.f if not specified
+        // 0.0 if not specified
         ai_real framesPerSecond;
 
         // Meshes: path to the mesh to be loaded
@@ -236,7 +236,7 @@ private:
 
             :   position    (px,py,pz)
             ,   normal      (nx,ny,nz)
-            ,   uv          (uvx,uvy,0.f)
+            ,   uv          (uvx,uvy,0.0)
         {}
 
         aiVector3D position, normal, uv;

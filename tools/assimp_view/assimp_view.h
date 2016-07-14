@@ -214,7 +214,7 @@ enum EClickPos
     extern IDirect3D9* g_piD3D                  /*= NULL*/;
     extern IDirect3DDevice9* g_piDevice         /*= NULL*/;
     extern IDirect3DVertexDeclaration9* gDefaultVertexDecl /*= NULL*/;
-    extern double g_fFPS                        /*= 0.0f*/;
+    extern double g_fFPS                        /*= 0.0*/;
     extern char g_szFileName[MAX_PATH];
     extern ID3DXEffect* g_piDefaultEffect       /*= NULL*/;
     extern ID3DXEffect* g_piNormalsEffect       /*= NULL*/;
@@ -224,21 +224,21 @@ enum EClickPos
     extern bool g_bMousePressedR                /*= false*/;
     extern bool g_bMousePressedM                /*= false*/;
     extern bool g_bMousePressedBoth             /*= false*/;
-    extern ai_real g_fElpasedTime                 /*= 0.0f*/;
+    extern ai_real g_fElpasedTime                 /*= 0.0*/;
     extern D3DCAPS9 g_sCaps;
     extern bool g_bLoadingFinished              /*= false*/;
     extern HANDLE g_hThreadHandle               /*= NULL*/;
-    extern float g_fWheelPos                    /*= -10.0f*/;
+    extern float g_fWheelPos                    /*= -10.0*/;
     extern bool g_bLoadingCanceled              /*= false*/;
     extern IDirect3DTexture9* g_pcTexture       /*= NULL*/;
 
     extern aiMatrix4x4 g_mWorld;
     extern aiMatrix4x4 g_mWorldRotate;
-    extern aiVector3D g_vRotateSpeed            /*= aiVector3D(0.5f,0.5f,0.5f)*/;
+    extern aiVector3D g_vRotateSpeed            /*= aiVector3D(0.5,0.5,0.5)*/;
 
     extern aiVector3D g_avLightDirs[1] /* =
-        {   aiVector3D(-0.5f,0.6f,0.2f) ,
-            aiVector3D(-0.5f,0.5f,0.5f)} */;
+        {   aiVector3D(-0.5,0.6,0.2) ,
+            aiVector3D(-0.5,0.5,0.5)} */;
 
 
     extern POINT g_mousePos                     /*= {0,0};*/;
@@ -253,7 +253,7 @@ enum EClickPos
     // When the user chooses a color from the palette the intensity
     // is reset to 1.0
     // index[2] is the ambient color
-    extern float g_fLightIntensity              /*=0.0f*/;
+    extern float g_fLightIntensity              /*=0.0*/;
     extern D3DCOLOR g_avLightColors[3];
 
     extern RenderOptions g_sOptions;
@@ -271,13 +271,13 @@ enum EClickPos
     extern unsigned char* g_szImageMask         /*= NULL*/;
 
 
-    extern float g_fACMR /*= 3.0f*/;
+    extern float g_fACMR /*= 3.0*/;
     extern IDirect3DQuery9* g_piQuery;
 
     extern bool g_bPlay                     /*= false*/;
 
     extern double g_dCurrent;
-    extern float g_smoothAngle /*= 80.f*/;
+    extern float g_smoothAngle /*= 80.0*/;
 
     extern unsigned int ppsteps,ppstepsdefault;
     extern bool nopointslines;

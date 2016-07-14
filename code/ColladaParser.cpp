@@ -81,7 +81,7 @@ ColladaParser::ColladaParser( IOSystem* pIOHandler, const std::string& pFile)
     , mControllerLibrary()
     , mRootNode( NULL )
     , mAnims()
-    , mUnitSize( 1.0f )
+    , mUnitSize( 1.0 )
     , mUpDirection( UP_Y )
     , mFormat(FV_1_5_n )    // We assume the newest file format by default
 {
@@ -240,7 +240,7 @@ void ColladaParser::ReadAssetInfo()
                 // read unit data from the element's attributes
                 const int attrIndex = TestAttribute( "meter");
                 if (attrIndex == -1) {
-                    mUnitSize = 1.f;
+                    mUnitSize = 1.0;
                 }
                 else {
                     mUnitSize = mReader->getAttributeValueAsFloat( attrIndex);
@@ -668,18 +668,18 @@ void ColladaParser::ReadController( Collada::Controller& pController)
             else if( IsElement( "bind_shape_matrix"))
             {
                 // content is 16 floats to define a matrix... it seems to be important for some models
-          const char* content = GetTextContent();
+                const char* content = GetTextContent();
 
-          // read the 16 floats
-          for( unsigned int a = 0; a < 16; a++)
-          {
-              // read a number
-          content = fast_atoreal_move<float>( content, pController.mBindShapeMatrix[a]);
-              // skip whitespace after it
-              SkipSpacesAndLineEnd( &content);
-          }
+                // read the 16 floats
+                for( unsigned int a = 0; a < 16; a++)
+                {
+                    // read a number
+                    content = fast_atoreal_move<float>( content, pController.mBindShapeMatrix[a]);
+                    // skip whitespace after it
+                    SkipSpacesAndLineEnd( &content);
+                }
 
-        TestClosing( "bind_shape_matrix");
+                TestClosing( "bind_shape_matrix");
             }
             else if( IsElement( "source"))
             {
@@ -1605,7 +1605,7 @@ void ColladaParser::ReadEffectColor( aiColor4D& pColor, Sampler& pSampler)
                 //SkipElement();
 
                 // as we've read texture, the color needs to be 1,1,1,1
-                pColor = aiColor4D(1.f, 1.f, 1.f, 1.f);
+                pColor = aiColor4D(1.0, 1.0, 1.0, 1.0);
             }
             else if( IsElement( "technique"))
             {
@@ -3075,7 +3075,7 @@ aiMatrix4x4 ColladaParser::CalculateResultTransform( const std::vector<Transform
             case TF_ROTATE:
             {
                 aiMatrix4x4 rot;
-                float angle = tf.f[3] * float( AI_MATH_PI) / 180.0f;
+                ai_real angle = tf.f[3] * ai_real( AI_MATH_PI) / 180.0;
                 aiVector3D axis( tf.f[0], tf.f[1], tf.f[2]);
                 aiMatrix4x4::Rotation( angle, axis, rot);
                 res *= rot;
@@ -3090,8 +3090,8 @@ aiMatrix4x4 ColladaParser::CalculateResultTransform( const std::vector<Transform
             }
             case TF_SCALE:
             {
-                aiMatrix4x4 scale( tf.f[0], 0.0f, 0.0f, 0.0f, 0.0f, tf.f[1], 0.0f, 0.0f, 0.0f, 0.0f, tf.f[2], 0.0f,
-                    0.0f, 0.0f, 0.0f, 1.0f);
+                aiMatrix4x4 scale( tf.f[0], 0.0, 0.0, 0.0, 0.0, tf.f[1], 0.0, 0.0, 0.0, 0.0, tf.f[2], 0.0,
+                    0.0, 0.0, 0.0, 1.0);
                 res *= scale;
                 break;
             }

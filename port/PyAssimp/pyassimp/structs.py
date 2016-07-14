@@ -423,8 +423,8 @@ class UVTransform(Structure):
             
             # Rotation - in counter-clockwise direction.
             #  The rotation angle is specified in radians. The
-            #  rotation center is 0.5f|0.5f. The default value
-            #  0.f.
+            #  rotation center is 0.5|0.5. The default value
+            #  0.0.
             ("mRotation", c_float),
         ]
 
@@ -551,7 +551,7 @@ class Mesh(Structure):
             # @code
             #define IS_QNAN(f) (f != f)
             # @endcode
-            # still dangerous because even 1.f == 1.f could evaluate to false! (
+            # still dangerous because even 1.0 == 1.0 could evaluate to false! (
             # remember the subtleties of IEEE754 artithmetics). Use stuff like
             # @c fpclassify instead.
             # @note Normal vectors computed by Assimp are always unit-length.
@@ -597,8 +597,8 @@ class Mesh(Structure):
             # Specifies the number of components for a given UV channel.
             # Up to three channels are supported (UVW, for accessing volume
             # or cube maps). If the value is 2 for a given channel n, the
-            # component p.z of mTextureCoords[n][p] is set to 0.0f.
-            # If the value is 1 for a given channel, p.y is set to 0.0f, too.
+            # component p.z of mTextureCoords[n][p] is set to 0.0.
+            # If the value is 1 for a given channel, p.y is set to 0.0, too.
             # @note 4D coords are not supported
             ("mNumUVComponents", c_uint*AI_MAX_NUMBER_OF_TEXTURECOORDS),
             
@@ -685,13 +685,13 @@ class Camera(Structure):
             ("mHorizontalFOV", c_float),
             
             # Distance of the near clipping plane from the camera.
-            # The value may not be 0.f (for arithmetic reasons to prevent
-            # a division through zero). The default value is 0.1f.
+            # The value may not be 0.0 (for arithmetic reasons to prevent
+            # a division through zero). The default value is 0.1.
             ("mClipPlaneNear", c_float),
             
             # Distance of the far clipping plane from the camera.
             # The far clipping plane must, of course, be further away than the
-            # near clipping plane. The default value is 1000.f. The ratio
+            # near clipping plane. The default value is 1000.0. The ratio
             # between the near and the far plane should not be too
             # large (between 1000-10000 should be ok) to avoid floating-point
             # inaccuracies which could lead to z-fighting.

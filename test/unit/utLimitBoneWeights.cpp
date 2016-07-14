@@ -80,7 +80,7 @@ void LimitBoneWeightsTest::SetUp()
             aiVertexWeight& v = pc->mWeights[qq];
             v.mVertexId = iCur++;
             if (500 == iCur)iCur = 0;
-            v.mWeight = 1.0f / 15; // each vertex should occur once in two bones
+            v.mWeight = 1.0 / 15; // each vertex should occur once in two bones
         }
     }
 }
@@ -116,11 +116,11 @@ TEST_F(LimitBoneWeightsTest, testProcess)
         }
     }
 
-    // now validate the size of the lists and check whether all weights sum to 1.0f
+    // now validate the size of the lists and check whether all weights sum to 1.0
     for (unsigned int i = 0; i < pcMesh->mNumVertices;++i)
     {
         EXPECT_LE(asWeights[i].size(), 4U);
-        float fSum = 0.0f;
+        float fSum = 0.0;
         for (VertexWeightList::const_iterator
             iter =  asWeights[i].begin();
             iter != asWeights[i].end();++iter)

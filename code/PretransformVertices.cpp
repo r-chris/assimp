@@ -690,9 +690,9 @@ void PretransformVertices::Execute( aiScene* pScene)
 
         // find the dominant axis
         aiVector3D d = max-min;
-        const ai_real div = std::max(d.x,std::max(d.y,d.z))*(ai_real)0.5f;
+        const ai_real div = std::max(d.x,std::max(d.y,d.z))*(ai_real)0.5;
 
-        d = min+d*( ai_real )0.5f;
+        d = min+d*( ai_real )0.5;
         for (unsigned int a = 0; a <  pScene->mNumMeshes; ++a) {
             aiMesh* m = pScene->mMeshes[a];
             for (unsigned int i = 0; i < m->mNumVertices;++i) {

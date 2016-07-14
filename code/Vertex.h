@@ -293,7 +293,7 @@ AI_FORCE_INLINE Vertex operator * (const Vertex& v0, ai_real f) {
 }
 
 AI_FORCE_INLINE Vertex operator / (const Vertex& v0, ai_real f) {
-    return Vertex::BinaryOp<Intern::multiplies>(v0,1.f/f);
+    return Vertex::BinaryOp<Intern::multiplies>(v0,1.0/f);
 }
 
 // ------------------------------------------------------------------------------------------------

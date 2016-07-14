@@ -99,7 +99,7 @@ struct aiTexel
     //! Conversion to a floating-point 4d color
     operator aiColor4D() const
     {
-        return aiColor4D(r/255.f,g/255.f,b/255.f,a/255.f);
+        return aiColor4D(r/255.0,g/255.0,b/255.0,a/255.0);
     }
 #endif // __cplusplus
 

@@ -123,7 +123,7 @@ bool isFloat( T *in, T *end ) {
         }
     }
 
-    // check for <1>.0f
+    // check for <1>.0
     bool result( false );
     while( isNotEndOfToken( in, end ) ) {
         if( *in == '.' ) {

@@ -139,13 +139,13 @@ void MakeLeftHandedProcess::ProcessMesh( aiMesh* pMesh)
     // mirror positions, normals and stuff along the Z axis
     for( size_t a = 0; a < pMesh->mNumVertices; ++a)
     {
-        pMesh->mVertices[a].z *= -1.0f;
+        pMesh->mVertices[a].z *= -1.0;
         if( pMesh->HasNormals())
-            pMesh->mNormals[a].z *= -1.0f;
+            pMesh->mNormals[a].z *= -1.0;
         if( pMesh->HasTangentsAndBitangents())
         {
-            pMesh->mTangents[a].z *= -1.0f;
-            pMesh->mBitangents[a].z *= -1.0f;
+            pMesh->mTangents[a].z *= -1.0;
+            pMesh->mBitangents[a].z *= -1.0;
         }
     }
 
@@ -165,7 +165,7 @@ void MakeLeftHandedProcess::ProcessMesh( aiMesh* pMesh)
     if( pMesh->HasTangentsAndBitangents())
     {
         for( unsigned int a = 0; a < pMesh->mNumVertices; a++)
-            pMesh->mBitangents[a] *= -1.0f;
+            pMesh->mBitangents[a] *= -1.0;
     }
 }
 
@@ -182,7 +182,7 @@ void MakeLeftHandedProcess::ProcessMaterial( aiMaterial* _mat)
             ai_assert( prop->mDataLength >= sizeof(aiVector3D)); /* something is wrong with the validation if we end up here */
             aiVector3D* pff = (aiVector3D*)prop->mData;
 
-            pff->z *= -1.f;
+            pff->z *= -1.0;
         }
     }
 }
@@ -193,7 +193,7 @@ void MakeLeftHandedProcess::ProcessAnimation( aiNodeAnim* pAnim)
 {
     // position keys
     for( unsigned int a = 0; a < pAnim->mNumPositionKeys; a++)
-        pAnim->mPositionKeys[a].mValue.z *= -1.0f;
+        pAnim->mPositionKeys[a].mValue.z *= -1.0;
 
     // rotation keys
     for( unsigned int a = 0; a < pAnim->mNumRotationKeys; a++)
@@ -205,8 +205,8 @@ void MakeLeftHandedProcess::ProcessAnimation( aiNodeAnim* pAnim)
         aiQuaternion rotquat( rotmat);
         pAnim->mRotationKeys[a].mValue = rotquat;
         */
-        pAnim->mRotationKeys[a].mValue.x *= -1.0f;
-        pAnim->mRotationKeys[a].mValue.y *= -1.0f;
+        pAnim->mRotationKeys[a].mValue.x *= -1.0;
+        pAnim->mRotationKeys[a].mValue.y *= -1.0;
     }
 }
 
@@ -262,8 +262,8 @@ void FlipUVsProcess::ProcessMaterial (aiMaterial* _mat)
             aiUVTransform* uv = (aiUVTransform*)prop->mData;
 
             // just flip it, that's everything
-            uv->mTranslation.y *= -1.f;
-            uv->mRotation *= -1.f;
+            uv->mTranslation.y *= -1.0;
+            uv->mRotation *= -1.0;
         }
     }
 }
@@ -279,7 +279,7 @@ void FlipUVsProcess::ProcessMesh( aiMesh* pMesh)
         }
 
         for( unsigned int b = 0; b < pMesh->mNumVertices; b++ ) {
-            pMesh->mTextureCoords[ a ][ b ].y = 1.0f - pMesh->mTextureCoords[ a ][ b ].y;
+            pMesh->mTextureCoords[ a ][ b ].y = 1.0 - pMesh->mTextureCoords[ a ][ b ].y;
         }
     }
 }

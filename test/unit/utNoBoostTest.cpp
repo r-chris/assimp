@@ -76,7 +76,7 @@ TEST(NoBoostTest, Tuple) {
     EXPECT_EQ(4U, first.get<2>());
 
     boost::tuple<int, float, double, bool, another> second=
-    		boost::make_tuple(1,1.0f,0.0,false,another());
+    		boost::make_tuple(1,1.0,0.0,false,another());
     bool b = second.get<3>();
 
     // check empty tuple
@@ -86,9 +86,9 @@ TEST(NoBoostTest, Tuple) {
     // FIXME: Explicit conversion not really required yet
     boost::tuple<float,float,float> last =
         (boost::tuple<float,float,float>)boost::make_tuple(1.,2.,3.);
-    EXPECT_EQ(1.f, last.get<0>());
-    EXPECT_EQ(2.f, last.get<1>());
-    EXPECT_EQ(3.f, last.get<2>());
+    EXPECT_EQ(1.0, last.get<0>());
+    EXPECT_EQ(2.0, last.get<1>());
+    EXPECT_EQ(3.0, last.get<2>());
 
     // Non-const access
     first.get<0>() = 1;
@@ -106,7 +106,7 @@ TEST(NoBoostTest, Tuple) {
 
     // Direct assignment w. explicit conversion
     last = first;
-    EXPECT_EQ(5.f, last.get<0>());
-    EXPECT_EQ(2.f, last.get<1>());
-    EXPECT_EQ(3.f, last.get<2>());
+    EXPECT_EQ(5.0, last.get<0>());
+    EXPECT_EQ(2.0, last.get<1>());
+    EXPECT_EQ(3.0, last.get<2>());
 }

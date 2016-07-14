@@ -76,9 +76,9 @@ void ScenePreprocessorTest::SetUp()
     scene->mRootNode->mName.Set("<test>");
 
     // add some translation
-    scene->mRootNode->mTransformation.a4 = 1.f;
-    scene->mRootNode->mTransformation.b4 = 2.f;
-    scene->mRootNode->mTransformation.c4 = 3.f;
+    scene->mRootNode->mTransformation.a4 = 1.0;
+    scene->mRootNode->mTransformation.b4 = 2.0;
+    scene->mRootNode->mTransformation.c4 = 3.0;
 
     // and allocate a ScenePreprocessor to operate on the scene
     pp = new ScenePreprocessor(scene);
@@ -192,7 +192,7 @@ TEST_F(ScenePreprocessorTest, testAnimationPreprocessingPos)
     EXPECT_TRUE(anim->mNumPositionKeys == 1 &&
         anim->mPositionKeys &&
         anim->mPositionKeys[0].mTime == 0.0 &&
-        anim->mPositionKeys[0].mValue == aiVector3D(1.f,2.f,3.f));
+        anim->mPositionKeys[0].mValue == aiVector3D(1.0,2.0,3.0));
 
     // ... and one rotation key
     EXPECT_TRUE(anim->mNumRotationKeys == 1 && anim->mRotationKeys &&

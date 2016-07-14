@@ -165,9 +165,9 @@ void StepExporter::WriteFile()
 
     // standard color
     aiColor4D fColor;
-    fColor.r = 0.8f;
-    fColor.g = 0.8f;
-    fColor.b = 0.8f;
+    fColor.r = 0.8;
+    fColor.g = 0.8;
+    fColor.b = 0.8;
 
     int ind = 100; // the start index to be used
     int faceEntryLen = 30; // number of entries for a triangle/face
@@ -311,7 +311,7 @@ void StepExporter::WriteFile()
                 fColor += mesh->mColors[0][face->mIndices[0]];
                 fColor += mesh->mColors[0][face->mIndices[1]];
                 fColor += mesh->mColors[0][face->mIndices[2]];
-                fColor /= 3.0f;
+                fColor /= 3.0;
             }
 
             int sid = ind; // the sub index

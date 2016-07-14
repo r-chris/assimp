@@ -659,13 +659,13 @@ void OgreXmlSerializer::ReadBoneAssignments(VertexDataXml *dest)
     const float epsilon = 0.05f;
     for (const uint32_t vertexIndex : influencedVertices)
     {
-        float sum = 0.0f;
+        float sum = 0.0;
         for (VertexBoneAssignmentList::const_iterator baIter=dest->boneAssignments.begin(), baEnd=dest->boneAssignments.end(); baIter != baEnd; ++baIter)
         {
             if (baIter->vertexIndex == vertexIndex)
                 sum += baIter->weight;
         }
-        if ((sum < (1.0f - epsilon)) || (sum > (1.0f + epsilon)))
+        if ((sum < (1.0 - epsilon)) || (sum > (1.0 + epsilon)))
         {
             for (auto &boneAssign : dest->boneAssignments)
             {
@@ -833,7 +833,7 @@ void OgreXmlSerializer::ReadAnimationTracks(Animation *dest)
 
 void OgreXmlSerializer::ReadAnimationKeyFrames(Animation *anim, VertexAnimationTrack *dest)
 {
-    const aiVector3D zeroVec(0.f, 0.f, 0.f);
+    const aiVector3D zeroVec(0.0, 0.0, 0.0);
 
     NextNode();
     while(m_currentNodeName == nnKeyFrame)
@@ -864,7 +864,7 @@ void OgreXmlSerializer::ReadAnimationKeyFrames(Animation *anim, VertexAnimationT
                 axis.z = ReadAttribute<float>(anZ);
                 if (axis.Equal(zeroVec))
                 {
-                    axis.x = 1.0f;
+                    axis.x = 1.0;
                     if (angle != 0) {
                         DefaultLogger::get()->warn("Found invalid a key frame with a zero rotation axis in animation: " + anim->name);
                     }

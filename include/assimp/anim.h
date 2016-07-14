@@ -442,7 +442,7 @@ struct Interpolator <unsigned int>  {
     void operator () (unsigned int& out,unsigned int a,
         unsigned int b, ai_real d) const
     {
-        out = d>0.5f ? b : a;
+        out = d>0.5 ? b : a;
     }
 }; // ! Interpolator <aiQuaternion>
 

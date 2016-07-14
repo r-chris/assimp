@@ -126,7 +126,7 @@ private:
     {
         explicit MappingInfo(aiTextureMapping _type)
             : type  (_type)
-            , axis  (0.f,1.f,0.f)
+            , axis  (0.0,1.0,0.0)
             , uv    (0u)
         {}
 

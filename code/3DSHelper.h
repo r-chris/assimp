@@ -327,11 +327,11 @@ struct Texture
 {
     //! Default constructor
     Texture()
-        : mOffsetU  (0.0f)
-        , mOffsetV  (0.0f)
-        , mScaleU   (1.0f)
-        , mScaleV   (1.0f)
-        , mRotation (0.0f)
+        : mOffsetU  (0.0)
+        , mOffsetV  (0.0)
+        , mScaleU   (1.0)
+        , mScaleV   (1.0)
+        , mRotation (0.0)
         , mMapMode  (aiTextureMapMode_Wrap)
         , bPrivate()
         , iUVSrc    (0)
@@ -369,12 +369,12 @@ struct Material
     //! Default constructor. Builds a default name for the material
     Material()
         :
-    mDiffuse            (0.6f,0.6f,0.6f), // FIX ... we won't want object to be black
-    mSpecularExponent   (0.0f),
-    mShininessStrength  (1.0f),
+    mDiffuse            (0.6,0.6,0.6), // FIX ... we won't want object to be black
+    mSpecularExponent   (0.0),
+    mShininessStrength  (1.0),
     mShading(Discreet3DS::Gouraud),
-    mTransparency       (1.0f),
-    mBumpHeight         (1.0f),
+    mTransparency       (1.0),
+    mBumpHeight         (1.0),
     mTwoSided           (false)
     {
         static int iCnt = 0;

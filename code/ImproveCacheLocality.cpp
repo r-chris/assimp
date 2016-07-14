@@ -99,7 +99,7 @@ void ImproveCacheLocalityProcess::Execute( aiScene* pScene)
 
     DefaultLogger::get()->debug("ImproveCacheLocalityProcess begin");
 
-    float out = 0.f;
+    float out = 0.0;
     unsigned int numf = 0, numm = 0;
     for( unsigned int a = 0; a < pScene->mNumMeshes; a++){
         const float res = ProcessMesh( pScene->mMeshes[a],a);
@@ -130,18 +130,18 @@ float ImproveCacheLocalityProcess::ProcessMesh( aiMesh* pMesh, unsigned int mesh
     // - there must be vertices and faces
     // - all faces must be triangulated or we can't operate on them
     if (!pMesh->HasFaces() || !pMesh->HasPositions())
-        return 0.f;
+        return 0.0;
 
     if (pMesh->mPrimitiveTypes != aiPrimitiveType_TRIANGLE) {
         DefaultLogger::get()->error("This algorithm works on triangle meshes only");
-        return 0.f;
+        return 0.0;
     }
 
     if(pMesh->mNumVertices <= configCacheDepth) {
-        return 0.f;
+        return 0.0;
     }
 
-    float fACMR = 3.f;
+    float fACMR = 3.0;
     const aiFace* const pcEnd = pMesh->mFaces+pMesh->mNumFaces;
 
     // Input ACMR is for logging purposes only
@@ -185,7 +185,7 @@ float ImproveCacheLocalityProcess::ProcessMesh( aiMesh* pMesh, unsigned int mesh
             // smaller than 3.0 ...
             ai_snprintf(szBuff,128,"Mesh %u: Not suitable for vcache optimization",meshNum);
             DefaultLogger::get()->warn(szBuff);
-            return 0.f;
+            return 0.0;
         }
     }
 
@@ -354,7 +354,7 @@ float ImproveCacheLocalityProcess::ProcessMesh( aiMesh* pMesh, unsigned int mesh
             }
         }
     }
-    float fACMR2 = 0.0f;
+    float fACMR2 = 0.0;
     if (!DefaultLogger::isNullLogger()) {
         fACMR2 = (float)iCacheMisses / pMesh->mNumFaces;
 
@@ -362,8 +362,8 @@ float ImproveCacheLocalityProcess::ProcessMesh( aiMesh* pMesh, unsigned int mesh
         if ( DefaultLogger::get()->getLogSeverity() == Logger::VERBOSE) {
             char szBuff[128]; // should be sufficiently large in every case
 
-            ai_snprintf(szBuff,128,"Mesh %u | ACMR in: %f out: %f | ~%.1f%%",meshNum,fACMR,fACMR2,
-                ((fACMR - fACMR2) / fACMR) * 100.f);
+            ai_snprintf(szBuff,128,"Mesh %u | ACMR in: %f out: %f | ~%.1%%",meshNum,fACMR,fACMR2,
+                ((fACMR - fACMR2) / fACMR) * 100.0);
             DefaultLogger::get()->debug(szBuff);
         }
 

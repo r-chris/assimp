@@ -371,7 +371,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
         pScene->mMaterials[i] = mat;
 
         // all white by default - texture rulez
-        aiColor3D color(1.f,1.f,1.f);
+        aiColor3D color(1.0,1.0,1.0);
 
         aiString s;
         ::ai_snprintf( s.data, MAXLEN, "mat%u_tx%u_",i,materials[i].tex );
@@ -386,7 +386,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
 
         // make TRANS faces 90% opaque that RemRedundantMaterials won't catch us
         if (materials[i].type == Unreal::MF_NORMAL_TRANS_TS)    {
-            const float opac = 0.9f;
+            const float opac = 0.9;
             mat->AddProperty(&opac,1,AI_MATKEY_OPACITY);
             ::strcat(s.data,"tran_");
         }
@@ -395,7 +395,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
         // a special name for the weapon attachment point
         if (materials[i].type == Unreal::MF_WEAPON_PLACEHOLDER) {
             s.length = ::ai_snprintf( s.data, MAXLEN, "$WeaponTag$" );
-            color = aiColor3D(0.f,0.f,0.f);
+            color = aiColor3D(0.0,0.0,0.0);
         }
 
         // set color and name
@@ -427,7 +427,7 @@ void UnrealImporter::InternReadFile( const std::string& pFile,
             f.mIndices[i] = mesh->mNumVertices;
 
             mesh->mVertices[mesh->mNumVertices] = vertices[ tri.mVertex[i] ];
-            mesh->mTextureCoords[0][mesh->mNumVertices] = aiVector3D( tri.mTex[i][0] / 255.f, 1.f - tri.mTex[i][1] / 255.f, 0.f);
+            mesh->mTextureCoords[0][mesh->mNumVertices] = aiVector3D( tri.mTex[i][0] / 255.0, 1.0 - tri.mTex[i][1] / 255.0, 0.0);
         }
     }
 

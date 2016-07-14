@@ -352,7 +352,7 @@ MD5AnimParser::MD5AnimParser(SectionList& mSections)
 {
     DefaultLogger::get()->debug("MD5AnimParser begin");
 
-    fFrameRate = 24.0f;
+    fFrameRate = 24.0;
     mNumAnimatedComponents = UINT_MAX;
     for (SectionList::const_iterator iter =  mSections.begin(), iterEnd = mSections.end();iter != iterEnd;++iter) {
         if ((*iter).mName == "hierarchy")   {
@@ -442,7 +442,7 @@ MD5AnimParser::MD5AnimParser(SectionList& mSections)
 MD5CameraParser::MD5CameraParser(SectionList& mSections)
 {
     DefaultLogger::get()->debug("MD5CameraParser begin");
-    fFrameRate = 24.0f;
+    fFrameRate = 24.0;
 
     for (SectionList::const_iterator iter =  mSections.begin(), iterEnd = mSections.end();iter != iterEnd;++iter) {
         if ((*iter).mName == "numFrames")   {

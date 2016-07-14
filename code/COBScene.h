@@ -106,7 +106,7 @@ struct Node : public ChunkInfo
     };
 
     virtual ~Node() {}
-    Node(Type type) : type(type), unit_scale(1.f){}
+    Node(Type type) : type(type), unit_scale(1.0){}
 
     Type type;
 
@@ -220,7 +220,7 @@ struct Material : ChunkInfo
         FACETED,AUTOFACETED,SMOOTH
     };
 
-    Material() : alpha(),exp(),ior(),ka(),ks(1.f),
+    Material() : alpha(),exp(),ior(),ka(),ks(1.0),
         matnum(UINT_MAX),
         shader(FLAT),autofacet(FACETED),
         autofacet_angle()

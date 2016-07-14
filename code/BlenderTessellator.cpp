@@ -324,10 +324,10 @@ void BlenderTessellatorP2T::Copy3DVertices( const MLoop* polyLoop, int vertexCou
 // ------------------------------------------------------------------------------------------------
 aiMatrix4x4 BlenderTessellatorP2T::GeneratePointTransformMatrix( const Blender::PlaneP2T& plane ) const
 {
-    aiVector3D sideA( 1.0f, 0.0f, 0.0f );
+    aiVector3D sideA( 1.0, 0.0, 0.0 );
     if ( std::fabs( plane.normal * sideA ) > 0.999f )
     {
-        sideA = aiVector3D( 0.0f, 1.0f, 0.0f );
+        sideA = aiVector3D( 0.0, 1.0, 0.0 );
     }
 
     aiVector3D sideB( plane.normal ^ sideA );
@@ -410,7 +410,7 @@ inline float p2tMax( float a, float b )
 // Adapted from: http://missingbytes.blogspot.co.uk/2012/06/fitting-plane-to-point-cloud.html
 float BlenderTessellatorP2T::FindLargestMatrixElem( const aiMatrix3x3& mtx ) const
 {
-    float result = 0.0f;
+    float result = 0.0;
 
     for ( size_t x = 0; x < 3; ++x )
     {
@@ -446,10 +446,10 @@ aiMatrix3x3 BlenderTessellatorP2T::ScaleMatrix( const aiMatrix3x3& mtx, float sc
 aiVector3D BlenderTessellatorP2T::GetEigenVectorFromLargestEigenValue( const aiMatrix3x3& mtx ) const
 {
     const float scale = FindLargestMatrixElem( mtx );
-    aiMatrix3x3 mc = ScaleMatrix( mtx, 1.0f / scale );
+    aiMatrix3x3 mc = ScaleMatrix( mtx, 1.0 / scale );
     mc = mc * mc * mc;
 
-    aiVector3D v( 1.0f );
+    aiVector3D v( 1.0 );
     aiVector3D lastV = v;
     for ( int i = 0; i < 100; ++i )
     {
@@ -470,7 +470,7 @@ PlaneP2T BlenderTessellatorP2T::FindLLSQPlane( const std::vector< PointP2T >& po
 {
     PlaneP2T result;
 
-    aiVector3D sum( 0.0f );
+    aiVector3D sum( 0.0 );
     for ( size_t i = 0; i < points.size( ); ++i )
     {
         sum += points[ i ].point3D;
@@ -497,9 +497,9 @@ PlaneP2T BlenderTessellatorP2T::FindLLSQPlane( const std::vector< PointP2T >& po
     aiMatrix3x3 mtx( sumXX, sumXY, sumXZ, sumXY, sumYY, sumYZ, sumXZ, sumYZ, sumZZ );
 
     const float det = mtx.Determinant( );
-    if ( det == 0.0f )
+    if ( det == 0.0 )
     {
-        result.normal = aiVector3D( 0.0f );
+        result.normal = aiVector3D( 0.0 );
     }
     else
     {

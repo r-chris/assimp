@@ -571,12 +571,12 @@ void BlenderImporter::BuildDefaultMaterial(Blender::ConversionData& conv_data)
                 // Thus all relevant fields should be explicitly initialized. We cannot add
                 // a default constructor to Material since the DNA codegen does not support
                 // parsing it.
-                p->r = p->g = p->b = 0.6f;
-                p->specr = p->specg = p->specb = 0.6f;
-                p->ambr = p->ambg = p->ambb = 0.0f;
-                p->mirr = p->mirg = p->mirb = 0.0f;
-                p->emit = 0.f;
-                p->alpha = 0.f;
+                p->r = p->g = p->b = 0.6;
+                p->specr = p->specg = p->specb = 0.6;
+                p->ambr = p->ambg = p->ambb = 0.0;
+                p->mirr = p->mirg = p->mirb = 0.0;
+                p->emit = 0.0;
+                p->alpha = 0.0;
                 p->har = 0;
 
                 index = static_cast<unsigned int>( conv_data.materials_raw.size() );
@@ -1138,11 +1138,11 @@ aiCamera* BlenderImporter::ConvertCamera(const Scene& /*in*/, const Object* obj,
 {
     ScopeGuard<aiCamera> out(new aiCamera());
     out->mName = obj->id.name+2;
-    out->mPosition = aiVector3D(0.f, 0.f, 0.f);
-    out->mUp = aiVector3D(0.f, 1.f, 0.f);
-    out->mLookAt = aiVector3D(0.f, 0.f, -1.f);
+    out->mPosition = aiVector3D(0.0, 0.0, 0.0);
+    out->mUp = aiVector3D(0.0, 1.0, 0.0);
+    out->mLookAt = aiVector3D(0.0, 0.0, -1.0);
     if (cam->sensor_x && cam->lens) {
-        out->mHorizontalFOV = atan2(cam->sensor_x,  2.f * cam->lens);
+        out->mHorizontalFOV = atan2(cam->sensor_x,  2.0 * cam->lens);
     }
     out->mClipPlaneNear = cam->clipsta;
     out->mClipPlaneFar = cam->clipend;
@@ -1165,8 +1165,8 @@ aiLight* BlenderImporter::ConvertLight(const Scene& /*in*/, const Object* obj, c
             out->mType = aiLightSource_DIRECTIONAL;
 
             // blender orients directional lights as facing toward -z
-            out->mDirection = aiVector3D(0.f, 0.f, -1.f);
-            out->mUp = aiVector3D(0.f, 1.f, 0.f);
+            out->mDirection = aiVector3D(0.0, 0.0, -1.0);
+            out->mUp = aiVector3D(0.0, 1.0, 0.0);
             break;
 
         case Lamp::Type_Area:
@@ -1180,8 +1180,8 @@ aiLight* BlenderImporter::ConvertLight(const Scene& /*in*/, const Object* obj, c
             }
 
             // blender orients directional lights as facing toward -z
-            out->mDirection = aiVector3D(0.f, 0.f, -1.f);
-            out->mUp = aiVector3D(0.f, 1.f, 0.f);
+            out->mDirection = aiVector3D(0.0, 0.0, -1.0);
+            out->mUp = aiVector3D(0.0, 1.0, 0.0);
             break;
 
         default:

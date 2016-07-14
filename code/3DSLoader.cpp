@@ -173,7 +173,7 @@ void Discreet3DSImporter::InternReadFile( const std::string& pFile,
     mRootNode->mHierarchyPos   = -1;
     mRootNode->mHierarchyIndex = -1;
     mRootNode->mParent         = NULL;
-    mMasterScale               = 1.0f;
+    mMasterScale               = 1.0;
     mBackgroundImage           = "";
     bHasBG                     = false;
     bIsPrj                     = false;
@@ -228,15 +228,15 @@ void Discreet3DSImporter::InternReadFile( const std::string& pFile,
 void Discreet3DSImporter::ApplyMasterScale(aiScene* pScene)
 {
     // There are some 3DS files with a zero scaling factor
-    if (!mMasterScale)mMasterScale = 1.0f;
-    else mMasterScale = 1.0f / mMasterScale;
+    if (!mMasterScale)mMasterScale = 1.0;
+    else mMasterScale = 1.0 / mMasterScale;
 
     // Construct an uniform scaling matrix and multiply with it
     pScene->mRootNode->mTransformation *= aiMatrix4x4(
-        mMasterScale,0.0f, 0.0f, 0.0f,
-        0.0f, mMasterScale,0.0f, 0.0f,
-        0.0f, 0.0f, mMasterScale,0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f);
+        mMasterScale,0.0, 0.0, 0.0,
+        0.0, mMasterScale,0.0, 0.0,
+        0.0, 0.0, mMasterScale,0.0,
+        0.0, 0.0, 0.0, 1.0);
 
     // Check whether a scaling track is assigned to the root node.
 }
@@ -357,7 +357,7 @@ void Discreet3DSImporter::ParseObjectChunk()
         {
             // We failed to read the ambient base color.
             DefaultLogger::get()->error("3DS: Failed to read ambient base color");
-            mClrAmbient.r = mClrAmbient.g = mClrAmbient.b = 0.0f;
+            mClrAmbient.r = mClrAmbient.g = mClrAmbient.b = 0.0;
         }
         break;
 
@@ -424,7 +424,7 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         light->mPosition.y = stream->GetF4();
         light->mPosition.z = stream->GetF4();
 
-        light->mColorDiffuse = aiColor3D(1.f,1.f,1.f);
+        light->mColorDiffuse = aiColor3D(1.0,1.0,1.0);
 
         // Now check for further subchunks
         if (!bIsPrj) /* fixme */
@@ -459,11 +459,11 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         camera->mLookAt.y = stream->GetF4() - camera->mPosition.y;
         camera->mLookAt.z = stream->GetF4() - camera->mPosition.z;
         ai_real len = camera->mLookAt.Length();
-        if (len < 1e-5f) {
+        if (len < 1e-5) {
 
             // There are some files with lookat == position. Don't know why or whether it's ok or not.
             DefaultLogger::get()->error("3DS: Unable to read proper camera look-at vector");
-            camera->mLookAt = aiVector3D(0.f,1.f,0.f);
+            camera->mLookAt = aiVector3D(0.0,1.0,0.0);
 
         }
         else camera->mLookAt /= len;
@@ -471,12 +471,12 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         // And finally - the camera rotation angle, in counter clockwise direction
         const float angle =  AI_DEG_TO_RAD( stream->GetF4() );
         aiQuaternion quat(camera->mLookAt,angle);
-        camera->mUp = quat.GetMatrix() * aiVector3D(0.f,1.f,0.f);
+        camera->mUp = quat.GetMatrix() * aiVector3D(0.0,1.0,0.0);
 
         // Read the lense angle
         camera->mHorizontalFOV = AI_DEG_TO_RAD ( stream->GetF4() );
-        if (camera->mHorizontalFOV < 0.001f)  {
-            camera->mHorizontalFOV = AI_DEG_TO_RAD(45.f);
+        if (camera->mHorizontalFOV < 0.001)  {
+            camera->mHorizontalFOV = AI_DEG_TO_RAD(45.0);
         }
 
         // Now check for further subchunks
@@ -877,7 +877,7 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
             axis.z = stream->GetF4();
 
             if (!axis.x && !axis.y && !axis.z)
-                axis.y = 1.f;
+                axis.y = 1.0;
 
             // Construct a rotation quaternion from the axis-angle pair
             v.mValue = aiQuaternion(axis,rad);
@@ -926,9 +926,9 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
                 sortKeys = true;
 
             // Remove zero-scalings on singular axes - they've been reported to be there erroneously in some strange files
-            if (!v.mValue.x) v.mValue.x = 1.f;
-            if (!v.mValue.y) v.mValue.y = 1.f;
-            if (!v.mValue.z) v.mValue.z = 1.f;
+            if (!v.mValue.x) v.mValue.x = 1.0;
+            if (!v.mValue.y) v.mValue.y = 1.0;
+            if (!v.mValue.z) v.mValue.z = 1.0;
 
             l->push_back(v);
         }
@@ -1124,7 +1124,7 @@ void Discreet3DSImporter::ParseMaterialChunk()
         if (is_qnan(pc->r)) {
             // color chunk is invalid. Simply ignore it
             DefaultLogger::get()->error("3DS: Unable to read DIFFUSE chunk");
-            pc->r = pc->g = pc->b = 1.0f;
+            pc->r = pc->g = pc->b = 1.0;
         }}
         break;
 
@@ -1136,7 +1136,7 @@ void Discreet3DSImporter::ParseMaterialChunk()
         if (is_qnan(pc->r)) {
             // color chunk is invalid. Simply ignore it
             DefaultLogger::get()->error("3DS: Unable to read SPECULAR chunk");
-            pc->r = pc->g = pc->b = 1.0f;
+            pc->r = pc->g = pc->b = 1.0;
         }}
         break;
 
@@ -1148,7 +1148,7 @@ void Discreet3DSImporter::ParseMaterialChunk()
         if (is_qnan(pc->r)) {
             // color chunk is invalid. Simply ignore it
             DefaultLogger::get()->error("3DS: Unable to read AMBIENT chunk");
-            pc->r = pc->g = pc->b = 0.0f;
+            pc->r = pc->g = pc->b = 0.0;
         }}
         break;
 
@@ -1160,7 +1160,7 @@ void Discreet3DSImporter::ParseMaterialChunk()
         if (is_qnan(pc->r)) {
             // color chunk is invalid. Simply ignore it
             DefaultLogger::get()->error("3DS: Unable to read EMISSIVE chunk");
-            pc->r = pc->g = pc->b = 0.0f;
+            pc->r = pc->g = pc->b = 0.0;
         }}
         break;
 
@@ -1172,8 +1172,8 @@ void Discreet3DSImporter::ParseMaterialChunk()
 
         // NOTE: transparency, not opacity
         if (is_qnan(*pcf))
-            *pcf = 1.0f;
-        else *pcf = 1.0f - *pcf * (float)0xFFFF / 100.0f;
+            *pcf = 1.0;
+        else *pcf = 1.0 - *pcf * (float)0xFFFF / 100.0;
         }
         break;
 
@@ -1192,7 +1192,7 @@ void Discreet3DSImporter::ParseMaterialChunk()
             ai_real* pcf = &mScene->mMaterials.back().mSpecularExponent;
             *pcf = ParsePercentageChunk();
             if ( is_qnan( *pcf ) )
-                *pcf = 0.0f;
+                *pcf = 0.0;
             else *pcf *= ( ai_real ) 0xFFFF;
         }
         break;
@@ -1202,8 +1202,8 @@ void Discreet3DSImporter::ParseMaterialChunk()
             ai_real* pcf = &mScene->mMaterials.back().mShininessStrength;
             *pcf = ParsePercentageChunk();
             if ( is_qnan( *pcf ) )
-                *pcf = 0.0f;
-            else *pcf *= ( ai_real ) 0xffff / 100.0f;
+                *pcf = 0.0;
+            else *pcf *= ( ai_real ) 0xffff / 100.0;
         }
         break;
 
@@ -1211,8 +1211,8 @@ void Discreet3DSImporter::ParseMaterialChunk()
         { // This is the self illumination strength of the material
             ai_real f = ParsePercentageChunk();
             if ( is_qnan( f ) )
-                f = 0.0f;
-            else f *= ( ai_real ) 0xFFFF / 100.0f;
+                f = 0.0;
+            else f *= ( ai_real ) 0xFFFF / 100.0;
             mScene->mMaterials.back().mEmissive = aiColor3D( f, f, f );
         }
         break;
@@ -1277,25 +1277,25 @@ void Discreet3DSImporter::ParseTextureChunk(D3DS::Texture* pcOut)
 
     case Discreet3DS::CHUNK_PERCENTW:
         // Manually parse the blend factor
-        pcOut->mTextureBlend = (float)((uint16_t)stream->GetI2()) / 100.0f;
+        pcOut->mTextureBlend = (float)((uint16_t)stream->GetI2()) / 100.0;
         break;
 
     case Discreet3DS::CHUNK_MAT_MAP_USCALE:
         // Texture coordinate scaling in the U direction
         pcOut->mScaleU = stream->GetF4();
-        if (0.0f == pcOut->mScaleU)
+        if (0.0 == pcOut->mScaleU)
         {
             DefaultLogger::get()->warn("Texture coordinate scaling in the x direction is zero. Assuming 1.");
-            pcOut->mScaleU = 1.0f;
+            pcOut->mScaleU = 1.0;
         }
         break;
     case Discreet3DS::CHUNK_MAT_MAP_VSCALE:
         // Texture coordinate scaling in the V direction
         pcOut->mScaleV = stream->GetF4();
-        if (0.0f == pcOut->mScaleV)
+        if (0.0 == pcOut->mScaleV)
         {
             DefaultLogger::get()->warn("Texture coordinate scaling in the y direction is zero. Assuming 1.");
-            pcOut->mScaleV = 1.0f;
+            pcOut->mScaleV = 1.0;
         }
         break;
 
@@ -1388,9 +1388,9 @@ void Discreet3DSImporter::ParseColorChunk(aiColor3D* out,
             *out = clrError;
             return;
         }
-        out->r = (float)(uint8_t)stream->GetI1() / 255.0f;
-        out->g = (float)(uint8_t)stream->GetI1() / 255.0f;
-        out->b = (float)(uint8_t)stream->GetI1() / 255.0f;
+        out->r = (float)(uint8_t)stream->GetI1() / 255.0;
+        out->g = (float)(uint8_t)stream->GetI1() / 255.0;
+        out->b = (float)(uint8_t)stream->GetI1() / 255.0;
         break;
 
     // Percentage chunks are accepted, too.
@@ -1404,7 +1404,7 @@ void Discreet3DSImporter::ParseColorChunk(aiColor3D* out,
 
     case Discreet3DS::CHUNK_PERCENTW:
         if (acceptPercent && 1 <= diff) {
-            out->g = out->b = out->r = (float)(uint8_t)stream->GetI1() / 255.0f;
+            out->g = out->b = out->r = (float)(uint8_t)stream->GetI1() / 255.0;
             break;
         }
         *out = clrError;

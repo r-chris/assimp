@@ -332,7 +332,7 @@ void MD2Importer::InternReadFile( const std::string& pFile,
             m_pcHeader->offsetSkins);
 
         aiColor3D clr;
-        clr.b = clr.g = clr.r = 1.0f;
+        clr.b = clr.g = clr.r = 1.0;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -356,7 +356,7 @@ void MD2Importer::InternReadFile( const std::string& pFile,
     else    {
         // apply a default material
         aiColor3D clr;
-        clr.b = clr.g = clr.r = 0.6f;
+        clr.b = clr.g = clr.r = 0.6;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -379,7 +379,7 @@ void MD2Importer::InternReadFile( const std::string& pFile,
     // now read all triangles of the first frame, apply scaling and translation
     unsigned int iCurrent = 0;
 
-    float fDivisorU = 1.0f,fDivisorV = 1.0f;
+    float fDivisorU = 1.0,fDivisorV = 1.0;
     if (m_pcHeader->numTexCoords)   {
         // allocate storage for texture coordinates, too
         pcMesh->mTextureCoords[0] = new aiVector3D[pcMesh->mNumVertices];
@@ -447,7 +447,7 @@ void MD2Importer::InternReadFile( const std::string& pFile,
                 // the texture coordinates are absolute values but we
                 // need relative values between 0 and 1
                 pcOut.x = pcTexCoords[iIndex].s / fDivisorU;
-                pcOut.y = 1.f-pcTexCoords[iIndex].t / fDivisorV;
+                pcOut.y = 1.0-pcTexCoords[iIndex].t / fDivisorV;
             }
             pScene->mMeshes[0]->mFaces[i].mIndices[c] = iCurrent;
         }

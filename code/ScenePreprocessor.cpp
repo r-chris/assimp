@@ -72,7 +72,7 @@ void ScenePreprocessor::ProcessScene ()
         aiString name;
 
         scene->mMaterials[scene->mNumMaterials] = helper = new aiMaterial();
-        aiColor3D clr(0.6f,0.6f,0.6f);
+        aiColor3D clr(0.6,0.6,0.6);
         helper->AddProperty(&clr,1,AI_MATKEY_COLOR_DIFFUSE);
 
         // setup the default name to make this material identifiable
@@ -107,11 +107,11 @@ void ScenePreprocessor::ProcessMesh (aiMesh* mesh)
             // this case
             if (2 == mesh->mNumUVComponents[i]) {
                 for (; p != end; ++p)
-                    p->z = 0.f;
+                    p->z = 0.0;
             }
             else if (1 == mesh->mNumUVComponents[i]) {
                 for (; p != end; ++p)
-                    p->z = p->y = 0.f;
+                    p->z = p->y = 0.0;
             }
             else if (3 == mesh->mNumUVComponents[i]) {
                 // Really 3D coordinates? Check whether the third coordinate is != 0 for at least one element

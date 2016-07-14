@@ -105,7 +105,7 @@ int CMeshRenderer::DrawSorted(unsigned int iIndex,const aiMatrix4x4& mWorld)
     for (unsigned int iFace = 0; iFace < pcMesh->mNumFaces;++iFace)
     {
         const aiFace* pcFace = &pcMesh->mFaces[iFace];
-        float fDist = 0.0f;
+        float fDist = 0.0;
         for (unsigned int c = 0; c < 3;++c)
         {
             aiVector3D vPos = pcMesh->mVertices[pcFace->mIndices[c]];

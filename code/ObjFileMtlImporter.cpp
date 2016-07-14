@@ -232,7 +232,7 @@ void ObjFileMtlImporter::getColorRGBA( aiColor3D *pColor )
 {
     ai_assert( NULL != pColor );
 
-    float r( 0.0f ), g( 0.0f ), b( 0.0f );
+    float r( 0.0 ), g( 0.0 ), b( 0.0 );
     m_DataIt = getFloat<DataArrayIt>( m_DataIt, m_DataItEnd, r );
     pColor->r = r;
 

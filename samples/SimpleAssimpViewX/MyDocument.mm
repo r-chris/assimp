@@ -111,19 +111,19 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,const CVTimeS
     
     glEnable(GL_LIGHTING);
     
-    GLfloat global_ambient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    GLfloat global_ambient[] = { 0.5, 0.5, 0.5, 1.0 };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
     
-    GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 
-    GLfloat diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat diffuse[] = {1.0, 1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 
-    GLfloat ambient[] = {0.2, 0.2f, 0.2f, 0.2f};
+    GLfloat ambient[] = {0.2, 0.2, 0.2, 0.2};
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
-    GLfloat position[] = { 1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat position[] = { 1.0, 1.0, 1.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, position);
 
     glEnable(GL_LIGHT0);
@@ -201,15 +201,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,const CVTimeS
                     //[self performSelectorInBackground:@selector(loadTexturesInBackground:) withObject:userInfo];
                     
                     [self getBoundingBoxWithMinVector:&scene_min maxVectr:&scene_max];
-                    scene_center.x = (scene_min.x + scene_max.x) / 2.0f;
-                    scene_center.y = (scene_min.y + scene_max.y) / 2.0f;
-                    scene_center.z = (scene_min.z + scene_max.z) / 2.0f;
+                    scene_center.x = (scene_min.x + scene_max.x) / 2.0;
+                    scene_center.y = (scene_min.y + scene_max.y) / 2.0;
+                    scene_center.z = (scene_min.z + scene_max.z) / 2.0;
                     
                     // optional normalized scaling
                     normalizedScale = scene_max.x-scene_min.x;
                     normalizedScale = aisgl_max(scene_max.y - scene_min.y,normalizedScale);
                     normalizedScale = aisgl_max(scene_max.z - scene_min.z,normalizedScale);
-                    normalizedScale = 1.f / normalizedScale;
+                    normalizedScale = 1.0 / normalizedScale;
                     
                     if(_scene->HasAnimations())
                         NSLog(@"scene has animations");
@@ -352,19 +352,19 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,const CVTimeS
         
         // Colors
         
-        aiColor4D dcolor = aiColor4D(0.8f, 0.8f, 0.8f, 1.0f);
+        aiColor4D dcolor = aiColor4D(0.8, 0.8, 0.8, 1.0);
         if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &dcolor))
             [meshHelper setDiffuseColor:&dcolor];
         
-        aiColor4D scolor = aiColor4D(0.0f, 0.0f, 0.0f, 1.0f);
+        aiColor4D scolor = aiColor4D(0.0, 0.0, 0.0, 1.0);
         if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_SPECULAR, &scolor))
             [meshHelper setSpecularColor:&scolor];
         
-        aiColor4D acolor = aiColor4D(0.2f, 0.2f, 0.2f, 1.0f);
+        aiColor4D acolor = aiColor4D(0.2, 0.2, 0.2, 1.0);
         if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_AMBIENT, &acolor))
             [meshHelper setAmbientColor:&acolor];
         
-        aiColor4D ecolor = aiColor4D(0.0f, 0.0f, 0.0f, 1.0f);
+        aiColor4D ecolor = aiColor4D(0.0, 0.0, 0.0, 1.0);
         if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_EMISSIVE, &ecolor))
             [meshHelper setEmissiveColor:&ecolor];
         
@@ -392,14 +392,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,const CVTimeS
             verts->vPosition = mesh->mVertices[x];
             
             if (NULL == mesh->mNormals)
-                verts->vNormal = aiVector3D(0.0f,0.0f,0.0f);
+                verts->vNormal = aiVector3D(0.0,0.0,0.0);
             else
                 verts->vNormal = mesh->mNormals[x];
             
             if (NULL == mesh->mTangents)
             {
-                verts->vTangent = aiVector3D(0.0f,0.0f,0.0f);
-                verts->vBitangent = aiVector3D(0.0f,0.0f,0.0f);
+                verts->vTangent = aiVector3D(0.0,0.0,0.0);
+                verts->vBitangent = aiVector3D(0.0,0.0,0.0);
             }
             else
             {
@@ -418,12 +418,12 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,const CVTimeS
             if (mesh->HasTextureCoords(0))
                 verts->vTextureUV = mesh->mTextureCoords[0][x];
             else
-                verts->vTextureUV = aiVector3D(0.5f,0.5f, 0.0f);
+                verts->vTextureUV = aiVector3D(0.5,0.5, 0.0);
             
             if (mesh->HasTextureCoords(1))
                 verts->vTextureUV2 = mesh->mTextureCoords[1][x];
             else 
-                verts->vTextureUV2 = aiVector3D(0.5f,0.5f, 0.0f);
+                verts->vTextureUV2 = aiVector3D(0.5,0.5, 0.0);
             
             // TODO: handle Bone indices and weights
             /*          if( mesh->HasBones())
@@ -435,7 +435,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,const CVTimeS
              for( unsigned int a = 0; a < weightsPerVertex[x].size(); a++)
              {
              boneIndices[a] = weightsPerVertex[x][a].mVertexId;
-             boneWeights[a] = (unsigned char) (weightsPerVertex[x][a].mWeight * 255.0f);
+             boneWeights[a] = (unsigned char) (weightsPerVertex[x][a].mWeight * 255.0);
              }
              
              memcpy( verts->mBoneIndices, boneIndices, sizeof( boneIndices));

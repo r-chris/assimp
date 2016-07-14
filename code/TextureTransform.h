@@ -150,7 +150,7 @@ struct STransformVecInfo : public aiUVTransform
     */
     inline bool IsUntransformed() const
     {
-        return (1.0f == mScaling.x && 1.f == mScaling.y &&
+        return (1.0 == mScaling.x && 1.0 == mScaling.y &&
             !mTranslation.x && !mTranslation.y &&
             mRotation < AI_TT_ROTATION_EPSILON);
     }
@@ -162,7 +162,7 @@ struct STransformVecInfo : public aiUVTransform
     {
         mOut = aiMatrix3x3();
 
-        if (1.0f != mScaling.x || 1.0f != mScaling.y)
+        if (1.0 != mScaling.x || 1.0 != mScaling.y)
         {
             aiMatrix3x3 mScale;
             mScale.a1 = mScaling.x;

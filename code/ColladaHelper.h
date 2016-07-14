@@ -105,8 +105,8 @@ struct Camera
         ,   mHorFov (10e10f)
         ,   mVerFov (10e10f)
         ,   mAspect (10e10f)
-        ,   mZNear  (0.1f)
-        ,   mZFar   (1000.f)
+        ,   mZNear  (0.1)
+        ,   mZFar   (1000.0)
     {}
 
     // Name of camera
@@ -135,14 +135,14 @@ struct Light
 {
     Light()
         :   mType            (aiLightSource_UNDEFINED)
-        ,   mAttConstant     (1.f)
-        ,   mAttLinear       (0.f)
-        ,   mAttQuadratic    (0.f)
-        ,   mFalloffAngle    (180.f)
-        ,   mFalloffExponent (0.f)
+        ,   mAttConstant     (1.0)
+        ,   mAttLinear       (0.0)
+        ,   mAttQuadratic    (0.0)
+        ,   mFalloffAngle    (180.0)
+        ,   mFalloffExponent (0.0)
         ,   mPenumbraAngle   (ASSIMP_COLLADA_LIGHT_ANGLE_NOT_SET)
         ,   mOuterAngle      (ASSIMP_COLLADA_LIGHT_ANGLE_NOT_SET)
-        ,   mIntensity       (1.f)
+        ,   mIntensity       (1.0)
     {}
 
     //! Type of the light source aiLightSourceType + ambient
@@ -445,8 +445,8 @@ struct Sampler
         ,   mMirrorV    ()
         ,   mOp         (aiTextureOp_Multiply)
         ,   mUVId       (UINT_MAX)
-        ,   mWeighting  (1.f)
-        ,   mMixWithPrevious (1.f)
+        ,   mWeighting  (1.0)
+        ,   mMixWithPrevious (1.0)
     {}
 
     /** Name of image reference
@@ -531,14 +531,14 @@ struct Effect
     Effect()
         : mShadeType    (Shade_Phong)
         , mEmissive     ( 0, 0, 0, 1)
-        , mAmbient      ( 0.1f, 0.1f, 0.1f, 1)
-        , mDiffuse      ( 0.6f, 0.6f, 0.6f, 1)
-        , mSpecular     ( 0.4f, 0.4f, 0.4f, 1)
+        , mAmbient      ( 0.1, 0.1, 0.1, 1)
+        , mDiffuse      ( 0.6, 0.6, 0.6, 1)
+        , mSpecular     ( 0.4, 0.4, 0.4, 1)
         , mTransparent  ( 0, 0, 0, 1)
-        , mShininess    (10.0f)
-        , mRefractIndex (1.f)
-        , mReflectivity (0.f)
-        , mTransparency (1.f)
+        , mShininess    (10.0)
+        , mRefractIndex (1.0)
+        , mReflectivity (0.0)
+        , mTransparency (1.0)
         , mHasTransparency (false)
         , mRGBTransparency(false)
         , mInvertTransparency(false)

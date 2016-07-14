@@ -245,7 +245,7 @@ aiReturn aiGetMaterialColor(const aiMaterial* pMat,
 
     // if no alpha channel is defined: set it to 1.0
     if (3 == iMax) {
-        pOut->a = 1.0f;
+        pOut->a = 1.0;
     }
 
     return eRet;

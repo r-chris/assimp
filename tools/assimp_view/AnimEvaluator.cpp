@@ -63,7 +63,7 @@ void AnimEvaluator::Evaluate( double pTime)
     pTime *= ticksPerSecond;
 
     // map into anim's duration
-    double time = 0.0f;
+    double time = 0.0;
     if( mAnim->mDuration > 0.0)
         time = fmod( pTime, mAnim->mDuration);
 

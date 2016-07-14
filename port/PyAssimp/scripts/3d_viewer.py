@@ -346,7 +346,7 @@ class PyAssimp3DViewer:
         self.frames += 1
         if gl_time - self.last_fps_time >= 1000:
             current_fps = self.frames * 1000 / (gl_time - self.last_fps_time)
-            pygame.display.set_caption(self.base_name + " - %.0f fps" % current_fps)
+            pygame.display.set_caption(self.base_name + " - %.0 fps" % current_fps)
             self.frames = 0
             self.last_fps_time = gl_time
 

@@ -358,8 +358,8 @@ void IRRMeshImporter::InternReadFile( const std::string& pFile,
 
                     sz = fast_atoreal_move<float>(sz,(float&)temp.y);
                     SkipSpaces(&sz);
-                    temp.z = 0.f;
-                    temp.y = 1.f - temp.y;  // DX to OGL
+                    temp.z = 0.0;
+                    temp.y = 1.0 - temp.y;  // DX to OGL
                     curUVs.push_back(temp);
 
                     // read the (optional) second UV coordinate set
@@ -368,7 +368,7 @@ void IRRMeshImporter::InternReadFile( const std::string& pFile,
                         SkipSpaces(&sz);
 
                         sz = fast_atoreal_move<float>(sz,(float&)temp.y);
-                        temp.y = 1.f - temp.y; // DX to OGL
+                        temp.y = 1.0 - temp.y; // DX to OGL
                         curUV2s.push_back(temp);
                     }
                     // read optional tangent and bitangent vectors
@@ -382,7 +382,7 @@ void IRRMeshImporter::InternReadFile( const std::string& pFile,
 
                         sz = fast_atoreal_move<float>(sz,(float&)temp.y);
                         SkipSpaces(&sz);
-                        temp.y *= -1.0f;
+                        temp.y *= -1.0;
                         curTangents.push_back(temp);
 
                         // bitangents
@@ -394,7 +394,7 @@ void IRRMeshImporter::InternReadFile( const std::string& pFile,
 
                         sz = fast_atoreal_move<float>(sz,(float&)temp.y);
                         SkipSpaces(&sz);
-                        temp.y *= -1.0f;
+                        temp.y *= -1.0;
                         curBitangents.push_back(temp);
                     }
                 }

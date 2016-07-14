@@ -106,10 +106,10 @@ protected:
 // Unpack a hex color, e.g. 0xdcdedfff
 inline void ColorFromARGBPacked(uint32_t in, aiColor4D& clr)
 {
-    clr.a = ((in >> 24) & 0xff) / 255.f;
-    clr.r = ((in >> 16) & 0xff) / 255.f;
-    clr.g = ((in >>  8) & 0xff) / 255.f;
-    clr.b = ((in      ) & 0xff) / 255.f;
+    clr.a = ((in >> 24) & 0xff) / 255.0;
+    clr.r = ((in >> 16) & 0xff) / 255.0;
+    clr.g = ((in >>  8) & 0xff) / 255.0;
+    clr.b = ((in      ) & 0xff) / 255.0;
 }
 
 

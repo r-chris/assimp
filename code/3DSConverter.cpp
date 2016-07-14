@@ -124,7 +124,7 @@ void Discreet3DSImporter::ReplaceDefaultMaterial()
     {
         // We need to create our own default material
         D3DS::Material sMat;
-        sMat.mDiffuse = aiColor3D(0.3f,0.3f,0.3f);
+        sMat.mDiffuse = aiColor3D(0.3,0.3,0.3);
         sMat.mName = "%%%DEFAULT";
         mScene->mMaterials.push_back(sMat);
 
@@ -207,10 +207,10 @@ void CopyTexture(aiMaterial& mat, D3DS::Texture& texture, aiTextureType type)
     // FIXME: this is not really correct ...
     if (texture.mMapMode == aiTextureMapMode_Mirror)
     {
-        texture.mScaleU *= 2.f;
-        texture.mScaleV *= 2.f;
-        texture.mOffsetU /= 2.f;
-        texture.mOffsetV /= 2.f;
+        texture.mScaleU *= 2.;
+        texture.mScaleV *= 2.;
+        texture.mOffsetU /= 2.;
+        texture.mOffsetV /= 2.;
     }
 
     // Setup texture UV transformations
@@ -486,12 +486,12 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene* pcSOut,aiNode* pcOut,
                 }
 
                 // Handle negative transformation matrix determinant -> invert vertex x
-                if (imesh->mMat.Determinant() < 0.0f)
+                if (imesh->mMat.Determinant() < 0.0)
                 {
                     /* we *must* have normals */
                     for (pvCurrent = mesh->mVertices, t2 = mesh->mNormals; pvCurrent != pvEnd; ++pvCurrent, ++t2) {
-                        pvCurrent->x *= -1.f;
-                        t2->x *= -1.f;
+                        pvCurrent->x *= -1.0;
+                        t2->x *= -1.0;
                     }
                     DefaultLogger::get()->info("3DS: Flipping mesh X-Axis");
                 }
@@ -533,7 +533,7 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene* pcSOut,aiNode* pcOut,
 
         // FIX to get to Assimp's quaternion conventions
         for (std::vector<aiQuatKey>::iterator it = pcIn->aRotationKeys.begin(); it != pcIn->aRotationKeys.end(); ++it) {
-            (*it).mValue.w *= -1.f;
+            (*it).mValue.w *= -1.0;
         }
 
         pcOut->mTransformation = aiMatrix4x4( pcIn->aRotationKeys[0].mValue.GetMatrix() );
@@ -587,7 +587,7 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene* pcSOut,aiNode* pcOut,
                 q.mTime  = f.mTime;
 
                 // FIX to get to Assimp quaternion conventions
-                q.mValue = aiQuaternion(0.f,0.f,AI_DEG_TO_RAD( /*-*/ f.mValue));
+                q.mValue = aiQuaternion(0.0,0.0,AI_DEG_TO_RAD( /*-*/ f.mValue));
             }
         }
 #if 0
@@ -635,12 +635,12 @@ void Discreet3DSImporter::AddNodeToGraph(aiScene* pcSOut,aiNode* pcOut,
         // to to be able to return valid cameras/lights even if no scenegraph is given.
         for (unsigned int n = 0; n < pcSOut->mNumCameras;++n)   {
             if (pcSOut->mCameras[n]->mName == pcOut->mName) {
-                pcSOut->mCameras[n]->mLookAt = aiVector3D(0.f,0.f,1.f);
+                pcSOut->mCameras[n]->mLookAt = aiVector3D(0.0,0.0,1.0);
             }
         }
         for (unsigned int n = 0; n < pcSOut->mNumLights;++n)    {
             if (pcSOut->mLights[n]->mName == pcOut->mName) {
-                pcSOut->mLights[n]->mDirection = aiVector3D(0.f,0.f,1.f);
+                pcSOut->mLights[n]->mDirection = aiVector3D(0.0,0.0,1.0);
             }
         }
 
@@ -815,10 +815,10 @@ void Discreet3DSImporter::GenerateNodeGraph(aiScene* pcOut)
     }
 
     pcOut->mRootNode->mTransformation = aiMatrix4x4(
-        1.f,0.f,0.f,0.f,
-        0.f,0.f,1.f,0.f,
-        0.f,-1.f,0.f,0.f,
-        0.f,0.f,0.f,1.f) * pcOut->mRootNode->mTransformation;
+        1.0,0.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,
+        0.0,-1.0,0.0,0.0,
+        0.0,0.0,0.0,1.0) * pcOut->mRootNode->mTransformation;
 
     // If the root node is unnamed name it "<3DSRoot>"
     if (::strstr( pcOut->mRootNode->mName.data, "UNNAMED" ) ||

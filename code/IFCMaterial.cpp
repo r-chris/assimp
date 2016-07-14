@@ -86,7 +86,7 @@ void FillMaterial(aiMaterial* mat,const IFC::IfcSurfaceStyle* surf,ConversionDat
             if (const IFC::IfcSurfaceStyleRendering* ren = shade->ToPtr<IFC::IfcSurfaceStyleRendering>()) {
 
                 if (ren->Transparency) {
-                    const float t = 1.f-static_cast<float>(ren->Transparency.Get());
+                    const float t = 1.0-static_cast<float>(ren->Transparency.Get());
                     mat->AddProperty(&t,1, AI_MATKEY_OPACITY);
                 }
 
@@ -193,7 +193,7 @@ unsigned int ProcessMaterials(uint64_t id, unsigned int prevMatId, ConversionDat
     std::unique_ptr<aiMaterial> mat(new aiMaterial());
     mat->AddProperty(&name,AI_MATKEY_NAME);
 
-    const aiColor4D col = aiColor4D( 0.6f, 0.6f, 0.6f, 1.0f); // aiColor4D( color.r, color.g, color.b, 1.0f);
+    const aiColor4D col = aiColor4D( 0.6, 0.6, 0.6, 1.0); // aiColor4D( color.r, color.g, color.b, 1.0);
     mat->AddProperty(&col,1, AI_MATKEY_COLOR_DIFFUSE);
 
     conv.materials.push_back(mat.release());

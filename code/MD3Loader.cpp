@@ -346,7 +346,7 @@ void Q3Shader::ConvertShaderToMaterial(aiMaterial* out, const ShaderDataBlock& s
     // If at least one emissive texture was set, set the emissive base color to 1 to ensure
     // the texture is actually displayed.
     if (0 != cur_emissive) {
-        aiColor3D one(1.f,1.f,1.f);
+        aiColor3D one(1.0,1.0,1.0);
         out->AddProperty(&one,1,AI_MATKEY_COLOR_EMISSIVE);
     }
 }
@@ -662,8 +662,8 @@ bool MD3Importer::ReadMultipartFile()
             (!configSpeedFlag ? AI_INT_MERGE_SCENE_GEN_UNIQUE_NAMES_IF_NECESSARY : 0));
 
         // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
-        mScene->mRootNode->mTransformation = aiMatrix4x4(1.f,0.f,0.f,0.f,
-            0.f,0.f,1.f,0.f,0.f,-1.f,0.f,0.f,0.f,0.f,0.f,1.f);
+        mScene->mRootNode->mTransformation = aiMatrix4x4(1.0,0.0,0.0,0.0,
+            0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,0.0,0.0,0.0,1.0);
 
         return true;
 
@@ -933,7 +933,7 @@ void MD3Importer::InternReadFile( const std::string& pFile,
         clr.b = clr.g = clr.r = 0.05f;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_AMBIENT);
 
-        clr.b = clr.g = clr.r = 1.0f;
+        clr.b = clr.g = clr.r = 1.0;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -1022,7 +1022,7 @@ void MD3Importer::InternReadFile( const std::string& pFile,
 
                 // Read texture coordinates
                 pcMesh->mTextureCoords[0][iCurrent].x = pcUVs[ pcTriangles->INDEXES[c]].U;
-                pcMesh->mTextureCoords[0][iCurrent].y = 1.0f-pcUVs[ pcTriangles->INDEXES[c]].V;
+                pcMesh->mTextureCoords[0][iCurrent].y = 1.0-pcUVs[ pcTriangles->INDEXES[c]].V;
             }
             // Flip face order if necessary
             if (!shader || shader->cull == Q3Shader::CULL_CW) {
@@ -1087,8 +1087,8 @@ void MD3Importer::InternReadFile( const std::string& pFile,
         pScene->mRootNode->mMeshes[i] = i;
 
     // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
-    pScene->mRootNode->mTransformation = aiMatrix4x4(1.f,0.f,0.f,0.f,
-        0.f,0.f,1.f,0.f,0.f,-1.f,0.f,0.f,0.f,0.f,0.f,1.f);
+    pScene->mRootNode->mTransformation = aiMatrix4x4(1.0,0.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,0.0,0.0,0.0,1.0);
 }
 
 #endif // !! ASSIMP_BUILD_NO_MD3_IMPORTER

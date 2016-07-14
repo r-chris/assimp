@@ -92,22 +92,22 @@ TEST_F(BlendImportAreaLight, testImportLight)
     ASSERT_EQ(lights[1].mType, aiLightSource_POINT);
     ASSERT_EQ(lights[2].mType, aiLightSource_AREA);
 
-    EXPECT_FLOAT_EQ(lights[0].mSize.x, 0.5f);
-    EXPECT_FLOAT_EQ(lights[0].mSize.y, 2.0f);
-    EXPECT_FLOAT_EQ(lights[2].mSize.x, 1.0f);
-    EXPECT_FLOAT_EQ(lights[2].mSize.y, 1.0f);
+    EXPECT_FLOAT_EQ(lights[0].mSize.x, 0.5);
+    EXPECT_FLOAT_EQ(lights[0].mSize.y, 2.0);
+    EXPECT_FLOAT_EQ(lights[2].mSize.x, 1.0);
+    EXPECT_FLOAT_EQ(lights[2].mSize.y, 1.0);
 
-    EXPECT_FLOAT_EQ(lights[0].mColorDiffuse.r, 42.0f);
-    EXPECT_FLOAT_EQ(lights[0].mColorDiffuse.g, 42.0f);
-    EXPECT_FLOAT_EQ(lights[0].mColorDiffuse.b, 42.0f);
-    EXPECT_FLOAT_EQ(lights[2].mColorDiffuse.r, 1.0f);
-    EXPECT_FLOAT_EQ(lights[2].mColorDiffuse.g, 1.0f);
-    EXPECT_FLOAT_EQ(lights[2].mColorDiffuse.b, 1.0f);
+    EXPECT_FLOAT_EQ(lights[0].mColorDiffuse.r, 42.0);
+    EXPECT_FLOAT_EQ(lights[0].mColorDiffuse.g, 42.0);
+    EXPECT_FLOAT_EQ(lights[0].mColorDiffuse.b, 42.0);
+    EXPECT_FLOAT_EQ(lights[2].mColorDiffuse.r, 1.0);
+    EXPECT_FLOAT_EQ(lights[2].mColorDiffuse.g, 1.0);
+    EXPECT_FLOAT_EQ(lights[2].mColorDiffuse.b, 1.0);
 
-    EXPECT_FLOAT_EQ(lights[0].mDirection.x, 0.0f);
-    EXPECT_FLOAT_EQ(lights[0].mDirection.y, 0.0f);
-    EXPECT_FLOAT_EQ(lights[0].mDirection.z, -1.0f);
-    EXPECT_FLOAT_EQ(lights[2].mDirection.x, 0.0f);
-    EXPECT_FLOAT_EQ(lights[2].mDirection.y, 0.0f);
-    EXPECT_FLOAT_EQ(lights[2].mDirection.z, -1.0f);
+    EXPECT_FLOAT_EQ(lights[0].mDirection.x, 0.0);
+    EXPECT_FLOAT_EQ(lights[0].mDirection.y, 0.0);
+    EXPECT_FLOAT_EQ(lights[0].mDirection.z, -1.0);
+    EXPECT_FLOAT_EQ(lights[2].mDirection.x, 0.0);
+    EXPECT_FLOAT_EQ(lights[2].mDirection.y, 0.0);
+    EXPECT_FLOAT_EQ(lights[2].mDirection.z, -1.0);
 }

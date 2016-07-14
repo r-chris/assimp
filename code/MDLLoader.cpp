@@ -235,8 +235,8 @@ void MDLImporter::InternReadFile( const std::string& pFile,
     }
 
     // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
-    pScene->mRootNode->mTransformation = aiMatrix4x4(1.f,0.f,0.f,0.f,
-        0.f,0.f,1.f,0.f,0.f,-1.f,0.f,0.f,0.f,0.f,0.f,1.f);
+    pScene->mRootNode->mTransformation = aiMatrix4x4(1.0,0.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,0.0,0.0,0.0,1.0);
 
     // delete the file buffer and cleanup
     AI_DEBUG_INVALIDATE_PTR(mBuffer);
@@ -487,14 +487,14 @@ void MDLImporter::InternReadFile_Quake1( )
 
             vec.y = (float)pcVertices[iIndex].v[1] * pcHeader->scale[1];
             vec.y += pcHeader->translate[1];
-            //vec.y *= -1.0f;
+            //vec.y *= -1.0;
 
             vec.z = (float)pcVertices[iIndex].v[2] * pcHeader->scale[2];
             vec.z += pcHeader->translate[2];
 
             // read the normal vector from the precalculated normal table
             MD2::LookupNormalIndex(pcVertices[iIndex].normalIndex,pcMesh->mNormals[iCurrent]);
-            //pcMesh->mNormals[iCurrent].y *= -1.0f;
+            //pcMesh->mNormals[iCurrent].y *= -1.0;
 
             // read texture coordinates
             float s = (float)pcTexCoords[iIndex].s;
@@ -502,12 +502,12 @@ void MDLImporter::InternReadFile_Quake1( )
 
             // translate texture coordinates
             if (0 == pcTriangles->facesfront && 0 != pcTexCoords[iIndex].onseam)    {
-                s += pcHeader->skinwidth * 0.5f;
+                s += pcHeader->skinwidth * 0.5;
             }
 
             // Scale s and t to range from 0.0 to 1.0
-            pcMesh->mTextureCoords[0][iCurrent].x = (s + 0.5f) / pcHeader->skinwidth;
-            pcMesh->mTextureCoords[0][iCurrent].y = 1.0f-(t + 0.5f) / pcHeader->skinheight;
+            pcMesh->mTextureCoords[0][iCurrent].x = (s + 0.5) / pcHeader->skinwidth;
+            pcMesh->mTextureCoords[0][iCurrent].y = 1.0-(t + 0.5) / pcHeader->skinheight;
 
         }
         pcMesh->mFaces[i].mIndices[0] = iTemp+2;
@@ -546,7 +546,7 @@ void MDLImporter::SetupMaterialProperties_3DGS_MDL5_Quake1( )
             pScene->mNumTextures = 0;
         }
         else    {
-            clr.b = clr.a = clr.g = clr.r = 1.0f;
+            clr.b = clr.a = clr.g = clr.r = 1.0;
             aiString szString;
             ::memcpy(szString.data,AI_MAKE_EMBEDDED_TEXNAME(0),3);
             szString.length = 2;
@@ -558,7 +558,7 @@ void MDLImporter::SetupMaterialProperties_3DGS_MDL5_Quake1( )
     pcHelper->AddProperty<aiColor4D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
     clr.r *= 0.05f;clr.g *= 0.05f;
-    clr.b *= 0.05f;clr.a  = 1.0f;
+    clr.b *= 0.05f;clr.a  = 1.0;
     pcHelper->AddProperty<aiColor4D>(&clr, 1,AI_MATKEY_COLOR_AMBIENT);
 }
 
@@ -698,14 +698,14 @@ void MDLImporter::InternReadFile_3DGS_MDL345( )
 
                 vec.y = (float)pcVertices[iIndex].v[1] * pcHeader->scale[1];
                 vec.y += pcHeader->translate[1];
-                // vec.y *= -1.0f;
+                // vec.y *= -1.0;
 
                 vec.z = (float)pcVertices[iIndex].v[2] * pcHeader->scale[2];
                 vec.z += pcHeader->translate[2];
 
                 // read the normal vector from the precalculated normal table
                 MD2::LookupNormalIndex(pcVertices[iIndex].normalIndex,pcMesh->mNormals[iCurrent]);
-                // pcMesh->mNormals[iCurrent].y *= -1.0f;
+                // pcMesh->mNormals[iCurrent].y *= -1.0;
 
                 // read texture coordinates
                 if (pcHeader->synctype) {
@@ -753,14 +753,14 @@ void MDLImporter::InternReadFile_3DGS_MDL345( )
 
                 vec.y = (float)pcVertices[iIndex].v[1] * pcHeader->scale[1];
                 vec.y += pcHeader->translate[1];
-                // vec.y *= -1.0f;
+                // vec.y *= -1.0;
 
                 vec.z = (float)pcVertices[iIndex].v[2] * pcHeader->scale[2];
                 vec.z += pcHeader->translate[2];
 
                 // read the normal vector from the precalculated normal table
                 MD2::LookupNormalIndex(pcVertices[iIndex].normalIndex,pcMesh->mNormals[iCurrent]);
-                // pcMesh->mNormals[iCurrent].y *= -1.0f;
+                // pcMesh->mNormals[iCurrent].y *= -1.0;
 
                 // read texture coordinates
                 if (pcHeader->synctype) {
@@ -803,13 +803,13 @@ void MDLImporter::ImportUVCoordinate_3DGS_MDL345(
 
     // Scale s and t to range from 0.0 to 1.0
     if (0x5 != iGSFileVersion)  {
-        s = (s + 0.5f)      / pcHeader->skinwidth;
-        t = 1.0f-(t + 0.5f) / pcHeader->skinheight;
+        s = (s + 0.5)      / pcHeader->skinwidth;
+        t = 1.0-(t + 0.5) / pcHeader->skinheight;
     }
 
     vOut.x = s;
     vOut.y = t;
-    vOut.z = 0.0f;
+    vOut.z = 0.0;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -853,7 +853,7 @@ void MDLImporter::CalculateUVCoordinates_MDL5()
             {
                 pcMesh->mTextureCoords[0][i].x /= fWidth;
                 pcMesh->mTextureCoords[0][i].y /= fHeight;
-                pcMesh->mTextureCoords[0][i].y = 1.0f - pcMesh->mTextureCoords[0][i].y; // DX to OGL
+                pcMesh->mTextureCoords[0][i].y = 1.0 - pcMesh->mTextureCoords[0][i].y; // DX to OGL
             }
         }
     }
@@ -1072,7 +1072,7 @@ void MDLImporter::ReadFaces_3DGS_MDL7(const MDL::IntGroupInfo_MDL7& groupInfo,
                     }
 
                     float u = groupInfo.pcGroupUVs[iIndex].u;
-                    float v = 1.0f-groupInfo.pcGroupUVs[iIndex].v; // DX to OGL
+                    float v = 1.0-groupInfo.pcGroupUVs[iIndex].v; // DX to OGL
 
                     groupData.vTextureCoords1[iOutIndex].x = u;
                     groupData.vTextureCoords1[iOutIndex].y = v;
@@ -1099,7 +1099,7 @@ void MDLImporter::ReadFaces_3DGS_MDL7(const MDL::IntGroupInfo_MDL7& groupInfo,
                     }
 
                     float u = groupInfo.pcGroupUVs[ iIndex ].u;
-                    float v = 1.0f-groupInfo.pcGroupUVs[ iIndex ].v;
+                    float v = 1.0-groupInfo.pcGroupUVs[ iIndex ].v;
 
                     groupData.vTextureCoords2[ iOutIndex ].x = u;
                     groupData.vTextureCoords2[ iOutIndex ].y = v; // DX to OGL
@@ -1436,7 +1436,7 @@ void MDLImporter::InternReadFile_3DGS_MDL7( )
             pcHelper->AddProperty<int>(&iMode, 1, AI_MATKEY_SHADING_MODEL);
 
             aiColor3D clr;
-            clr.b = clr.g = clr.r = 0.6f;
+            clr.b = clr.g = clr.r = 0.6;
             pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
             pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -1922,7 +1922,7 @@ void MDLImporter::GenerateOutputMeshes_3DGS_MDL7(
 
                     for (unsigned int weight = 0; weight < pcBone->mNumWeights;++weight)    {
                         pcBone->mWeights[weight].mVertexId = (*k)[weight];
-                        pcBone->mWeights[weight].mWeight = 1.0f;
+                        pcBone->mWeights[weight].mWeight = 1.0;
                     }
                 }
             }

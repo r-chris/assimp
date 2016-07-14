@@ -149,10 +149,10 @@ extern ( C ) {
       /**
        * Distance of the near clipping plane from the camera.
        *
-       * The value may not be 0.f (for arithmetic reasons to prevent
+       * The value may not be 0.0 (for arithmetic reasons to prevent
        * a division through zero).
        *
-       * The default value is 0.1f.
+       * The default value is 0.1.
        */
       float mClipPlaneNear;
 
@@ -164,7 +164,7 @@ extern ( C ) {
        * should not be too large (between 1000-10000 should be ok) to avoid
        * floating-point inaccuracies which could lead to z-fighting.
        *
-       * The default value is 1000.f.
+       * The default value is 1000.0.
        */
       float mClipPlaneFar;
 

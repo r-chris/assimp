@@ -199,7 +199,7 @@ void RAWImporter::InternReadFile( const std::string& pFile,
             }
             if (12 == num)
             {
-                aiColor4D v(data[0],data[1],data[2],1.0f);
+                aiColor4D v(data[0],data[1],data[2],1.0);
                 output->colors.push_back(v);
                 output->colors.push_back(v);
                 output->colors.push_back(v);
@@ -306,10 +306,10 @@ void RAWImporter::InternReadFile( const std::string& pFile,
             // generate a material for the mesh
             aiMaterial* mat = new aiMaterial();
 
-            aiColor4D clr(1.0f,1.0f,1.0f,1.0f);
+            aiColor4D clr(1.0,1.0,1.0,1.0);
             if ("%default%" == (*it2).name) // a gray default material
             {
-                clr.r = clr.g = clr.b = 0.6f;
+                clr.r = clr.g = clr.b = 0.6;
             }
             else if ((*it2).name.length() > 0) // a texture
             {

@@ -65,25 +65,25 @@ extern float g_fLoadTime;
 //-------------------------------------------------------------------------------
 D3DXVECTOR4 g_aclNormalColors[14] =
 {
-    D3DXVECTOR4(0xFF / 255.0f,0xFF / 255.0f,0xFF / 255.0f, 1.0f), // white
+    D3DXVECTOR4(0xFF / 255.0,0xFF / 255.0,0xFF / 255.0, 1.0), // white
 
-    D3DXVECTOR4(0xFF / 255.0f,0x00 / 255.0f,0x00 / 255.0f,1.0f), // red
-    D3DXVECTOR4(0x00 / 255.0f,0xFF / 255.0f,0x00 / 255.0f,1.0f), // green
-    D3DXVECTOR4(0x00 / 255.0f,0x00 / 255.0f,0xFF / 255.0f,1.0f), // blue
+    D3DXVECTOR4(0xFF / 255.0,0x00 / 255.0,0x00 / 255.0,1.0), // red
+    D3DXVECTOR4(0x00 / 255.0,0xFF / 255.0,0x00 / 255.0,1.0), // green
+    D3DXVECTOR4(0x00 / 255.0,0x00 / 255.0,0xFF / 255.0,1.0), // blue
 
-    D3DXVECTOR4(0xFF / 255.0f,0xFF / 255.0f,0x00 / 255.0f,1.0f), // yellow
-    D3DXVECTOR4(0xFF / 255.0f,0x00 / 255.0f,0xFF / 255.0f,1.0f), // magenta
-    D3DXVECTOR4(0x00 / 255.0f,0xFF / 255.0f,0xFF / 255.0f,1.0f), // wtf
+    D3DXVECTOR4(0xFF / 255.0,0xFF / 255.0,0x00 / 255.0,1.0), // yellow
+    D3DXVECTOR4(0xFF / 255.0,0x00 / 255.0,0xFF / 255.0,1.0), // magenta
+    D3DXVECTOR4(0x00 / 255.0,0xFF / 255.0,0xFF / 255.0,1.0), // wtf
 
-    D3DXVECTOR4(0xFF / 255.0f,0x60 / 255.0f,0x60 / 255.0f,1.0f), // light red
-    D3DXVECTOR4(0x60 / 255.0f,0xFF / 255.0f,0x60 / 255.0f,1.0f), // light green
-    D3DXVECTOR4(0x60 / 255.0f,0x60 / 255.0f,0xFF / 255.0f,1.0f), // light blue
+    D3DXVECTOR4(0xFF / 255.0,0x60 / 255.0,0x60 / 255.0,1.0), // light red
+    D3DXVECTOR4(0x60 / 255.0,0xFF / 255.0,0x60 / 255.0,1.0), // light green
+    D3DXVECTOR4(0x60 / 255.0,0x60 / 255.0,0xFF / 255.0,1.0), // light blue
 
-    D3DXVECTOR4(0xA0 / 255.0f,0x00 / 255.0f,0x00 / 255.0f,1.0f), // dark red
-    D3DXVECTOR4(0x00 / 255.0f,0xA0 / 255.0f,0x00 / 255.0f,1.0f), // dark green
-    D3DXVECTOR4(0x00 / 255.0f,0x00 / 255.0f,0xA0 / 255.0f,1.0f), // dark blue
+    D3DXVECTOR4(0xA0 / 255.0,0x00 / 255.0,0x00 / 255.0,1.0), // dark red
+    D3DXVECTOR4(0x00 / 255.0,0xA0 / 255.0,0x00 / 255.0,1.0), // dark green
+    D3DXVECTOR4(0x00 / 255.0,0x00 / 255.0,0xA0 / 255.0,1.0), // dark blue
 
-    D3DXVECTOR4(0x88 / 255.0f,0x88 / 255.0f,0x88 / 255.0f, 1.0f) // gray
+    D3DXVECTOR4(0x88 / 255.0,0x88 / 255.0,0x88 / 255.0, 1.0) // gray
 };
 
 
@@ -169,7 +169,7 @@ int CDisplay::AddNodeToDisplayList(
         {
             iIndex += iDepth  * 100;
         }
-        else 
+        else
 			iIndex += iDepth  * 10;
         ai_snprintf(chTemp, MAXLEN,"Node %u",iIndex);
     }
@@ -374,7 +374,7 @@ int CDisplay::AddTextureToDisplayList(unsigned int iType,
     const aiString* szPath,
     HTREEITEM hFX,
     unsigned int iUVIndex       /*= 0*/,
-    const float fBlendFactor    /*= 0.0f*/,
+    const float fBlendFactor    /*= 0.0*/,
     aiTextureOp eTextureOp      /*= aiTextureOp_Multiply*/,
     unsigned int iMesh      /*= 0*/)
 {
@@ -748,7 +748,7 @@ int CDisplay::OnRender()
             double time = g_dCurrent;
             aiAnimation* mAnim = g_pcAsset->mAnimator->CurrentAnim();
             if(  mAnim && mAnim->mDuration > 0.0) {
-                double tps = mAnim->mTicksPerSecond ? mAnim->mTicksPerSecond : 25.f;
+                double tps = mAnim->mTicksPerSecond ? mAnim->mTicksPerSecond : 25.0;
                 time = fmod( time, mAnim->mDuration/tps);
                 SendDlgItemMessage(g_hDlg,IDC_SLIDERANIM,TBM_SETPOS,TRUE,LPARAM(10000 * (time/(mAnim->mDuration/tps))));
             }
@@ -843,7 +843,7 @@ int CDisplay::FillDefaultStatistics(void)
 	ai_snprintf(szOut, 1024,"%i", CMaterialManager::Instance().GetShaderCount());
     SetDlgItemText(g_hDlg,IDC_ESHADER,szOut);
 
-    sprintf(szOut,"%.5f",(float)g_fLoadTime);
+    sprintf(szOut,"%.5",(float)g_fLoadTime);
     SetDlgItemText(g_hDlg,IDC_ELOAD,szOut);
 
     UpdateColorFieldsInUI();
@@ -929,10 +929,10 @@ int CDisplay::OnSetupNodeView(NodeInfo* pcNew)
 
     char szTemp[1024];
     sprintf(szTemp,
-        "%.2f %.2f %.2f\r\n"
-        "%.2f %.2f %.2f\r\n"
-        "%.2f %.2f %.2f\r\n"
-        "%.2f %.2f %.2f\r\n",
+        "%.2 %.2 %.2\r\n"
+        "%.2 %.2 %.2\r\n"
+        "%.2 %.2 %.2\r\n"
+        "%.2 %.2 %.2\r\n",
         pcNew->psNode->mTransformation.a1,
         pcNew->psNode->mTransformation.b1,
         pcNew->psNode->mTransformation.c1,
@@ -1000,8 +1000,8 @@ int CDisplay::OnSetupTextureView(TextureInfo* pcNew)
             D3DCOLOR_ARGB(0xFF,0xFF,0x00,0));
     }
 
-    this->m_fTextureZoom = 1000.0f;
-    this->m_vTextureOffset.x = this->m_vTextureOffset.y = 0.0f;
+    this->m_fTextureZoom = 1000.0;
+    this->m_vTextureOffset.x = this->m_vTextureOffset.y = 0.0;
 
     this->m_pcCurrentTexture = pcNew;
     this->SetViewMode(VIEWMODE_TEXTURE);
@@ -1250,9 +1250,9 @@ int CDisplay::HandleTreeViewPopup(WPARAM wParam,LPARAM lParam)
         clr.hwndOwner = g_hDlg;
         clr.Flags = CC_RGBINIT | CC_FULLOPEN;
         clr.rgbResult = RGB(
-            clamp<unsigned char>(clrOld.r * 255.0f),
-            clamp<unsigned char>(clrOld.g * 255.0f),
-            clamp<unsigned char>(clrOld.b * 255.0f));
+            clamp<unsigned char>(clrOld.r * 255.0),
+            clamp<unsigned char>(clrOld.g * 255.0),
+            clamp<unsigned char>(clrOld.b * 255.0));
         clr.lpCustColors = g_aclCustomColors;
         clr.lpfnHook = NULL;
         clr.lpTemplateName = NULL;
@@ -1260,9 +1260,9 @@ int CDisplay::HandleTreeViewPopup(WPARAM wParam,LPARAM lParam)
 
         ChooseColor(&clr);
 
-        clrOld.r = (float)(((unsigned int)clr.rgbResult)       & 0xFF) / 255.0f;
-        clrOld.g = (float)(((unsigned int)clr.rgbResult >> 8)  & 0xFF) / 255.0f;
-        clrOld.b = (float)(((unsigned int)clr.rgbResult >> 16) & 0xFF) / 255.0f;
+        clrOld.r = (float)(((unsigned int)clr.rgbResult)       & 0xFF) / 255.0;
+        clrOld.g = (float)(((unsigned int)clr.rgbResult >> 8)  & 0xFF) / 255.0;
+        clrOld.b = (float)(((unsigned int)clr.rgbResult >> 16) & 0xFF) / 255.0;
 
         // update the color values in the mesh instances and
         // update all shaders ...
@@ -1516,7 +1516,7 @@ int CDisplay::RenderStereoView(const aiMatrix4x4& m)
             D3DCOLORWRITEENABLE_BLUE);
 
         // clear the z-buffer
-        g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER,0,1.0f,0);
+        g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER,0,1.0,0);
 
         // move the camera a little bit to the right
         g_sCamera.vPos += g_sCamera.vRight * 0.06;
@@ -1579,9 +1579,9 @@ int CDisplay::HandleInput()
     {
         aiMatrix4x4 mMat;
         D3DXMatrixRotationYawPitchRoll((D3DXMATRIX*)&mMat,
-            g_vRotateSpeed.x * g_fElpasedTime * 0.5f,
-            g_vRotateSpeed.y * g_fElpasedTime * 0.5f,
-            g_vRotateSpeed.z * g_fElpasedTime * 0.5f);
+            g_vRotateSpeed.x * g_fElpasedTime * 0.5,
+            g_vRotateSpeed.y * g_fElpasedTime * 0.5,
+            g_vRotateSpeed.z * g_fElpasedTime * 0.5);
 
         D3DXVec3TransformNormal((D3DXVECTOR3*)&g_avLightDirs[0],
             (D3DXVECTOR3*)&g_avLightDirs[0],(D3DXMATRIX*)&mMat);
@@ -1646,38 +1646,38 @@ int CDisplay::DrawHUD()
     D3DSURFACE_DESC sDesc;
     g_pcTexture->GetLevelDesc(0,&sDesc);
     SVertex as[4];
-    float fHalfX = ((float)sRect.right-(float)sDesc.Width) / 2.0f;
-    float fHalfY = ((float)sRect.bottom-(float)sDesc.Height) / 2.0f;
+    float fHalfX = ((float)sRect.right-(float)sDesc.Width) / 2.0;
+    float fHalfY = ((float)sRect.bottom-(float)sDesc.Height) / 2.0;
     as[1].x = fHalfX;
     as[1].y = fHalfY;
-    as[1].z = 0.2f;
-    as[1].w = 1.0f;
-    as[1].u = 0.0f;
-    as[1].v = 0.0f;
+    as[1].z = 0.2;
+    as[1].w = 1.0;
+    as[1].u = 0.0;
+    as[1].v = 0.0;
 
     as[3].x = (float)sRect.right-fHalfX;
     as[3].y = fHalfY;
-    as[3].z = 0.2f;
-    as[3].w = 1.0f;
-    as[3].u = 1.0f;
-    as[3].v = 0.0f;
+    as[3].z = 0.2;
+    as[3].w = 1.0;
+    as[3].u = 1.0;
+    as[3].v = 0.0;
 
     as[0].x = fHalfX;
     as[0].y = (float)sRect.bottom-fHalfY;
-    as[0].z = 0.2f;
-    as[0].w = 1.0f;
-    as[0].u = 0.0f;
-    as[0].v = 1.0f;
+    as[0].z = 0.2;
+    as[0].w = 1.0;
+    as[0].u = 0.0;
+    as[0].v = 1.0;
 
     as[2].x = (float)sRect.right-fHalfX;
     as[2].y = (float)sRect.bottom-fHalfY;
-    as[2].z = 0.2f;
-    as[2].w = 1.0f;
-    as[2].u = 1.0f;
-    as[2].v = 1.0f;
+    as[2].z = 0.2;
+    as[2].w = 1.0;
+    as[2].u = 1.0;
+    as[2].v = 1.0;
 
-    as[0].x -= 0.5f;as[1].x -= 0.5f;as[2].x -= 0.5f;as[3].x -= 0.5f;
-    as[0].y -= 0.5f;as[1].y -= 0.5f;as[2].y -= 0.5f;as[3].y -= 0.5f;
+    as[0].x -= 0.5;as[1].x -= 0.5;as[2].x -= 0.5;as[3].x -= 0.5;
+    as[0].y -= 0.5;as[1].y -= 0.5;as[2].y -= 0.5;as[3].y -= 0.5;
 
     g_piDevice->SetSamplerState(0,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
     g_piDevice->SetSamplerState(0,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
@@ -1791,7 +1791,7 @@ int CDisplay::RenderFullScene()
         ID3DXEffect* piEnd = g_piNormalsEffect;
         aiMatrix4x4 pcProj = m * mViewProjection;
 
-        D3DXVECTOR4 vVector(1.f,0.f,0.f,1.f);
+        D3DXVECTOR4 vVector(1.0,0.0,0.0,1.0);
         piEnd->SetVector("OUTPUT_COLOR",&vVector);
         piEnd->SetMatrix("WorldViewProjection", (const D3DXMATRIX*)&pcProj);
 
@@ -1905,33 +1905,33 @@ int CDisplay::RenderNode (aiNode* piNode,const aiMatrix4x4& piMatrix,
         apcVec[0].x = g_avLightDirs[0].x;
         apcVec[0].y = g_avLightDirs[0].y;
         apcVec[0].z = g_avLightDirs[0].z;
-        apcVec[0].w = 0.0f;
-        apcVec[1].x = g_avLightDirs[0].x * -1.0f;
-        apcVec[1].y = g_avLightDirs[0].y * -1.0f;
-        apcVec[1].z = g_avLightDirs[0].z * -1.0f;
-        apcVec[1].w = 0.0f;
+        apcVec[0].w = 0.0;
+        apcVec[1].x = g_avLightDirs[0].x * -1.0;
+        apcVec[1].y = g_avLightDirs[0].y * -1.0;
+        apcVec[1].z = g_avLightDirs[0].z * -1.0;
+        apcVec[1].w = 0.0;
 
         D3DXVec4Normalize(&apcVec[0],&apcVec[0]);
         D3DXVec4Normalize(&apcVec[1],&apcVec[1]);
         piEnd->SetVectorArray("afLightDir",apcVec,5);
 
-        apcVec[0].x = ((g_avLightColors[0] >> 16) & 0xFF) / 255.0f;
-        apcVec[0].y = ((g_avLightColors[0] >> 8) & 0xFF) / 255.0f;
-        apcVec[0].z = ((g_avLightColors[0]) & 0xFF) / 255.0f;
-        apcVec[0].w = 1.0f;
+        apcVec[0].x = ((g_avLightColors[0] >> 16) & 0xFF) / 255.0;
+        apcVec[0].y = ((g_avLightColors[0] >> 8) & 0xFF) / 255.0;
+        apcVec[0].z = ((g_avLightColors[0]) & 0xFF) / 255.0;
+        apcVec[0].w = 1.0;
 
         if( g_sOptions.b3Lights)
         {
-            apcVec[1].x = ((g_avLightColors[1] >> 16) & 0xFF) / 255.0f;
-            apcVec[1].y = ((g_avLightColors[1] >> 8) & 0xFF) / 255.0f;
-            apcVec[1].z = ((g_avLightColors[1]) & 0xFF) / 255.0f;
-            apcVec[1].w = 0.0f;
+            apcVec[1].x = ((g_avLightColors[1] >> 16) & 0xFF) / 255.0;
+            apcVec[1].y = ((g_avLightColors[1] >> 8) & 0xFF) / 255.0;
+            apcVec[1].z = ((g_avLightColors[1]) & 0xFF) / 255.0;
+            apcVec[1].w = 0.0;
         } else
         {
-            apcVec[1].x = 0.0f;
-            apcVec[1].y = 0.0f;
-            apcVec[1].z = 0.0f;
-            apcVec[1].w = 0.0f;
+            apcVec[1].x = 0.0;
+            apcVec[1].y = 0.0;
+            apcVec[1].z = 0.0;
+            apcVec[1].w = 0.0;
         }
 
         apcVec[0] *= g_fLightIntensity;
@@ -1979,7 +1979,7 @@ int CDisplay::RenderNode (aiNode* piNode,const aiMatrix4x4& piMatrix,
             AssetHelper::MeshHelper* helper = g_pcAsset->apcMeshes[piNode->mMeshes[i]];
 
             // don't render the mesh if the render pass is incorrect
-            if (g_sOptions.bRenderMats && (helper->piOpacityTexture || helper->fOpacity != 1.0f) && !mesh->HasBones())
+            if (g_sOptions.bRenderMats && (helper->piOpacityTexture || helper->fOpacity != 1.0) && !mesh->HasBones())
             {
                 if (!bAlpha)continue;
             }
@@ -2121,14 +2121,14 @@ int CDisplay::RenderPatternBG()
             // (hopefully this is ugly enough that every ps_2_0 cards owner
             //  runs to the next shop to buy himself a new card ...)
             g_piDevice->Clear(0,NULL,D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-                D3DCOLOR_ARGB(0xFF,0xFF,0,0xFF), 1.0f,0 );
+                D3DCOLOR_ARGB(0xFF,0xFF,0,0xFF), 1.0,0 );
             return 1;
         }
     }
 
     // clear the depth buffer only
     g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER,
-        D3DCOLOR_ARGB(0xFF,0xFF,0,0xFF), 1.0f,0 );
+        D3DCOLOR_ARGB(0xFF,0xFF,0,0xFF), 1.0,0 );
 
     // setup the colors to be used ...
     g_piPatternEffect->SetVector("COLOR_ONE",&m_avCheckerColors[0]);
@@ -2150,26 +2150,26 @@ int CDisplay::RenderPatternBG()
     };
     // build the screen-filling rectangle
     SVertex as[4];
-    as[1].x = 0.0f;
-    as[1].y = 0.0f;
-    as[1].z = 0.2f;
+    as[1].x = 0.0;
+    as[1].y = 0.0;
+    as[1].z = 0.2;
     as[3].x = (float)sRect.right;
-    as[3].y = 0.0f;
-    as[3].z = 0.2f;
-    as[0].x = 0.0f;
+    as[3].y = 0.0;
+    as[3].z = 0.2;
+    as[0].x = 0.0;
     as[0].y = (float)sRect.bottom;
-    as[0].z = 0.2f;
+    as[0].z = 0.2;
     as[2].x = (float)sRect.right;
     as[2].y = (float)sRect.bottom;
-    as[2].z = 0.2f;
+    as[2].z = 0.2;
 
-    as[0].w = 1.0f;
-    as[1].w = 1.0f;
-    as[2].w = 1.0f;
-    as[3].w = 1.0f;
+    as[0].w = 1.0;
+    as[1].w = 1.0;
+    as[2].w = 1.0;
+    as[3].w = 1.0;
 
-    as[0].x -= 0.5f;as[1].x -= 0.5f;as[2].x -= 0.5f;as[3].x -= 0.5f;
-    as[0].y -= 0.5f;as[1].y -= 0.5f;as[2].y -= 0.5f;as[3].y -= 0.5f;
+    as[0].x -= 0.5;as[1].x -= 0.5;as[2].x -= 0.5;as[3].x -= 0.5;
+    as[0].y -= 0.5;as[1].y -= 0.5;as[2].y -= 0.5;as[3].y -= 0.5;
 
     // draw the rectangle
     DWORD dw2;g_piDevice->GetFVF(&dw2);
@@ -2249,36 +2249,36 @@ int CDisplay::RenderTextureView()
         const float ny = (float)sRect.bottom;
         const float  x = (float)sDesc.Width;
         const float  y = (float)sDesc.Height;
-        float f = min((nx-30) / x,(ny-30) / y) * (m_fTextureZoom/1000.0f);
+        float f = min((nx-30) / x,(ny-30) / y) * (m_fTextureZoom/1000.0);
 
-        float fHalfX = (nx - (f * x)) / 2.0f;
-        float fHalfY = (ny - (f * y)) / 2.0f;
+        float fHalfX = (nx - (f * x)) / 2.0;
+        float fHalfY = (ny - (f * y)) / 2.0;
         as[1].x = fHalfX + m_vTextureOffset.x;
         as[1].y = fHalfY + m_vTextureOffset.y;
-        as[1].z = 0.2f;
-        as[1].w = 1.0f;
-        as[1].u = 0.0f;
-        as[1].v = 0.0f;
+        as[1].z = 0.2;
+        as[1].w = 1.0;
+        as[1].u = 0.0;
+        as[1].v = 0.0;
         as[3].x = nx-fHalfX + m_vTextureOffset.x;
         as[3].y = fHalfY + m_vTextureOffset.y;
-        as[3].z = 0.2f;
-        as[3].w = 1.0f;
-        as[3].u = 1.0f;
-        as[3].v = 0.0f;
+        as[3].z = 0.2;
+        as[3].w = 1.0;
+        as[3].u = 1.0;
+        as[3].v = 0.0;
         as[0].x = fHalfX + m_vTextureOffset.x;
         as[0].y = ny-fHalfY + m_vTextureOffset.y;
-        as[0].z = 0.2f;
-        as[0].w = 1.0f;
-        as[0].u = 0.0f;
-        as[0].v = 1.0f;
+        as[0].z = 0.2;
+        as[0].w = 1.0;
+        as[0].u = 0.0;
+        as[0].v = 1.0;
         as[2].x = nx-fHalfX + m_vTextureOffset.x;
         as[2].y = ny-fHalfY + m_vTextureOffset.y;
-        as[2].z = 0.2f;
-        as[2].w = 1.0f;
-        as[2].u = 1.0f;
-        as[2].v = 1.0f;
-        as[0].x -= 0.5f;as[1].x -= 0.5f;as[2].x -= 0.5f;as[3].x -= 0.5f;
-        as[0].y -= 0.5f;as[1].y -= 0.5f;as[2].y -= 0.5f;as[3].y -= 0.5f;
+        as[2].z = 0.2;
+        as[2].w = 1.0;
+        as[2].u = 1.0;
+        as[2].v = 1.0;
+        as[0].x -= 0.5;as[1].x -= 0.5;as[2].x -= 0.5;as[3].x -= 0.5;
+        as[0].y -= 0.5;as[1].y -= 0.5;as[2].y -= 0.5;as[3].y -= 0.5;
 
         // draw the rectangle
         DWORD dw2;g_piDevice->GetFVF(&dw2);
@@ -2295,4 +2295,3 @@ int CDisplay::RenderTextureView()
     return 1;
 }
 };
-

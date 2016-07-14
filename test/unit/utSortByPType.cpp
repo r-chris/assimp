@@ -142,11 +142,11 @@ void SortByPTypeProcessTest::SetUp()
                 float f = (float)remaining[idx];
 
                 // (the values need to be unique - otherwise all degenerates would be removed)
-                *pv++ = aiVector3D(f,f+1.f,f+q);
-                *pn++ = aiVector3D(f,f+1.f,f+q);
-                *pt++ = aiVector3D(f,f+1.f,f+q);
-                *pb++ = aiVector3D(f,f+1.f,f+q);
-                *puv++ = aiVector3D(f,f+1.f,f+q);
+                *pv++ = aiVector3D(f,f+1.0,f+q);
+                *pn++ = aiVector3D(f,f+1.0,f+q);
+                *pt++ = aiVector3D(f,f+1.0,f+q);
+                *pb++ = aiVector3D(f,f+1.0,f+q);
+                *puv++ = aiVector3D(f,f+1.0,f+q);
             }
             ++faces;
             --remaining[idx];

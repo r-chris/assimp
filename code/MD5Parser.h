@@ -257,14 +257,14 @@ inline void ConvertQuaternion (const aiVector3D& in, aiQuaternion& out) {
     out.y = in.y;
     out.z = in.z;
 
-    const ai_real t = 1.0f - (in.x*in.x) - (in.y*in.y) - (in.z*in.z);
+    const ai_real t = 1.0 - (in.x*in.x) - (in.y*in.y) - (in.z*in.z);
 
-    if (t < 0.0f)
-        out.w = 0.0f;
+    if (t < 0.0)
+        out.w = 0.0;
     else out.w = std::sqrt (t);
 
     // Assimp convention.
-    out.w *= -1.f;
+    out.w *= -1.0;
 }
 
 // ---------------------------------------------------------------------------

@@ -778,7 +778,7 @@ PLY::PropertyInstance::ValueUnion PLY::PropertyInstance::DefaultValue(
     switch (eType)
     {
     case EDT_Float:
-        out.fFloat = 0.f;
+        out.fFloat = 0.0;
         return out;
 
     case EDT_Double:

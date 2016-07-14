@@ -61,7 +61,7 @@ std::vector<std::string> g_aPreviousFiles;
 // history menu item
 HMENU g_hHistoryMenu = NULL;
 
-float g_fACMR = 3.0f;
+float g_fACMR = 3.0;
 
 #define AI_VIEW_NUM_RECENT_FILES 0x8
 #define AI_VIEW_RECENT_FILE_ID(_n_) (5678 + _n_)
@@ -549,9 +549,9 @@ void DisplayColorDialog(D3DXVECTOR4* pclrResult)
     clr.lStructSize = sizeof(CHOOSECOLOR);
     clr.hwndOwner = g_hDlg;
     clr.Flags = CC_RGBINIT | CC_FULLOPEN;
-    clr.rgbResult = RGB(clamp<unsigned char>(pclrResult->x * 255.0f),
-        clamp<unsigned char>(pclrResult->y * 255.0f),
-        clamp<unsigned char>(pclrResult->z * 255.0f));
+    clr.rgbResult = RGB(clamp<unsigned char>(pclrResult->x * 255.0),
+        clamp<unsigned char>(pclrResult->y * 255.0),
+        clamp<unsigned char>(pclrResult->z * 255.0));
     clr.lpCustColors = g_aclCustomColors;
     clr.lpfnHook = NULL;
     clr.lpTemplateName = NULL;
@@ -559,9 +559,9 @@ void DisplayColorDialog(D3DXVECTOR4* pclrResult)
 
     ChooseColor(&clr);
 
-    pclrResult->x = GetRValue(clr.rgbResult) / 255.0f;
-    pclrResult->y = GetGValue(clr.rgbResult) / 255.0f;
-    pclrResult->z = GetBValue(clr.rgbResult) / 255.0f;
+    pclrResult->x = GetRValue(clr.rgbResult) / 255.0;
+    pclrResult->y = GetGValue(clr.rgbResult) / 255.0;
+    pclrResult->z = GetBValue(clr.rgbResult) / 255.0;
     return;
 }
 
@@ -1354,7 +1354,7 @@ INT_PTR CALLBACK SMMessageProc(HWND hwndDlg,UINT uMsg,
     {
     case WM_INITDIALOG:
         char s[30];
-        ::sprintf(s,"%.2f",g_smoothAngle);
+        ::sprintf(s,"%.2",g_smoothAngle);
         SetDlgItemText(hwndDlg,IDC_EDITSM,s);
         return TRUE;
 
@@ -1432,13 +1432,13 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
 
             if (CDisplay::VIEWMODE_TEXTURE == CDisplay::Instance().GetViewMode())
             {
-                CDisplay::Instance().SetTextureViewZoom ( GET_WHEEL_DELTA_WPARAM(wParam) / 50.0f );
+                CDisplay::Instance().SetTextureViewZoom ( GET_WHEEL_DELTA_WPARAM(wParam) / 50.0 );
             }
             else
             {
                 if (!g_bFPSView)
                     {
-                    g_sCamera.vPos.z += GET_WHEEL_DELTA_WPARAM(wParam) / 50.0f;
+                    g_sCamera.vPos.z += GET_WHEEL_DELTA_WPARAM(wParam) / 50.0;
                     }
                 else
                     {
@@ -1514,9 +1514,9 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
                     if (CDisplay::VIEWMODE_TEXTURE == CDisplay::Instance().GetViewMode() ||
                         CDisplay::VIEWMODE_MATERIAL == CDisplay::Instance().GetViewMode())
                     {
-                        r = (unsigned char)(CDisplay::Instance().GetFirstCheckerColor()->x * 255.0f);
-                        g = (unsigned char)(CDisplay::Instance().GetFirstCheckerColor()->y * 255.0f);
-                        b = (unsigned char)(CDisplay::Instance().GetFirstCheckerColor()->z * 255.0f);
+                        r = (unsigned char)(CDisplay::Instance().GetFirstCheckerColor()->x * 255.0);
+                        g = (unsigned char)(CDisplay::Instance().GetFirstCheckerColor()->y * 255.0);
+                        b = (unsigned char)(CDisplay::Instance().GetFirstCheckerColor()->z * 255.0);
                         szText = "Background #0";
                     }
                     else if (!g_pcAsset)
@@ -1547,9 +1547,9 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
                     if (CDisplay::VIEWMODE_TEXTURE == CDisplay::Instance().GetViewMode() ||
                         CDisplay::VIEWMODE_MATERIAL == CDisplay::Instance().GetViewMode())
                     {
-                        r = (unsigned char)(CDisplay::Instance().GetSecondCheckerColor()->x * 255.0f);
-                        g = (unsigned char)(CDisplay::Instance().GetSecondCheckerColor()->y * 255.0f);
-                        b = (unsigned char)(CDisplay::Instance().GetSecondCheckerColor()->z * 255.0f);
+                        r = (unsigned char)(CDisplay::Instance().GetSecondCheckerColor()->x * 255.0);
+                        g = (unsigned char)(CDisplay::Instance().GetSecondCheckerColor()->y * 255.0);
+                        b = (unsigned char)(CDisplay::Instance().GetSecondCheckerColor()->z * 255.0);
                         szText = "Background #1";
                     }
                     else if (!g_pcAsset)
@@ -1678,8 +1678,8 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
             D3DSURFACE_DESC sDesc;
             g_pcTexture->GetLevelDesc(0,&sDesc);
 
-            fHalfX = (int)(((float)sRect.right-(float)sDesc.Width) / 2.0f);
-            fHalfY = (int)(((float)sRect.bottom-(float)sDesc.Height) / 2.0f);
+            fHalfX = (int)(((float)sRect.right-(float)sDesc.Width) / 2.0);
+            fHalfY = (int)(((float)sRect.bottom-(float)sDesc.Height) / 2.0);
 
             // Determine the input operation to perform for this position
             g_eClick = EClickPos_Outside;
@@ -1855,10 +1855,10 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
             }
             else if (ID_VIEWER_RESETVIEW == LOWORD(wParam))
                 {
-                g_sCamera.vPos = aiVector3D(0.0f,0.0f,-10.0f);
-                g_sCamera.vLookAt = aiVector3D(0.0f,0.0f,1.0f);
-                g_sCamera.vUp = aiVector3D(0.0f,1.0f,0.0f);
-                g_sCamera.vRight = aiVector3D(0.0f,1.0f,0.0f);
+                g_sCamera.vPos = aiVector3D(0.0,0.0,-10.0);
+                g_sCamera.vLookAt = aiVector3D(0.0,0.0,1.0);
+                g_sCamera.vUp = aiVector3D(0.0,1.0,0.0);
+                g_sCamera.vRight = aiVector3D(0.0,1.0,0.0);
                 g_mWorldRotate = aiMatrix4x4();
                 g_mWorld = aiMatrix4x4();
 
@@ -2167,8 +2167,8 @@ INT_PTR CALLBACK MessageProc(HWND hwndDlg,UINT uMsg,
                     if (CDisplay::VIEWMODE_TEXTURE == CDisplay::Instance().GetViewMode() ||
                         CDisplay::VIEWMODE_MATERIAL == CDisplay::Instance().GetViewMode())
                     {
-                        CDisplay::Instance().SetFirstCheckerColor(D3DXVECTOR4(0.4f,0.4f,0.4f,1.0f));
-                        CDisplay::Instance().SetSecondCheckerColor(D3DXVECTOR4(0.6f,0.6f,0.6f,1.0f));
+                        CDisplay::Instance().SetFirstCheckerColor(D3DXVECTOR4(0.4,0.4,0.4,1.0));
+                        CDisplay::Instance().SetSecondCheckerColor(D3DXVECTOR4(0.6,0.6,0.6,1.0));
                         SaveCheckerPatternColors();
                     }
                     else
@@ -2461,7 +2461,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 
     double adLast[30];
-    for (int i = 0; i < 30;++i)adLast[i] = 0.0f;
+    for (int i = 0; i < 30;++i)adLast[i] = 0.0;
     int iCurrent = 0;
 
     double g_dCurTime = 0;
@@ -2624,7 +2624,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         g_fElpasedTime = (float)((g_dCurTime - g_dLastTime) * 0.001);
         g_dLastTime    = g_dCurTime;
 
-        adLast[iCurrent++] = 1.0f / g_fElpasedTime;
+        adLast[iCurrent++] = 1.0 / g_fElpasedTime;
 
         double dFPS = 0.0;
         for (int i = 0;i < 30;++i)
@@ -2639,7 +2639,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                 g_fFPS = dFPS;
                 char szOut[256];
 
-                sprintf(szOut,"%i",(int)floorf((float)dFPS+0.5f));
+                sprintf(szOut,"%i",(int)floorf((float)dFPS+0.5));
                 SetDlgItemText(g_hDlg,IDC_EFPS,szOut);
                 }
             }

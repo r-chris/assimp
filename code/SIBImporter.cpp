@@ -163,13 +163,13 @@ static aiColor3D ReadColor(StreamReaderLE* stream)
 
 static void UnknownChunk(StreamReaderLE* stream, const SIBChunk& chunk)
 {
-    char temp[5] = { 
+    char temp[5] = {
         static_cast<char>(( chunk.Tag>>24 ) & 0xff),
         static_cast<char>(( chunk.Tag>>16 ) & 0xff),
         static_cast<char>(( chunk.Tag>>8 ) & 0xff),
         static_cast<char>(chunk.Tag & 0xff), '\0'
     };
-    
+
     DefaultLogger::get()->warn((Formatter::format(), "SIB: Skipping unknown '",temp,"' chunk."));
 }
 
@@ -373,7 +373,7 @@ static void ConnectFaces(SIBMesh* mesh)
         uint32_t *idx = &mesh->idx[mesh->faceStart[faceIdx]];
         uint32_t numPoints = *idx++;
         uint32_t prev = idx[(numPoints-1)*N+POS];
-    
+
         for (uint32_t i=0;i<numPoints;i++,idx+=N)
         {
             uint32_t next = idx[POS];
@@ -398,7 +398,7 @@ static void ConnectFaces(SIBMesh* mesh)
 static aiVector3D CalculateVertexNormal(SIBMesh* mesh, uint32_t faceIdx, uint32_t pos,
                                         const std::vector<aiVector3D>& faceNormals)
 {
-    // Creased edges complicate this. We need to find the start/end range of the 
+    // Creased edges complicate this. We need to find the start/end range of the
     // ring of faces that touch this position.
     // We do this in two passes. The first pass is to find the end of the range,
     // the second is to work backwards to the start and calculate the final normal.
@@ -449,12 +449,12 @@ static aiVector3D CalculateVertexNormal(SIBMesh* mesh, uint32_t faceIdx, uint32_
 
             prevFaceIdx = faceIdx;
             faceIdx = nextFaceIdx;
-        }       
+        }
     }
 
     // Normalize it.
     float len = vtxNormal.Length();
-    if (len > 0.000000001f)
+    if (len > 0.000000001)
         vtxNormal /= len;
     return vtxNormal;
 }
@@ -558,7 +558,7 @@ static void ReadShape(SIB* sib, StreamReaderLE* stream)
     aiMatrix4x4 worldToLocal = smesh.axis;
     worldToLocal.Inverse();
     aiMatrix4x4 worldToLocalN = worldToLocal;
-    worldToLocalN.a4 = worldToLocalN.b4 = worldToLocalN.c4 = 0.0f;
+    worldToLocalN.a4 = worldToLocalN.b4 = worldToLocalN.c4 = 0.0;
     worldToLocalN.Inverse().Transpose();
 
     // Allocate final mesh data.
@@ -610,7 +610,7 @@ static void ReadShape(SIB* sib, StreamReaderLE* stream)
     obj.name = name;
     obj.axis = smesh.axis;
     obj.meshIdx = sib->meshes.size();
-    
+
     // Now that we know the size of everything,
     // we can build the final one-material-per-mesh data.
     for (size_t n=0;n<meshes.size();n++)
@@ -710,8 +710,8 @@ static void ReadLightInfo(aiLight* light, StreamReaderLE* stream)
     //    OpenGL: I = cos(angle)^E
     //   Solving: angle = acos(I^(1/E))
     ai_real E = 1.0 / std::max(spotExponent, 0.00001);
-    ai_real inner = acosf(powf(0.99f, E));
-    ai_real outer = acosf(powf(0.01f, E));
+    ai_real inner = acosf(powf(0.99, E));
+    ai_real outer = acosf(powf(0.01, E));
 
     // Apply the cutoff.
     outer = std::min(outer, AI_DEG_TO_RAD(spotCutoff));

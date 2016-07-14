@@ -206,8 +206,8 @@ void AC3DImporter::LoadObjectSection(std::vector<Object>& objects)
 
         // Return a point light with no attenuation
         light->mType = aiLightSource_POINT;
-        light->mColorDiffuse = light->mColorSpecular = aiColor3D(1.f,1.f,1.f);
-        light->mAttenuationConstant = 1.f;
+        light->mColorDiffuse = light->mColorSpecular = aiColor3D(1.0,1.0,1.0);
+        light->mAttenuationConstant = 1.0;
 
         // Generate a default name for both the light source and the node
         // FIXME - what's the right way to print a size_t? Is 'zu' universally available? stick with the safe version.
@@ -264,7 +264,7 @@ void AC3DImporter::LoadObjectSection(std::vector<Object>& objects)
             SkipSpaces(&buffer);
             AI_AC_CHECKED_LOAD_FLOAT_ARRAY("",0,2,&obj.texRepeat);
             if (!obj.texRepeat.x || !obj.texRepeat.y)
-                obj.texRepeat = aiVector2D (1.f,1.f);
+                obj.texRepeat = aiVector2D (1.0,1.0);
         }
         else if (TokenMatch(buffer,"texoff",6))
         {
@@ -424,7 +424,7 @@ void AC3DImporter::ConvertMaterial(const Object& object,
         matDest.AddProperty(&s,AI_MATKEY_TEXTURE_DIFFUSE(0));
 
         // UV transformation
-        if (1.f != object.texRepeat.x || 1.f != object.texRepeat.y ||
+        if (1.0 != object.texRepeat.x || 1.0 != object.texRepeat.y ||
             object.texOffset.x        || object.texOffset.y)
         {
             aiUVTransform transform;
@@ -448,7 +448,7 @@ void AC3DImporter::ConvertMaterial(const Object& object,
     else n = aiShadingMode_Gouraud;
     matDest.AddProperty<int>(&n,1,AI_MATKEY_SHADING_MODEL);
 
-    float f = 1.f - matSrc.trans;
+    float f = 1.0 - matSrc.trans;
     matDest.AddProperty<float>(&f,1,AI_MATKEY_OPACITY);
 }
 

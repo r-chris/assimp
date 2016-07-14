@@ -423,11 +423,11 @@ void LWSImporter::BuildGraph(aiNode* nd, LWS::NodeDesc& src, std::vector<Attachm
 
         // fixme: no proper handling of light falloffs yet
         if (src.lightFalloffType == 1)
-            lit->mAttenuationConstant = 1.f;
+            lit->mAttenuationConstant = 1.0;
         else if (src.lightFalloffType == 1)
-            lit->mAttenuationLinear = 1.f;
+            lit->mAttenuationLinear = 1.0;
         else
-            lit->mAttenuationQuadratic = 1.f;
+            lit->mAttenuationQuadratic = 1.0;
     }
 
     // If object is a camera - setup a corresponding ai structure

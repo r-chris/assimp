@@ -68,7 +68,7 @@ extern HWND g_hDlg                          /*= NULL*/;
 extern IDirect3D9* g_piD3D                  /*= NULL*/;
 extern IDirect3DDevice9* g_piDevice         /*= NULL*/;
 extern IDirect3DVertexDeclaration9* gDefaultVertexDecl /*= NULL*/;
-extern double g_fFPS                        /*= 0.0f*/;
+extern double g_fFPS                        /*= 0.0*/;
 extern char g_szFileName[ MAX_PATH ];
 extern ID3DXEffect* g_piDefaultEffect       /*= NULL*/;
 extern ID3DXEffect* g_piNormalsEffect       /*= NULL*/;
@@ -78,21 +78,21 @@ extern bool g_bMousePressed                 /*= false*/;
 extern bool g_bMousePressedR                /*= false*/;
 extern bool g_bMousePressedM                /*= false*/;
 extern bool g_bMousePressedBoth             /*= false*/;
-extern ai_real g_fElpasedTime                 /*= 0.0f*/;
+extern ai_real g_fElpasedTime                 /*= 0.0*/;
 extern D3DCAPS9 g_sCaps;
 extern bool g_bLoadingFinished              /*= false*/;
 extern HANDLE g_hThreadHandle               /*= NULL*/;
-extern float g_fWheelPos                    /*= -10.0f*/;
+extern float g_fWheelPos                    /*= -10.0*/;
 extern bool g_bLoadingCanceled              /*= false*/;
 extern IDirect3DTexture9* g_pcTexture       /*= NULL*/;
 
 extern aiMatrix4x4 g_mWorld;
 extern aiMatrix4x4 g_mWorldRotate;
-extern aiVector3D g_vRotateSpeed            /*= aiVector3D(0.5f,0.5f,0.5f)*/;
+extern aiVector3D g_vRotateSpeed            /*= aiVector3D(0.5,0.5,0.5)*/;
 
 extern aiVector3D g_avLightDirs[ 1 ] /* =
-                                        {   aiVector3D(-0.5f,0.6f,0.2f) ,
-                                        aiVector3D(-0.5f,0.5f,0.5f)} */;
+                                        {   aiVector3D(-0.5,0.6,0.2) ,
+                                        aiVector3D(-0.5,0.5,0.5)} */;
 
 
 extern POINT g_mousePos                     /*= {0,0};*/;
@@ -107,7 +107,7 @@ extern unsigned int g_iCurrentColor         /*= 0*/;
 // When the user chooses a color from the palette the intensity
 // is reset to 1.0
 // index[2] is the ambient color
-extern float g_fLightIntensity              /*=0.0f*/;
+extern float g_fLightIntensity              /*=0.0*/;
 extern D3DCOLOR g_avLightColors[ 3 ];
 
 extern RenderOptions g_sOptions;
@@ -125,13 +125,13 @@ extern AssetHelper *g_pcAsset               /*= NULL*/;
 extern unsigned char* g_szImageMask         /*= NULL*/;
 
 
-extern float g_fACMR /*= 3.0f*/;
+extern float g_fACMR /*= 3.0*/;
 extern IDirect3DQuery9* g_piQuery;
 
 extern bool g_bPlay                     /*= false*/;
 
 extern double g_dCurrent;
-extern float g_smoothAngle /*= 80.f*/;
+extern float g_smoothAngle /*= 80.0*/;
 
 extern unsigned int ppsteps, ppstepsdefault;
 extern bool nopointslines;
@@ -154,8 +154,8 @@ VOID WINAPI FillFunc(D3DXVECTOR4* pOut,
 
     // generate a nice checker pattern (yellow/black)
     // size of a square: 32 * 32 px
-    unsigned int iX = (unsigned int)(pTexCoord->x * 256.0f);
-    unsigned int iY = (unsigned int)(pTexCoord->y * 256.0f);
+    unsigned int iX = (unsigned int)(pTexCoord->x * 256.0);
+    unsigned int iY = (unsigned int)(pTexCoord->y * 256.0);
 
     bool bBlack = false;
     if ((iX / 32) % 2 == 0)
@@ -166,15 +166,15 @@ VOID WINAPI FillFunc(D3DXVECTOR4* pOut,
     {
         if ((iY / 32) % 2 != 0)bBlack = true;
     }
-    pOut->w = 1.0f;
+    pOut->w = 1.0;
     if (bBlack)
     {
-        pOut->x = pOut->y = pOut->z = 0.0f;
+        pOut->x = pOut->y = pOut->z = 0.0;
     }
     else
     {
-        pOut->x = pOut->y = 1.0f;
-        pOut->z = 0.0f;
+        pOut->x = pOut->y = 1.0;
+        pOut->z = 0.0;
     }
     return;
 }
@@ -765,7 +765,7 @@ void CMaterialManager::HMtoNMIfNecessary(
         else /*if (0 == iElement)*/dwFlags = D3DX_CHANNEL_BLUE;
 
         if(FAILED(D3DXComputeNormalMap(piTempTexture,
-            piTexture,NULL,0,dwFlags,1.0f)))
+            piTexture,NULL,0,dwFlags,1.0)))
         {
             CLogDisplay::Instance().AddEntry(
                 "[ERROR] Unable to compute normal map from height map",
@@ -840,10 +840,10 @@ int CMaterialManager::CreateMaterial(
     if(AI_SUCCESS != aiGetMaterialColor(pcMat,AI_MATKEY_COLOR_DIFFUSE,
         (aiColor4D*)&pcMesh->vDiffuseColor))
     {
-        pcMesh->vDiffuseColor.x = 1.0f;
-        pcMesh->vDiffuseColor.y = 1.0f;
-        pcMesh->vDiffuseColor.z = 1.0f;
-        pcMesh->vDiffuseColor.w = 1.0f;
+        pcMesh->vDiffuseColor.x = 1.0;
+        pcMesh->vDiffuseColor.y = 1.0;
+        pcMesh->vDiffuseColor.z = 1.0;
+        pcMesh->vDiffuseColor.w = 1.0;
     }
     //
     // SPECULAR COLOR --------------------------------------------------
@@ -851,10 +851,10 @@ int CMaterialManager::CreateMaterial(
     if(AI_SUCCESS != aiGetMaterialColor(pcMat,AI_MATKEY_COLOR_SPECULAR,
         (aiColor4D*)&pcMesh->vSpecularColor))
     {
-        pcMesh->vSpecularColor.x = 1.0f;
-        pcMesh->vSpecularColor.y = 1.0f;
-        pcMesh->vSpecularColor.z = 1.0f;
-        pcMesh->vSpecularColor.w = 1.0f;
+        pcMesh->vSpecularColor.x = 1.0;
+        pcMesh->vSpecularColor.y = 1.0;
+        pcMesh->vSpecularColor.z = 1.0;
+        pcMesh->vSpecularColor.w = 1.0;
     }
     //
     // AMBIENT COLOR --------------------------------------------------
@@ -862,10 +862,10 @@ int CMaterialManager::CreateMaterial(
     if(AI_SUCCESS != aiGetMaterialColor(pcMat,AI_MATKEY_COLOR_AMBIENT,
         (aiColor4D*)&pcMesh->vAmbientColor))
     {
-        pcMesh->vAmbientColor.x = 0.0f;
-        pcMesh->vAmbientColor.y = 0.0f;
-        pcMesh->vAmbientColor.z = 0.0f;
-        pcMesh->vAmbientColor.w = 1.0f;
+        pcMesh->vAmbientColor.x = 0.0;
+        pcMesh->vAmbientColor.y = 0.0;
+        pcMesh->vAmbientColor.z = 0.0;
+        pcMesh->vAmbientColor.w = 1.0;
     }
     //
     // EMISSIVE COLOR -------------------------------------------------
@@ -873,10 +873,10 @@ int CMaterialManager::CreateMaterial(
     if(AI_SUCCESS != aiGetMaterialColor(pcMat,AI_MATKEY_COLOR_EMISSIVE,
         (aiColor4D*)&pcMesh->vEmissiveColor))
     {
-        pcMesh->vEmissiveColor.x = 0.0f;
-        pcMesh->vEmissiveColor.y = 0.0f;
-        pcMesh->vEmissiveColor.z = 0.0f;
-        pcMesh->vEmissiveColor.w = 1.0f;
+        pcMesh->vEmissiveColor.x = 0.0;
+        pcMesh->vEmissiveColor.y = 0.0;
+        pcMesh->vEmissiveColor.z = 0.0;
+        pcMesh->vEmissiveColor.w = 1.0;
     }
 
     //
@@ -884,7 +884,7 @@ int CMaterialManager::CreateMaterial(
     //
     if(AI_SUCCESS != aiGetMaterialFloat(pcMat,AI_MATKEY_OPACITY,&pcMesh->fOpacity))
     {
-        pcMesh->fOpacity = 1.0f;
+        pcMesh->fOpacity = 1.0;
     }
 
     //
@@ -904,7 +904,7 @@ int CMaterialManager::CreateMaterial(
     if(AI_SUCCESS != aiGetMaterialFloat(pcMat,AI_MATKEY_SHININESS,&pcMesh->fShininess))
     {
         // assume 15 as default shininess
-        pcMesh->fShininess = 15.0f;
+        pcMesh->fShininess = 15.0;
     }
     else if (bDefault)pcMesh->eShadingMode  = aiShadingMode_Phong;
 
@@ -915,7 +915,7 @@ int CMaterialManager::CreateMaterial(
     if(AI_SUCCESS != aiGetMaterialFloat(pcMat,AI_MATKEY_SHININESS_STRENGTH,&pcMesh->fSpecularStrength))
     {
         // assume 1.0 as default shininess strength
-        pcMesh->fSpecularStrength = 1.0f;
+        pcMesh->fSpecularStrength = 1.0;
     }
 
     aiString szPath;
@@ -1039,11 +1039,11 @@ int CMaterialManager::CreateMaterial(
         CBackgroundPainter::Instance().SetTextureBG(szPath.data);
     }
 
-    // BUGFIX: If the shininess is 0.0f disable phong lighting
+    // BUGFIX: If the shininess is 0.0 disable phong lighting
     // This is a workaround for some meshes in the DX SDK (e.g. tiny.x)
     // FIX: Added this check to the x-loader, but the line remains to
     // catch other loader doing the same ...
-    if (0.0f == pcMesh->fShininess){
+    if (0.0 == pcMesh->fShininess){
         pcMesh->eShadingMode = aiShadingMode_Gouraud;
     }
 
@@ -1089,7 +1089,7 @@ int CMaterialManager::CreateMaterial(
             (pc->eShadingMode != aiShadingMode_Gouraud ? true : false))
             continue;
 
-        if ((pcMesh->fOpacity != 1.0f ? true : false) != (pc->fOpacity != 1.0f ? true : false))
+        if ((pcMesh->fOpacity != 1.0 ? true : false) != (pc->fOpacity != 1.0 ? true : false))
             continue;
 
         if (pcSource->HasBones() != g_pcAsset->pcScene->mMeshes[i]->HasBones())
@@ -1171,7 +1171,7 @@ int CMaterialManager::CreateMaterial(
         else sMacro[iCurrent].Definition = "IN.TexCoord0";
         sMacro[iCurrent].Name = "AV_LIGHTMAP_TEXTURE_UV_COORD";
 
-        ++iCurrent;float f= 1.f;
+        ++iCurrent;float f= 1.0;
         aiGetMaterialFloat(pcMat,AI_MATKEY_TEXBLEND_LIGHTMAP(0),&f);
         sprintf(buff,"%f",f);
 
@@ -1218,7 +1218,7 @@ int CMaterialManager::CreateMaterial(
             ++iCurrent;
         }
     }
-    if (1.0f != pcMesh->fOpacity)
+    if (1.0 != pcMesh->fOpacity)
     {
         sMacro[iCurrent].Name = "AV_OPACITY";
         sMacro[iCurrent].Definition = "1";
@@ -1290,7 +1290,7 @@ int CMaterialManager::CreateMaterial(
     // shared shaders are automatically recommited before the shader
     // is being used for a particular mesh
 
-    if (1.0f != pcMesh->fOpacity)
+    if (1.0 != pcMesh->fOpacity)
         pcMesh->piEffect->SetFloat("TRANSPARENCY",pcMesh->fOpacity);
     if (pcMesh->eShadingMode  != aiShadingMode_Gouraud && !g_sOptions.bNoSpecular)
     {
@@ -1351,47 +1351,47 @@ int CMaterialManager::SetupMaterial (
     apcVec[0].x = g_avLightDirs[0].x;
     apcVec[0].y = g_avLightDirs[0].y;
     apcVec[0].z = g_avLightDirs[0].z;
-    apcVec[0].w = 0.0f;
-    apcVec[1].x = g_avLightDirs[0].x * -1.0f;
-    apcVec[1].y = g_avLightDirs[0].y * -1.0f;
-    apcVec[1].z = g_avLightDirs[0].z * -1.0f;
-    apcVec[1].w = 0.0f;
+    apcVec[0].w = 0.0;
+    apcVec[1].x = g_avLightDirs[0].x * -1.0;
+    apcVec[1].y = g_avLightDirs[0].y * -1.0;
+    apcVec[1].z = g_avLightDirs[0].z * -1.0;
+    apcVec[1].w = 0.0;
     D3DXVec4Normalize(&apcVec[0],&apcVec[0]);
     D3DXVec4Normalize(&apcVec[1],&apcVec[1]);
     piEnd->SetVectorArray("afLightDir",apcVec,5);
 
-    apcVec[0].x = ((g_avLightColors[0] >> 16)   & 0xFF) / 255.0f;
-    apcVec[0].y = ((g_avLightColors[0] >> 8)    & 0xFF) / 255.0f;
-    apcVec[0].z = ((g_avLightColors[0])         & 0xFF) / 255.0f;
-    apcVec[0].w = 1.0f;
+    apcVec[0].x = ((g_avLightColors[0] >> 16)   & 0xFF) / 255.0;
+    apcVec[0].y = ((g_avLightColors[0] >> 8)    & 0xFF) / 255.0;
+    apcVec[0].z = ((g_avLightColors[0])         & 0xFF) / 255.0;
+    apcVec[0].w = 1.0;
 
     if( g_sOptions.b3Lights)
     {
-        apcVec[1].x = ((g_avLightColors[1] >> 16) & 0xFF) / 255.0f;
-        apcVec[1].y = ((g_avLightColors[1] >> 8) & 0xFF) / 255.0f;
-        apcVec[1].z = ((g_avLightColors[1]) & 0xFF) / 255.0f;
-        apcVec[1].w = 0.0f;
+        apcVec[1].x = ((g_avLightColors[1] >> 16) & 0xFF) / 255.0;
+        apcVec[1].y = ((g_avLightColors[1] >> 8) & 0xFF) / 255.0;
+        apcVec[1].z = ((g_avLightColors[1]) & 0xFF) / 255.0;
+        apcVec[1].w = 0.0;
     } else
     {
-        apcVec[1].x = 0.0f;
-        apcVec[1].y = 0.0f;
-        apcVec[1].z = 0.0f;
-        apcVec[1].w = 0.0f;
+        apcVec[1].x = 0.0;
+        apcVec[1].y = 0.0;
+        apcVec[1].z = 0.0;
+        apcVec[1].w = 0.0;
     }
 
     apcVec[0] *= g_fLightIntensity;
     apcVec[1] *= g_fLightIntensity;
     piEnd->SetVectorArray("afLightColor",apcVec,5);
 
-    apcVec[0].x = ((g_avLightColors[2] >> 16)   & 0xFF) / 255.0f;
-    apcVec[0].y = ((g_avLightColors[2] >> 8)    & 0xFF) / 255.0f;
-    apcVec[0].z = ((g_avLightColors[2])         & 0xFF) / 255.0f;
-    apcVec[0].w = 1.0f;
+    apcVec[0].x = ((g_avLightColors[2] >> 16)   & 0xFF) / 255.0;
+    apcVec[0].y = ((g_avLightColors[2] >> 8)    & 0xFF) / 255.0;
+    apcVec[0].z = ((g_avLightColors[2])         & 0xFF) / 255.0;
+    apcVec[0].w = 1.0;
 
-    apcVec[1].x = ((g_avLightColors[2] >> 16)   & 0xFF) / 255.0f;
-    apcVec[1].y = ((g_avLightColors[2] >> 8)    & 0xFF) / 255.0f;
-    apcVec[1].z = ((g_avLightColors[2])         & 0xFF) / 255.0f;
-    apcVec[1].w = 0.0f;
+    apcVec[1].x = ((g_avLightColors[2] >> 16)   & 0xFF) / 255.0;
+    apcVec[1].y = ((g_avLightColors[2] >> 8)    & 0xFF) / 255.0;
+    apcVec[1].z = ((g_avLightColors[2])         & 0xFF) / 255.0;
+    apcVec[1].w = 0.0;
 
     // FIX: light intensity doesn't apply to ambient color
     //apcVec[0] *= g_fLightIntensity;
@@ -1409,7 +1409,7 @@ int CMaterialManager::SetupMaterial (
     if (pcMesh->bSharedFX)
     {
         // now commit all constants to the shader
-        if (1.0f != pcMesh->fOpacity)
+        if (1.0 != pcMesh->fOpacity)
             pcMesh->piEffect->SetFloat("TRANSPARENCY",pcMesh->fOpacity);
         if (pcMesh->eShadingMode  != aiShadingMode_Gouraud)
         {

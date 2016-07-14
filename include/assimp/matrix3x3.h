@@ -68,9 +68,9 @@ class aiMatrix3x3t
 public:
 
     aiMatrix3x3t () :
-        a1(static_cast<TReal>(1.0f)), a2(), a3(),
-        b1(), b2(static_cast<TReal>(1.0f)), b3(),
-        c1(), c2(), c3(static_cast<TReal>(1.0f)) {}
+        a1(static_cast<TReal>(1.0)), a2(), a3(),
+        b1(), b2(static_cast<TReal>(1.0)), b3(),
+        c1(), c2(), c3(static_cast<TReal>(1.0)) {}
 
     aiMatrix3x3t (  TReal _a1, TReal _a2, TReal _a3,
                     TReal _b1, TReal _b2, TReal _b3,

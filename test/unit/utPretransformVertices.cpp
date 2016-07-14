@@ -73,7 +73,7 @@ void AddNodes(unsigned int num, aiNode* father, unsigned int depth)
         nd->mMeshes[1] = 24-(num*5+i); // mesh 12 is special ... it references the same mesh twice
 
         // setup an unique transformation matrix
-        nd->mTransformation.a1 = num*5.f+i + 1;
+        nd->mTransformation.a1 = num*5.0+i + 1;
     }
 
     if (depth > 1) {
@@ -105,7 +105,7 @@ void PretransformVerticesTest::SetUp()
             f.mIndices = new unsigned int [f.mNumIndices = 1];
             f.mIndices[0] = a*3;
 
-            mesh->mVertices[a] = aiVector3D((float)i,(float)a,0.f);
+            mesh->mVertices[a] = aiVector3D((float)i,(float)a,0.0);
         }
         mesh->mMaterialIndex = i%5;
 

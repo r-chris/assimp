@@ -351,7 +351,7 @@ float ParseTokenAsFloat(const Token& t, const char*& err_out)
 
     if (t.Type() != TokenType_DATA) {
         err_out = "expected TOK_DATA token";
-        return 0.0f;
+        return 0.0;
     }
 
     if(t.IsBinary())
@@ -359,7 +359,7 @@ float ParseTokenAsFloat(const Token& t, const char*& err_out)
         const char* data = t.begin();
         if (data[0] != 'F' && data[0] != 'D') {
             err_out = "failed to parse F(loat) or D(ouble), unexpected data type (binary)";
-            return 0.0f;
+            return 0.0;
         }
 
         if (data[0] == 'F') {

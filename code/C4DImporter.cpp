@@ -591,23 +591,23 @@ aiMesh* C4DImporter::ReadMesh(BaseObject* object)
                 uvs_src->Get(uvs_src->GetDataAddressR(),i,uvw);
 
                 uvs->x = uvw.a.x;
-                uvs->y = 1.0f-uvw.a.y;
+                uvs->y = 1.0-uvw.a.y;
                 uvs->z = uvw.a.z;
                 ++uvs;
 
                 uvs->x = uvw.b.x;
-                uvs->y = 1.0f-uvw.b.y;
+                uvs->y = 1.0-uvw.b.y;
                 uvs->z = uvw.b.z;
                 ++uvs;
 
                 uvs->x = uvw.c.x;
-                uvs->y = 1.0f-uvw.c.y;
+                uvs->y = 1.0-uvw.c.y;
                 uvs->z = uvw.c.z;
                 ++uvs;
 
                 if(face->mNumIndices == 4) {
                     uvs->x = uvw.d.x;
-                    uvs->y = 1.0f-uvw.d.y;
+                    uvs->y = 1.0-uvw.d.y;
                     uvs->z = uvw.d.z;
                     ++uvs;
                 }

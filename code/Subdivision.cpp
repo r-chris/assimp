@@ -319,7 +319,7 @@ void CatmullClarkSubdivider::InternSubdivide (
                 if (e.ref<=2) {
                     if (e.ref==1) { // original points (end points) - add only once
                         e.edge_point = e.midpoint = Vertex(mesh,id[0])+Vertex(mesh,id[1]);
-                        e.midpoint *= 0.5f;
+                        e.midpoint *= 0.5;
                     }
                     e.edge_point += centroids[FLATTEN_FACE_IDX(t,i)];
                 }
@@ -336,7 +336,7 @@ void CatmullClarkSubdivider::InternSubdivide (
             ai_assert((*it).second.ref);
             ++bad_cnt;
         }
-        (*it).second.edge_point *= 1.f/((*it).second.ref+2.f);
+        (*it).second.edge_point *= 1.0/((*it).second.ref+2.0);
     }
 
     if (bad_cnt) {
@@ -546,7 +546,7 @@ void CatmullClarkSubdivider::InternSubdivide (
                                     // add *both* edges. this way, we can be sure that we add
                                     // *all* adjacent edges to R. In a closed shape, every
                                     // edge is added twice - so we simply leave out the
-                                    // factor 2.f in the amove formula and get the right
+                                    // factor 2.0 in the amove formula and get the right
                                     // result.
 
                                     const Edge& c0 = edges[MAKE_EDGE_HASH(org,maptbl[FLATTEN_VERTEX_IDX(
@@ -569,8 +569,8 @@ void CatmullClarkSubdivider::InternSubdivide (
                             ai_assert(haveit);
                         }
 
-                        const float div = static_cast<float>(cnt), divsq = 1.f/(div*div);
-                        ov.second = Vertex(minp,face.mIndices[a])*((div-3.f) / div) + R*divsq + F*divsq;
+                        const float div = static_cast<float>(cnt), divsq = 1.0/(div*div);
+                        ov.second = Vertex(minp,face.mIndices[a])*((div-3.0) / div) + R*divsq + F*divsq;
                     }
                 }
                 ov.second.SortBack(mout,faceOut.mIndices[2]=v++);

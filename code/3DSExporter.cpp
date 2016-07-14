@@ -197,7 +197,7 @@ Discreet3DSExporter:: Discreet3DSExporter(std::shared_ptr<IOStream> outfile, con
 
         {
             ChunkWriter chunk(writer, Discreet3DS::CHUNK_MASTER_SCALE);
-            writer.PutF4(1.0f);
+            writer.PutF(1.0);
         }
     }
 
@@ -331,7 +331,7 @@ void Discreet3DSExporter::WriteMaterials()
         }
 
 
-        float f;
+        ai_real f;
         if (mat.Get(AI_MATKEY_SHININESS, f) == AI_SUCCESS) {
             ChunkWriter chunk(writer, Discreet3DS::CHUNK_MAT_SHININESS);
             WritePercentChunk(f);
@@ -365,7 +365,7 @@ void Discreet3DSExporter::WriteTexture(const aiMaterial& mat, aiTextureType type
     aiTextureMapMode map_mode[2] = {
         aiTextureMapMode_Wrap, aiTextureMapMode_Wrap
     };
-    float blend = 1.0f;
+    float blend = 1.0;
     if (mat.GetTexture(type, 0, &path, NULL, NULL, &blend, NULL, map_mode) != AI_SUCCESS || !path.length) {
         return;
     }
@@ -442,9 +442,9 @@ void Discreet3DSExporter::WriteMeshes()
             writer.PutU2(count);
             for (unsigned int i = 0; i < mesh.mNumVertices; ++i) {
                 const aiVector3D& v = trafo * mesh.mVertices[i];
-                writer.PutF4(v.x);
-                writer.PutF4(v.y);
-                writer.PutF4(v.z);
+                writer.PutF(v.x);
+                writer.PutF(v.y);
+                writer.PutF(v.z);
             }
         }
 
@@ -456,8 +456,8 @@ void Discreet3DSExporter::WriteMeshes()
 
             for (unsigned int i = 0; i < mesh.mNumVertices; ++i) {
                 const aiVector3D& v = mesh.mTextureCoords[0][i];
-                writer.PutF4(v.x);
-                writer.PutF4(v.y);
+                writer.PutF(v.x);
+                writer.PutF(v.y);
             }
         }
 
@@ -505,7 +505,7 @@ void Discreet3DSExporter::WriteMeshes()
             ChunkWriter chunk(writer, Discreet3DS::CHUNK_TRMATRIX);
             for (unsigned int r = 0; r < 4; ++r) {
                 for (unsigned int c = 0; c < 3; ++c) {
-                    writer.PutF4(trafo[r][c]);
+                    writer.PutF(trafo[r][c]);
                 }
             }
         }
@@ -549,15 +549,15 @@ void Discreet3DSExporter::WriteString(const aiString& s) {
 // ------------------------------------------------------------------------------------------------
 void Discreet3DSExporter::WriteColor(const aiColor3D& color) {
     ChunkWriter chunk(writer, Discreet3DS::CHUNK_RGBF);
-    writer.PutF4(color.r);
-    writer.PutF4(color.g);
-    writer.PutF4(color.b);
+    writer.PutF(color.r);
+    writer.PutF(color.g);
+    writer.PutF(color.b);
 }
 
 // ------------------------------------------------------------------------------------------------
-void Discreet3DSExporter::WritePercentChunk(float f) {
+void Discreet3DSExporter::WritePercentChunk(ai_real f) {
     ChunkWriter chunk(writer, Discreet3DS::CHUNK_PERCENTF);
-    writer.PutF4(f);
+    writer.PutF(f);
 }
 
 

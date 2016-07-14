@@ -55,7 +55,7 @@ namespace AssimpView {
 using namespace Assimp;
 
 bool g_bWasFlipped = false;
-float g_smoothAngle = 80.f;
+float g_smoothAngle = 80.0;
 
 //-------------------------------------------------------------------------------
 // Flip all normal vectors
@@ -71,7 +71,7 @@ void AssetHelper::FlipNormalsInt()
             continue;
 
         for (unsigned int a = 0; a < pcMesh->mNumVertices;++a){
-            pcMesh->mNormals[a] *= -1.0f;
+            pcMesh->mNormals[a] *= -1.0;
         }
     }
 }
@@ -161,7 +161,7 @@ void AssetHelper::SetNormalSet(unsigned int iSet)
             aiMesh* pcMesh = pcScene->mMeshes[i];
             for (unsigned int a = 0; a < pcMesh->mNumVertices;++a)
             {
-                pcMesh->mNormals[a] *= -1.0f;
+                pcMesh->mNormals[a] *= -1.0;
             }
         }
     }

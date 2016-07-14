@@ -89,8 +89,8 @@ private:
     struct Material
     {
         Material()
-            :   diffuse         (0.6f,0.6f,0.6f)
-            ,   transparency    (0.f)
+            :   diffuse         (0.6,0.6,0.6)
+            ,   transparency    (0.0)
             ,   texIdx          (UINT_MAX)
         {}
 

@@ -207,54 +207,54 @@ void IRRImporter::BuildSkybox(std::vector<aiMesh*>& meshes, std::vector<aiMateri
     // by six single planes with different textures, so we'll
     // need to build six meshes.
 
-    const float l = 10.f; // the size used by Irrlicht
+    const float l = 10.0; // the size used by Irrlicht
 
     // FRONT SIDE
     meshes.push_back( BuildSingleQuadMesh(
-        SkyboxVertex(-l,-l,-l,  0, 0, 1,   1.f,1.f),
-        SkyboxVertex( l,-l,-l,  0, 0, 1,   0.f,1.f),
-        SkyboxVertex( l, l,-l,  0, 0, 1,   0.f,0.f),
-        SkyboxVertex(-l, l,-l,  0, 0, 1,   1.f,0.f)) );
+        SkyboxVertex(-l,-l,-l,  0, 0, 1,   1.0,1.0),
+        SkyboxVertex( l,-l,-l,  0, 0, 1,   0.0,1.0),
+        SkyboxVertex( l, l,-l,  0, 0, 1,   0.0,0.0),
+        SkyboxVertex(-l, l,-l,  0, 0, 1,   1.0,0.0)) );
     meshes.back()->mMaterialIndex = materials.size()-6u;
 
     // LEFT SIDE
     meshes.push_back( BuildSingleQuadMesh(
-        SkyboxVertex( l,-l,-l,  -1, 0, 0,   1.f,1.f),
-        SkyboxVertex( l,-l, l,  -1, 0, 0,   0.f,1.f),
-        SkyboxVertex( l, l, l,  -1, 0, 0,   0.f,0.f),
-        SkyboxVertex( l, l,-l,  -1, 0, 0,   1.f,0.f)) );
+        SkyboxVertex( l,-l,-l,  -1, 0, 0,   1.0,1.0),
+        SkyboxVertex( l,-l, l,  -1, 0, 0,   0.0,1.0),
+        SkyboxVertex( l, l, l,  -1, 0, 0,   0.0,0.0),
+        SkyboxVertex( l, l,-l,  -1, 0, 0,   1.0,0.0)) );
     meshes.back()->mMaterialIndex = materials.size()-5u;
 
     // BACK SIDE
     meshes.push_back( BuildSingleQuadMesh(
-        SkyboxVertex( l,-l, l,  0, 0, -1,   1.f,1.f),
-        SkyboxVertex(-l,-l, l,  0, 0, -1,   0.f,1.f),
-        SkyboxVertex(-l, l, l,  0, 0, -1,   0.f,0.f),
-        SkyboxVertex( l, l, l,  0, 0, -1,   1.f,0.f)) );
+        SkyboxVertex( l,-l, l,  0, 0, -1,   1.0,1.0),
+        SkyboxVertex(-l,-l, l,  0, 0, -1,   0.0,1.0),
+        SkyboxVertex(-l, l, l,  0, 0, -1,   0.0,0.0),
+        SkyboxVertex( l, l, l,  0, 0, -1,   1.0,0.0)) );
     meshes.back()->mMaterialIndex = materials.size()-4u;
 
     // RIGHT SIDE
     meshes.push_back( BuildSingleQuadMesh(
-        SkyboxVertex(-l,-l, l,  1, 0, 0,   1.f,1.f),
-        SkyboxVertex(-l,-l,-l,  1, 0, 0,   0.f,1.f),
-        SkyboxVertex(-l, l,-l,  1, 0, 0,   0.f,0.f),
-        SkyboxVertex(-l, l, l,  1, 0, 0,   1.f,0.f)) );
+        SkyboxVertex(-l,-l, l,  1, 0, 0,   1.0,1.0),
+        SkyboxVertex(-l,-l,-l,  1, 0, 0,   0.0,1.0),
+        SkyboxVertex(-l, l,-l,  1, 0, 0,   0.0,0.0),
+        SkyboxVertex(-l, l, l,  1, 0, 0,   1.0,0.0)) );
     meshes.back()->mMaterialIndex = materials.size()-3u;
 
     // TOP SIDE
     meshes.push_back( BuildSingleQuadMesh(
-        SkyboxVertex( l, l,-l,  0, -1, 0,   1.f,1.f),
-        SkyboxVertex( l, l, l,  0, -1, 0,   0.f,1.f),
-        SkyboxVertex(-l, l, l,  0, -1, 0,   0.f,0.f),
-        SkyboxVertex(-l, l,-l,  0, -1, 0,   1.f,0.f)) );
+        SkyboxVertex( l, l,-l,  0, -1, 0,   1.0,1.0),
+        SkyboxVertex( l, l, l,  0, -1, 0,   0.0,1.0),
+        SkyboxVertex(-l, l, l,  0, -1, 0,   0.0,0.0),
+        SkyboxVertex(-l, l,-l,  0, -1, 0,   1.0,0.0)) );
     meshes.back()->mMaterialIndex = materials.size()-2u;
 
     // BOTTOM SIDE
     meshes.push_back( BuildSingleQuadMesh(
-        SkyboxVertex( l,-l, l,  0,  1, 0,   0.f,0.f),
-        SkyboxVertex( l,-l,-l,  0,  1, 0,   1.f,0.f),
-        SkyboxVertex(-l,-l,-l,  0,  1, 0,   1.f,1.f),
-        SkyboxVertex(-l,-l, l,  0,  1, 0,   0.f,1.f)) );
+        SkyboxVertex( l,-l, l,  0,  1, 0,   0.0,0.0),
+        SkyboxVertex( l,-l,-l,  0,  1, 0,   1.0,0.0),
+        SkyboxVertex(-l,-l,-l,  0,  1, 0,   1.0,1.0),
+        SkyboxVertex(-l,-l, l,  0,  1, 0,   0.0,1.0)) );
     meshes.back()->mMaterialIndex = materials.size()-1u;
 }
 
@@ -275,7 +275,7 @@ void IRRImporter::CopyMaterial(std::vector<aiMaterial*>& materials,
             s.Set(AI_DEFAULT_MATERIAL_NAME);
             mat->AddProperty(&s,AI_MATKEY_NAME);
 
-            aiColor3D c(0.6f,0.6f,0.6f);
+            aiColor3D c(0.6,0.6,0.6);
             mat->AddProperty(&c,1,AI_MATKEY_COLOR_DIFFUSE);
         }
         mesh->mMaterialIndex = defMatIdx;
@@ -377,7 +377,7 @@ void IRRImporter::ComputeAnimations(Node* root, aiNode* real, std::vector<aiNode
             {
                 // -----------------------------------------------------
                 // find out how long a full rotation will take
-                // This is the least common multiple of 360.f and all
+                // This is the least common multiple of 360.0 and all
                 // three euler angles. Although we'll surely find a
                 // possible multiple (haha) it could be somewhat large
                 // for our purposes. So we need to modify the angles
@@ -423,7 +423,7 @@ void IRRImporter::ComputeAnimations(Node* root, aiNode* real, std::vector<aiNode
                 // find out how many time units we'll need for the finest
                 // track (in seconds) - this defines the number of output
                 // keys (fps * seconds)
-                float max  = 0.f;
+                float max  = 0.0;
                 if (angles[0])
                     max = (float)lcm / angles[0];
                 if (angles[1])
@@ -530,7 +530,7 @@ void IRRImporter::ComputeAnimations(Node* root, aiNode* real, std::vector<aiNode
                     anim->mPositionKeys = new aiVectorKey[anim->mNumPositionKeys];
 
                     anim->mPositionKeys[0].mValue = in.splineKeys[0].mValue;
-                    anim->mPositionKeys[0].mTime  = 0.f;
+                    anim->mPositionKeys[0].mTime  = 0.0;
                     break;
                 }
 
@@ -542,7 +542,7 @@ void IRRImporter::ComputeAnimations(Node* root, aiNode* real, std::vector<aiNode
                 {
                     aiVectorKey& key = anim->mPositionKeys[i];
 
-                    const ai_real dt = (i * in.speed * 0.001f );
+                    const ai_real dt = (i * in.speed * 0.001 );
                     const ai_real u = dt - std::floor(dt);
                     const int idx = (int)std::floor(dt) % size;
 
@@ -556,9 +556,9 @@ void IRRImporter::ComputeAnimations(Node* root, aiNode* real, std::vector<aiNode
                     const ai_real u2 = u*u;
                     const ai_real u3 = u2*2;
 
-                    const ai_real h1 = 2.0f * u3 - 3.0f * u2 + 1.0f;
-                    const ai_real h2 = -2.0f * u3 + 3.0f * u3;
-                    const ai_real h3 = u3 - 2.0f * u3;
+                    const ai_real h1 = 2.0 * u3 - 3.0 * u2 + 1.0;
+                    const ai_real h2 = -2.0 * u3 + 3.0 * u3;
+                    const ai_real h3 = u3 - 2.0 * u3;
                     const ai_real h4 = u3 - u2;
 
                     // compute the spline tangents
@@ -587,7 +587,7 @@ void IRRImporter::ComputeAnimations(Node* root, aiNode* real, std::vector<aiNode
 
 // ------------------------------------------------------------------------------------------------
 // This function is maybe more generic than we'd need it here
-void SetupMapping (aiMaterial* mat, aiTextureMapping mode, const aiVector3D& axis = aiVector3D(0.f,0.f,-1.f))
+void SetupMapping (aiMaterial* mat, aiTextureMapping mode, const aiVector3D& axis = aiVector3D(0.0,0.0,-1.0))
 {
     // Check whether there are texture properties defined - setup
     // the desired texture mapping mode for all of them and ignore
@@ -726,7 +726,7 @@ void IRRImporter::GenerateGraph(Node* root,aiNode* rootOut ,aiScene* scene,
                         DefaultLogger::get()->info("IRR: Replacing mesh vertex alpha with common opacity");
 
                         for (unsigned int a = 0; a < mesh->mNumVertices;++a)
-                            mesh->mColors[0][a].a = 1.f;
+                            mesh->mColors[0][a].a = 1.0;
 
                         mat->AddProperty(& mesh->mColors[0][0].a, 1, AI_MATKEY_OPACITY);
                     }
@@ -1108,7 +1108,7 @@ void IRRImporter::InternReadFile( const std::string& pFile,
 
                                         // From Irrlicht's source - a workaround for backward compatibility with Irrlicht 1.1
                                         if (curAnim->direction == aiVector3D()) {
-                                            curAnim->direction = aiVector3D(0.f,1.f,0.f);
+                                            curAnim->direction = aiVector3D(0.0,1.0,0.0);
                                         }
                                         else curAnim->direction.Normalize();
                                     }

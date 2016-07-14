@@ -163,7 +163,7 @@ protected:
      float value;
      Property()
          : exist(false)
-         , value(0.0f)
+         , value(0.0)
      {}
   };
 

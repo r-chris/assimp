@@ -79,14 +79,14 @@ TEST_F( utMatrix3x3Test, FromToMatrixTest ) {
 
     for (int i = 0; i < NUM_SAMPLES; ++i) {
         from = aiVector3D
-            ( 1.f * rand() / RAND_MAX
-            , 1.f * rand() / RAND_MAX
-            , 1.f * rand() / RAND_MAX
+            ( 1.0 * rand() / RAND_MAX
+            , 1.0 * rand() / RAND_MAX
+            , 1.0 * rand() / RAND_MAX
             ).Normalize();
         to = aiVector3D
-            ( 1.f * rand() / RAND_MAX
-            , 1.f * rand() / RAND_MAX
-            , 1.f * rand() / RAND_MAX
+            ( 1.0 * rand() / RAND_MAX
+            , 1.0 * rand() / RAND_MAX
+            , 1.0 * rand() / RAND_MAX
             ).Normalize();
 
         aiMatrix3x3::FromToMatrix( from, to, trafo );

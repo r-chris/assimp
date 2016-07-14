@@ -69,9 +69,9 @@ void GenNormalsTest::SetUp()
     pcMesh->mFaces[0].mIndices[2] = 1;
     pcMesh->mNumVertices = 3;
     pcMesh->mVertices = new aiVector3D[3];
-    pcMesh->mVertices[0] = aiVector3D(0.0f,1.0f,6.0f);
-    pcMesh->mVertices[1] = aiVector3D(2.0f,3.0f,1.0f);
-    pcMesh->mVertices[2] = aiVector3D(3.0f,2.0f,4.0f);
+    pcMesh->mVertices[0] = aiVector3D(0.0,1.0,6.0);
+    pcMesh->mVertices[1] = aiVector3D(2.0,3.0,1.0);
+    pcMesh->mVertices[2] = aiVector3D(3.0,2.0,4.0);
 }
 
 // ------------------------------------------------------------------------------------------------

@@ -506,7 +506,7 @@ struct aiMesh
     * @code
     * #define IS_QNAN(f) (f != f)
     * @endcode
-    * still dangerous because even 1.f == 1.f could evaluate to false! (
+    * still dangerous because even 1.0 == 1.0 could evaluate to false! (
     * remember the subtleties of IEEE754 artithmetics). Use stuff like
     * @c fpclassify instead.
     * @note Normal vectors computed by Assimp are always unit-length.
@@ -554,8 +554,8 @@ struct aiMesh
     /** Specifies the number of components for a given UV channel.
     * Up to three channels are supported (UVW, for accessing volume
     * or cube maps). If the value is 2 for a given channel n, the
-    * component p.z of mTextureCoords[n][p] is set to 0.0f.
-    * If the value is 1 for a given channel, p.y is set to 0.0f, too.
+    * component p.z of mTextureCoords[n][p] is set to 0.0.
+    * If the value is 1 for a given channel, p.y is set to 0.0, too.
     * @note 4D coords are not supported
     */
     unsigned int mNumUVComponents[AI_MAX_NUMBER_OF_TEXTURECOORDS];

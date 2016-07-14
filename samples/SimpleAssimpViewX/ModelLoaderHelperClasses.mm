@@ -36,9 +36,9 @@
     if((self = [super init]))
     {
         diffuseColor = aiColor4D(0.8, 0.8, 0.8, 1.0);
-        specularColor = aiColor4D(0.0f, 0.0f, 0.0f, 1.0f);
-        ambientColor = aiColor4D(0.2f, 0.2f, 0.2f, 1.0f);
-        emissiveColor = aiColor4D(0.0f, 0.0f, 0.0f, 1.0f);
+        specularColor = aiColor4D(0.0, 0.0, 0.0, 1.0);
+        ambientColor = aiColor4D(0.2, 0.2, 0.2, 1.0);
+        emissiveColor = aiColor4D(0.0, 0.0, 0.0, 1.0);
     }
     return self; 
 }

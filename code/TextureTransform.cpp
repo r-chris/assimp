@@ -112,7 +112,7 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
         }
 
         // Next step - convert negative rotation angles to positives
-        if (out < 0.f)
+        if (out < 0.0)
             out = (float)AI_MATH_TWO_PI * 2 + out;
 
         info.mRotation = out;
@@ -126,7 +126,7 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
      * offset 2 and 3)
      */
     if ((rounded  = (int)info.mTranslation.x))  {
-        ai_real out = 0.0f;
+        ai_real out = 0.0;
         szTemp[0] = 0;
         if (aiTextureMapMode_Wrap == info.mapU) {
             // Wrap - simple take the fraction of the field
@@ -143,9 +143,9 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
         }
         else if (aiTextureMapMode_Clamp == info.mapU || aiTextureMapMode_Decal == info.mapU)    {
             // Clamp - translations beyond 1,1 are senseless
-            ai_snprintf(szTemp,512,"[c] UV U offset %f can be clamped to 1.0f",info.mTranslation.x);
+            ai_snprintf(szTemp,512,"[c] UV U offset %f can be clamped to 1.0",info.mTranslation.x);
 
-            out = 1.f;
+            out = 1.0;
         }
         if (szTemp[0])      {
             DefaultLogger::get()->info(szTemp);
@@ -159,7 +159,7 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
      * offset 2 and 3)
      */
     if ((rounded  = (int)info.mTranslation.y))  {
-        ai_real out = 0.0f;
+        ai_real out = 0.0;
         szTemp[0] = 0;
         if (aiTextureMapMode_Wrap == info.mapV) {
             // Wrap - simple take the fraction of the field
@@ -176,9 +176,9 @@ void TextureTransformStep::PreProcessUVTransform(STransformVecInfo& info)
         }
         else if (aiTextureMapMode_Clamp == info.mapV || aiTextureMapMode_Decal == info.mapV)    {
             // Clamp - translations beyond 1,1 are senseless
-            ::ai_snprintf(szTemp,512,"[c] UV V offset %f canbe clamped to 1.0f",info.mTranslation.y);
+            ::ai_snprintf(szTemp,512,"[c] UV V offset %f canbe clamped to 1.0",info.mTranslation.y);
 
-            out = 1.f;
+            out = 1.0;
         }
         if (szTemp[0])  {
             DefaultLogger::get()->info(szTemp);
@@ -286,13 +286,13 @@ void TextureTransformStep::Execute( aiScene* pScene)
 
                 // Find out which transformations are to be evaluated
                 if (!(configFlags & AI_UVTRAFO_ROTATION)) {
-                    info.mRotation = 0.f;
+                    info.mRotation = 0.0;
                 }
                 if (!(configFlags & AI_UVTRAFO_SCALING)) {
-                    info.mScaling = aiVector2D(1.f,1.f);
+                    info.mScaling = aiVector2D(1.0,1.0);
                 }
                 if (!(configFlags & AI_UVTRAFO_TRANSLATION)) {
-                    info.mTranslation = aiVector2D(0.f,0.f);
+                    info.mTranslation = aiVector2D(0.0,0.0);
                 }
 
                 // Do some preprocessing
@@ -475,7 +475,7 @@ void TextureTransformStep::Execute( aiScene* pScene)
 
             // Write to the log
             if (!DefaultLogger::isNullLogger()) {
-                ::ai_snprintf(buffer,1024,"Mesh %u, channel %u: t(%.3f,%.3f), s(%.3f,%.3f), r(%.3f), %s%s",
+                ::ai_snprintf(buffer,1024,"Mesh %u, channel %u: t(%.3,%.3), s(%.3,%.3), r(%.3), %s%s",
                     q,n,
                     (*it).mTranslation.x,
                     (*it).mTranslation.y,
@@ -531,8 +531,8 @@ void TextureTransformStep::Execute( aiScene* pScene)
                 m4.a1 = scl.x;
                 m4.b2 = scl.y;
 
-                m2.a3 = m2.b3 = 0.5f;
-                m3.a3 = m3.b3 = -0.5f;
+                m2.a3 = m2.b3 = 0.5;
+                m3.a3 = m3.b3 = -0.5;
 
                 if ((*it).mRotation > AI_TT_ROTATION_EPSILON )
                     aiMatrix3x3::RotationZ((*it).mRotation,matrix);
@@ -541,11 +541,11 @@ void TextureTransformStep::Execute( aiScene* pScene)
                 matrix = m2 * m4 * matrix * m3 * m5;
 
                 for (src = dest; src != end; ++src) { /* manual homogenious divide */
-                    src->z = 1.f;
+                    src->z = 1.0;
                     *src = matrix * *src;
                     src->x /= src->z;
                     src->y /= src->z;
-                    src->z = 0.f;
+                    src->z = 0.0;
                 }
             }
 

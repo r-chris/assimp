@@ -54,10 +54,10 @@ class Camera
         Camera ()
             :
 
-            vPos(0.0f,0.0f,-10.0f),
-            vUp(0.0f,1.0f,0.0f),
-            vLookAt(0.0f,0.0f,1.0f),
-            vRight(0.0f,1.0f,0.0f)
+            vPos(0.0,0.0,-10.0),
+            vUp(0.0,1.0,0.0),
+            vLookAt(0.0,0.0,1.0),
+            vRight(0.0,1.0,0.0)
             {
 
             }

@@ -198,9 +198,9 @@ void  BlenderModifier_Mirror :: DoIt(aiNode& out, ConversionData& conv_data,  co
         aiMesh* mesh;
         SceneCombiner::Copy(&mesh,conv_data.meshes[out.mMeshes[i]]);
 
-        const float xs = mir.flag & MirrorModifierData::Flags_AXIS_X ? -1.f : 1.f;
-        const float ys = mir.flag & MirrorModifierData::Flags_AXIS_Y ? -1.f : 1.f;
-        const float zs = mir.flag & MirrorModifierData::Flags_AXIS_Z ? -1.f : 1.f;
+        const float xs = mir.flag & MirrorModifierData::Flags_AXIS_X ? -1.0 : 1.0;
+        const float ys = mir.flag & MirrorModifierData::Flags_AXIS_Y ? -1.0 : 1.0;
+        const float zs = mir.flag & MirrorModifierData::Flags_AXIS_Z ? -1.0 : 1.0;
 
         if (mir.mirror_ob) {
             const aiVector3D center( mir.mirror_ob->obmat[3][0],mir.mirror_ob->obmat[3][1],mir.mirror_ob->obmat[3][2] );
@@ -240,8 +240,8 @@ void  BlenderModifier_Mirror :: DoIt(aiNode& out, ConversionData& conv_data,  co
             }
         }
 
-        const float us = mir.flag & MirrorModifierData::Flags_MIRROR_U ? -1.f : 1.f;
-        const float vs = mir.flag & MirrorModifierData::Flags_MIRROR_V ? -1.f : 1.f;
+        const float us = mir.flag & MirrorModifierData::Flags_MIRROR_U ? -1.0 : 1.0;
+        const float vs = mir.flag & MirrorModifierData::Flags_MIRROR_V ? -1.0 : 1.0;
 
         for (unsigned int n = 0; mesh->HasTextureCoords(n); ++n) {
             for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {

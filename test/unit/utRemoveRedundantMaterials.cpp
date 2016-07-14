@@ -71,7 +71,7 @@ aiMaterial* getUniqueMaterial1()
 
     aiMaterial* pcMat = new aiMaterial();
     pcMat->AddProperty(&mTemp,AI_MATKEY_NAME);
-    float f = 2.0f;
+    float f = 2.0;
     pcMat->AddProperty<float>(&f, 1, AI_MATKEY_BUMPSCALING);
     pcMat->AddProperty<float>(&f, 1, AI_MATKEY_SHININESS_STRENGTH);
     return pcMat;
@@ -86,7 +86,7 @@ aiMaterial* getUniqueMaterial2()
 
     aiMaterial* pcMat = new aiMaterial();
     pcMat->AddProperty(&mTemp,AI_MATKEY_NAME);
-    float f = 4.0f;int i = 1;
+    float f = 4.0;int i = 1;
     pcMat->AddProperty<float>(&f, 1, AI_MATKEY_BUMPSCALING);
     pcMat->AddProperty<int>(&i, 1, AI_MATKEY_ENABLE_WIREFRAME);
     return pcMat;

@@ -618,12 +618,12 @@ void Parser::ParseLV2MaterialBlock(ASE::Material& mat)
             if (TokenMatch(filePtr,"MATERIAL_TRANSPARENCY",21))
             {
                 ParseLV4MeshReal(mat.mTransparency);
-                mat.mTransparency = 1.0f - mat.mTransparency;continue;
+                mat.mTransparency = 1.0 - mat.mTransparency;continue;
             }
             // material self illumination
             if (TokenMatch(filePtr,"MATERIAL_SELFILLUM",18))
             {
-                ai_real f = 0.0f;
+                ai_real f = 0.0;
                 ParseLV4MeshReal(f);
 
                 mat.mEmissive.r = f;
@@ -1725,7 +1725,7 @@ void Parser::ParseLV3MeshTListBlock(unsigned int iNumVertices,
                 }
                 else mesh.amTexCoords[iChannel][iIndex] = vTemp;
 
-                if (0.0f != vTemp.z)
+                if (0.0 != vTemp.z)
                 {
                     // we need 3 coordinate channels
                     mesh.mNumUVComponents[iChannel] = 3;
@@ -1832,7 +1832,7 @@ void Parser::ParseLV3MeshCListBlock(unsigned int iNumVertices, ASE::Mesh& mesh)
             if (TokenMatch(filePtr,"MESH_VERTCOL" ,12))
             {
                 aiColor4D vTemp;
-                vTemp.a = 1.0f;
+                vTemp.a = 1.0;
                 unsigned int iIndex;
                 ParseLV4MeshRealTriple(&vTemp.r,iIndex);
 
@@ -1889,7 +1889,7 @@ void Parser::ParseLV3MeshNormalListBlock(ASE::Mesh& sMesh)
     AI_ASE_PARSER_INIT();
 
     // Allocate enough storage for the normals
-    sMesh.mNormals.resize(sMesh.mFaces.size()*3,aiVector3D( 0.f, 0.f, 0.f ));
+    sMesh.mNormals.resize(sMesh.mFaces.size()*3,aiVector3D( 0.0, 0.0, 0.0 ));
     unsigned int index, faceIdx = UINT_MAX;
 
     // FIXME: rewrite this and find out how to interpret the normals
@@ -2129,7 +2129,7 @@ void Parser::ParseLV4MeshReal( ai_real& fOut)
     {
         // LOG
         LogWarning("Unable to parse float: unexpected EOL [#1]");
-        fOut = 0.0f;
+        fOut = 0.0;
         ++iLineNumber;
         return;
     }

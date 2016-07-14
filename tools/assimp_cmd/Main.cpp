@@ -298,7 +298,7 @@ const aiScene* ImportModel(
 	const clock_t second = ::clock();
 	const double seconds = static_cast<double>(second-first) / CLOCKS_PER_SEC;
 
-	printf("Importing file ...                   OK \n   import took approx. %.5f seconds\n"
+	printf("Importing file ...                   OK \n   import took approx. %.5 seconds\n"
 		"\n",seconds);
 
 	if (imp.log) { 
@@ -339,7 +339,7 @@ bool ExportModel(const aiScene* pOut,
 	const clock_t second = ::clock();
 	const double seconds = static_cast<double>(second-first) / CLOCKS_PER_SEC;
 
-	printf("Exporting file ...                   OK \n   export took approx. %.5f seconds\n"
+	printf("Exporting file ...                   OK \n   export took approx. %.5 seconds\n"
 		"\n",seconds);
 
 	if (imp.log) { 

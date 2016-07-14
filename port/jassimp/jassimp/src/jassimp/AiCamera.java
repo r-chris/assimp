@@ -213,8 +213,8 @@ public final class AiCamera {
     /** 
      * Returns the distance of the near clipping plane from the camera.<p>
      *
-     * The value may not be 0.f (for arithmetic reasons to prevent a division 
-     * through zero). The default value is 0.1f.
+     * The value may not be 0.0 (for arithmetic reasons to prevent a division 
+     * through zero). The default value is 0.1.
      * 
      * @return the distance of the near clipping plane
      */
@@ -227,7 +227,7 @@ public final class AiCamera {
      * Returns the distance of the far clipping plane from the camera.<p>
      *
      * The far clipping plane must, of course, be further away than the
-     * near clipping plane. The default value is 1000.0f. The ratio
+     * near clipping plane. The default value is 1000.0. The ratio
      * between the near and the far plane should not be too
      * large (between 1000-10000 should be ok) to avoid floating-point
      * inaccuracies which could lead to z-fighting.

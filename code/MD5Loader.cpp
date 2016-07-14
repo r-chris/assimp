@@ -176,8 +176,8 @@ void MD5Importer::InternReadFile( const std::string& pFile,
     }
 
     // Now rotate the whole scene 90 degrees around the x axis to match our internal coordinate system
-    pScene->mRootNode->mTransformation = aiMatrix4x4(1.f,0.f,0.f,0.f,
-        0.f,0.f,1.f,0.f,0.f,-1.f,0.f,0.f,0.f,0.f,0.f,1.f);
+    pScene->mRootNode->mTransformation = aiMatrix4x4(1.0,0.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,0.0,0.0,0.0,1.0);
 
     // the output scene wouldn't pass the validation without this flag
     if (!bHadMD5Mesh) {
@@ -426,8 +426,8 @@ void MD5Importer::LoadMD5MeshFile ()
         aiVector3D* pv = mesh->mTextureCoords[0];
         for (MD5::VertexList::const_iterator iter =  meshSrc.mVertices.begin();iter != meshSrc.mVertices.end();++iter,++pv) {
             pv->x = (*iter).mUV.x;
-            pv->y = 1.0f-(*iter).mUV.y; // D3D to OpenGL
-            pv->z = 0.0f;
+            pv->y = 1.0-(*iter).mUV.y; // D3D to OpenGL
+            pv->z = 0.0;
         }
 
         // sort all bone weights - per bone
@@ -475,7 +475,7 @@ void MD5Importer::LoadMD5MeshFile ()
                 *pv = aiVector3D();
 
                 // there are models which have weights which don't sum to 1 ...
-                ai_real fSum = 0.0f;
+                ai_real fSum = 0.0;
                 for (unsigned int jub = (*iter).mFirstWeight, w = jub; w < jub + (*iter).mNumWeights;++w)
                     fSum += meshSrc.mWeights[w].mWeight;
                 if (!fSum) {

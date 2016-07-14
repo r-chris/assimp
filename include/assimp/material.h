@@ -474,8 +474,8 @@ struct aiUVTransform
     /** Rotation - in counter-clockwise direction.
      *
      *  The rotation angle is specified in radians. The
-     *  rotation center is 0.5f|0.5f. The default value
-     *  0.f.
+     *  rotation center is 0.5|0.5. The default value
+     *  0.0.
      */
     ai_real mRotation;
 
@@ -483,8 +483,8 @@ struct aiUVTransform
 #ifdef __cplusplus
     aiUVTransform()
         : mTranslation( 0,0 )
-        , mScaling(1.f,1.f)
-        , mRotation(0.f)
+        , mScaling(1.0,1.0)
+        , mRotation(0.0)
     {
         // nothing to be done here ...
     }
@@ -812,7 +812,7 @@ public:
         unsigned int type  = 0,
         unsigned int index = 0);
 
-    aiReturn AddProperty (const float* pInput,
+    aiReturn AddProperty (const ai_real* pInput,
         unsigned int pNumValues,
         const char* pKey,
         unsigned int type  = 0,
@@ -1361,7 +1361,7 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialFloatArray(
 * Pass one of the AI_MATKEY_XXX constants for the last three parameters (the
 * example reads the #AI_MATKEY_SHININESS_STRENGTH property of the first diffuse texture)
 * @code
-* float specStrength = 1.f; // default value, remains unmodified if we fail.
+* float specStrength = 1.0; // default value, remains unmodified if we fail.
 * aiGetMaterialFloat(mat, AI_MATKEY_SHININESS_STRENGTH,
 *    (float*)&specStrength);
 * @endcode

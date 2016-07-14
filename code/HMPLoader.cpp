@@ -191,7 +191,7 @@ void HMPImporter::ValidateHeader_HMP457( )
     if (!pcHeader->ftrisize_x || !pcHeader->ftrisize_y)
         throw DeadlyImportError("Size of triangles in either  x or y direction is zero");
 
-    if(pcHeader->fnumverts_x < 1.0f || (pcHeader->numverts/pcHeader->fnumverts_x) < 1.0f)
+    if(pcHeader->fnumverts_x < 1.0 || (pcHeader->numverts/pcHeader->fnumverts_x) < 1.0)
         throw DeadlyImportError("Number of triangles in either x or y direction is zero");
 
     if(!pcHeader->numframes)
@@ -243,7 +243,7 @@ void HMPImporter::InternReadFile_HMP5( )
         {
             pcVertOut->x = x * pcHeader->ftrisize_x;
             pcVertOut->y = y * pcHeader->ftrisize_y;
-            pcVertOut->z = (((float)src->z / 0xffff)-0.5f) * pcHeader->ftrisize_x * 8.0f;
+            pcVertOut->z = (((ai_real)src->z / 0xffff)-0.5) * pcHeader->ftrisize_x * 8.0;
             MD2::LookupNormalIndex(src->normals162index, *pcNorOut );
             ++pcVertOut;++pcNorOut;++src;
         }
@@ -308,11 +308,11 @@ void HMPImporter::InternReadFile_HMP7( )
             // FIXME: What exctly is the correct scaling factor to use?
             // possibly pcHeader->scale_origin[2] in combination with a
             // signed interpretation of src->z?
-            pcVertOut->z = (((float)src->z / 0xffff)-0.5f) * pcHeader->ftrisize_x * 8.0f;
+            pcVertOut->z = (((ai_real)src->z / 0xffff)-0.5) * pcHeader->ftrisize_x * 8.0;
 
-            pcNorOut->x = ((float)src->normal_x / 0x80 ); // * pcHeader->scale_origin[0];
-            pcNorOut->y = ((float)src->normal_y / 0x80 ); // * pcHeader->scale_origin[1];
-            pcNorOut->z = 1.0f;
+            pcNorOut->x = ((ai_real)src->normal_x / 0x80 ); // * pcHeader->scale_origin[0];
+            pcNorOut->y = ((ai_real)src->normal_y / 0x80 ); // * pcHeader->scale_origin[1];
+            pcNorOut->z = 1.0;
             pcNorOut->Normalize();
 
             ++pcVertOut;++pcNorOut;++src;
@@ -359,7 +359,7 @@ void HMPImporter::CreateMaterial(const unsigned char* szCurrent,
         pcHelper->AddProperty<int>(&iMode, 1, AI_MATKEY_SHADING_MODEL);
 
         aiColor3D clr;
-        clr.b = clr.g = clr.r = 0.6f;
+        clr.b = clr.g = clr.r = 0.6;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -498,14 +498,14 @@ void HMPImporter::GenerateTextureCoords(
 
     aiVector3D* uv = pScene->mMeshes[0]->mTextureCoords[0];
 
-    const float fY = (1.0f / height) + (1.0f / height) / (height-1);
-    const float fX = (1.0f / width) + (1.0f / width) / (width-1);
+    const ai_real fY = (1.0 / height) + (1.0 / height) / (height-1);
+    const ai_real fX = (1.0 / width) + (1.0 / width) / (width-1);
 
     for (unsigned int y = 0; y < height;++y)    {
         for (unsigned int x = 0; x < width;++x,++uv)    {
             uv->y = fY*y;
             uv->x = fX*x;
-            uv->z = 0.0f;
+            uv->z = 0.0;
         }
     }
 }

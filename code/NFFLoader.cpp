@@ -109,7 +109,7 @@ const aiImporterDesc* NFFImporter::GetInfo () const
 
 // ------------------------------------------------------------------------------------------------
 #define AI_NFF_PARSE_SHAPE_INFORMATION() \
-    aiVector3D center, radius(1.0f,get_qnan(),get_qnan()); \
+    aiVector3D center, radius(1.0,get_qnan(),get_qnan()); \
     AI_NFF_PARSE_TRIPLE(center); \
     AI_NFF_PARSE_TRIPLE(radius); \
     if (is_qnan(radius.z))radius.z = radius.x; \
@@ -259,8 +259,8 @@ void NFFImporter::InternReadFile( const std::string& pFile,
     const char* sz;
 
     // camera parameters
-    aiVector3D camPos, camUp(0.f,1.f,0.f), camLookAt(0.f,0.f,1.f);
-    float angle = 45.f;
+    aiVector3D camPos, camUp(0.0,1.0,0.0), camLookAt(0.0,0.0,1.0);
+    float angle = 45.0;
     aiVector2D resolution;
 
     bool hasCam = false;
@@ -291,8 +291,8 @@ void NFFImporter::InternReadFile( const std::string& pFile,
     if (TokenMatch(buffer,"nff",3))
     {
         const ai_real qnan = get_qnan();
-        const aiColor4D  cQNAN = aiColor4D (qnan,0.f,0.f,1.f);
-        const aiVector3D vQNAN = aiVector3D(qnan,0.f,0.f);
+        const aiColor4D  cQNAN = aiColor4D (qnan,0.0,0.0,1.0);
+        const aiVector3D vQNAN = aiVector3D(qnan,0.0,0.0);
 
         // another NFF file format ... just a raw parser has been implemented
         // no support for further details, I don't think it is worth the effort
@@ -408,12 +408,12 @@ void NFFImporter::InternReadFile( const std::string& pFile,
                             hasColor = true;
                             unsigned int numIdx = ::strtoul16(sz,&sz);
                             aiColor4D clr;
-                            clr.a = 1.f;
+                            clr.a = 1.0;
 
                             // 0xRRGGBB
-                            clr.r = ((numIdx >> 16u) & 0xff) / 255.f;
-                            clr.g = ((numIdx >> 8u)  & 0xff) / 255.f;
-                            clr.b = ((numIdx)        & 0xff) / 255.f;
+                            clr.r = ((numIdx >> 16u) & 0xff) / 255.0;
+                            clr.g = ((numIdx >> 8u)  & 0xff) / 255.0;
+                            clr.b = ((numIdx)        & 0xff) / 255.0;
                             tempColors.push_back(clr);
                         }
                         // normal vector
@@ -429,7 +429,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
                             hasUVs = true;
                             AI_NFF_PARSE_FLOAT(v.x);
                             AI_NFF_PARSE_FLOAT(v.y);
-                            v.z = 0.f;
+                            v.z = 0.0;
                             tempTextureCoords.push_back(v);
                         }
                     }
@@ -483,8 +483,8 @@ void NFFImporter::InternReadFile( const std::string& pFile,
                     unsigned int matIdx = 0;
 
                     // white material color - we have vertex colors
-                    shader.color = aiColor3D(1.f,1.f,1.f);
-                    aiColor4D c  = aiColor4D(1.f,1.f,1.f,1.f);
+                    shader.color = aiColor3D(1.0,1.0,1.0);
+                    aiColor4D c  = aiColor4D(1.0,1.0,1.0,1.0);
                     while (true)
                     {
                         SkipSpaces(sz,&sz);
@@ -501,16 +501,16 @@ void NFFImporter::InternReadFile( const std::string& pFile,
                             // 0xRRGGBB
                             if (diff > 3)
                             {
-                                c.r = ((numIdx >> 16u) & 0xff) / 255.f;
-                                c.g = ((numIdx >> 8u)  & 0xff) / 255.f;
-                                c.b = ((numIdx)        & 0xff) / 255.f;
+                                c.r = ((numIdx >> 16u) & 0xff) / 255.0;
+                                c.g = ((numIdx >> 8u)  & 0xff) / 255.0;
+                                c.b = ((numIdx)        & 0xff) / 255.0;
                             }
                             // 0xRGB
                             else
                             {
-                                c.r = ((numIdx >> 8u) & 0xf) / 16.f;
-                                c.g = ((numIdx >> 4u) & 0xf) / 16.f;
-                                c.b = ((numIdx)       & 0xf) / 16.f;
+                                c.r = ((numIdx >> 8u) & 0xf) / 16.0;
+                                c.g = ((numIdx >> 4u) & 0xf) / 16.0;
+                                c.b = ((numIdx)       & 0xf) / 16.0;
                             }
                         }
                         // TODO - implement texture mapping here
@@ -779,7 +779,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
                             sz = line;
                         }
                         AI_NFF_PARSE_FLOAT(v.y);
-                        v.y = 1.f - v.y;
+                        v.y = 1.0 - v.y;
                         out->uvs[out->vertices.size()-n-1] = v;
                     }
                 }
@@ -1096,7 +1096,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
 
         // If the resolution is not specified in the file, we
         // need to set 1.0 as aspect.
-        c->mAspect      = (!resolution.y ? 0.f : resolution.x / resolution.y);
+        c->mAspect      = (!resolution.y ? 0.0 : resolution.x / resolution.y);
         ++ppcChildren;
     }
 
@@ -1145,7 +1145,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
             node->mName.Set(src.name);
 
             // setup the transformation matrix of the node
-            aiMatrix4x4::FromToMatrix(aiVector3D(0.f,1.f,0.f),
+            aiMatrix4x4::FromToMatrix(aiVector3D(0.0,1.0,0.0),
                 src.dir,node->mTransformation);
 
             aiMatrix4x4& mat = node->mTransformation;
@@ -1219,7 +1219,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
         pcMat->AddProperty(&s, AI_MATKEY_NAME);
 
         // FIX: Ignore diffuse == 0
-        aiColor3D c = src.shader.color * (src.shader.diffuse.r ?  src.shader.diffuse : aiColor3D(1.f,1.f,1.f));
+        aiColor3D c = src.shader.color * (src.shader.diffuse.r ?  src.shader.diffuse : aiColor3D(1.0,1.0,1.0));
         pcMat->AddProperty(&c,1,AI_MATKEY_COLOR_DIFFUSE);
         c = src.shader.color * src.shader.specular;
         pcMat->AddProperty(&c,1,AI_MATKEY_COLOR_SPECULAR);
@@ -1237,7 +1237,7 @@ void NFFImporter::InternReadFile( const std::string& pFile,
 
             if (aiTextureMapping_UV != src.shader.mapping) {
 
-                aiVector3D v(0.f,-1.f,0.f);
+                aiVector3D v(0.0,-1.0,0.0);
                 pcMat->AddProperty(&v, 1,AI_MATKEY_TEXMAP_AXIS_DIFFUSE(0));
                 pcMat->AddProperty((int*)&src.shader.mapping, 1,AI_MATKEY_MAPPING_DIFFUSE(0));
             }

@@ -76,8 +76,8 @@ void ConvertListToStrings(const std::string& in, std::list<std::string>& out)
 void FindAABBTransformed (const aiMesh* mesh, aiVector3D& min, aiVector3D& max,
     const aiMatrix4x4& m)
 {
-    min = aiVector3D (10e10f,  10e10f, 10e10f);
-    max = aiVector3D (-10e10f,-10e10f,-10e10f);
+    min = aiVector3D (10e10,  10e10, 10e10);
+    max = aiVector3D (-10e10,-10e10,-10e10);
     for (unsigned int i = 0;i < mesh->mNumVertices;++i)
     {
         const aiVector3D v = m * mesh->mVertices[i];
@@ -90,7 +90,7 @@ void FindAABBTransformed (const aiMesh* mesh, aiVector3D& min, aiVector3D& max,
 void FindMeshCenter (aiMesh* mesh, aiVector3D& out, aiVector3D& min, aiVector3D& max)
 {
     ArrayBounds(mesh->mVertices,mesh->mNumVertices, min,max);
-    out = min + (max-min)*( ai_real )0.5f;
+    out = min + (max-min)*( ai_real )0.5;
 }
 
 // -------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ void FindSceneCenter (aiScene* scene, aiVector3D& out, aiVector3D& min, aiVector
         if (max[1] < tmax[1]) max[1] = tmax[1];
         if (max[2] < tmax[2]) max[2] = tmax[2];
     }
-    out = min + (max-min)*( ai_real )0.5f;
+    out = min + (max-min)*( ai_real )0.5;
 }
 
 
@@ -122,7 +122,7 @@ void FindMeshCenterTransformed (aiMesh* mesh, aiVector3D& out, aiVector3D& min,
     aiVector3D& max, const aiMatrix4x4& m)
 {
     FindAABBTransformed(mesh,min,max,m);
-    out = min + (max-min)*( ai_real )0.5f;
+    out = min + (max-min)*( ai_real )0.5;
 }
 
 // -------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ void FindMeshCenterTransformed (aiMesh* mesh, aiVector3D& out,
 // -------------------------------------------------------------------------------
 ai_real ComputePositionEpsilon(const aiMesh* pMesh)
 {
-    const ai_real epsilon = 1e-4f;
+    const ai_real epsilon = 1e-4;
 
     // calculate the position bounds so we have a reliable epsilon to check position differences against
     aiVector3D minVec, maxVec;
@@ -156,7 +156,7 @@ ai_real ComputePositionEpsilon(const aiMesh* const* pMeshes, size_t num)
 {
     ai_assert( NULL != pMeshes );
 
-    const ai_real epsilon = 1e-4f;
+    const ai_real epsilon = 1e-4;
 
     // calculate the position bounds so we have a reliable epsilon to check position differences against
     aiVector3D minVec, maxVec, mi, ma;
@@ -171,7 +171,7 @@ ai_real ComputePositionEpsilon(const aiMesh* const* pMeshes, size_t num)
     }
     return (maxVec - minVec).Length() * epsilon;
 }
-    
+
 // -------------------------------------------------------------------------------
 unsigned int GetMeshVFormatUnique(const aiMesh* pcMesh)
 {

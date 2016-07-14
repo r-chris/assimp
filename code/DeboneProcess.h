@@ -55,7 +55,7 @@ namespace Assimp
 {
 
 #if (!defined AI_DEBONE_THRESHOLD)
-#   define AI_DEBONE_THRESHOLD  1.0f
+#   define AI_DEBONE_THRESHOLD  1.0
 #endif // !! AI_DEBONE_THRESHOLD
 
 // ---------------------------------------------------------------------------

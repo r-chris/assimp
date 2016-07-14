@@ -198,7 +198,7 @@ struct PolyLine
 struct InsertBlock
 {
     InsertBlock()
-        : scale(1.f,1.f,1.f)
+        : scale(1.0,1.0,1.0)
         , angle()
     {}
 

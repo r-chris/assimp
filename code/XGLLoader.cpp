@@ -466,7 +466,7 @@ aiNode* XGLImporter::ReadObject(TempScope& scope, bool skipFirst, const char* cl
 aiMatrix4x4 XGLImporter::ReadTrafo()
 {
     aiVector3D forward, up, right, position;
-    float scale = 1.0f;
+    float scale = 1.0;
 
     while (ReadElementUpToClosing("transform")) {
         const std::string& s = GetElementName();
@@ -481,7 +481,7 @@ aiMatrix4x4 XGLImporter::ReadTrafo()
         }
         if (s == "scale") {
             scale = ReadFloat();
-            if(scale < 0.f) {
+            if(scale < 0.0) {
                 // this is wrong, but we can leave the value and pass it to the caller
                 LogError("found negative scaling in <transform>, ignoring");
             }
@@ -547,7 +547,7 @@ aiMesh* XGLImporter::ToOutputMesh(const TempMaterialMesh& m)
         mesh->mTextureCoords[0] = new aiVector3D[mesh->mNumVertices];
 
         for(unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-            mesh->mTextureCoords[0][i] = aiVector3D(m.uvs[i].x,m.uvs[i].y,0.f);
+            mesh->mTextureCoords[0][i] = aiVector3D(m.uvs[i].x,m.uvs[i].y,0.0);
         }
     }
 
@@ -842,13 +842,13 @@ float XGLImporter::ReadFloat()
 {
     if(!SkipToText()) {
         LogError("unexpected EOF reading float element contents");
-        return 0.f;
+        return 0.0;
     }
     const char* s = reader->getNodeData(), *se;
 
     if(!SkipSpaces(&s)) {
         LogError("unexpected EOL, failed to parse float");
-        return 0.f;
+        return 0.0;
     }
 
     float t;
@@ -856,7 +856,7 @@ float XGLImporter::ReadFloat()
 
     if (se == s) {
         LogError("failed to read float text");
-        return 0.f;
+        return 0.0;
     }
 
     return t;
@@ -947,7 +947,7 @@ aiVector3D XGLImporter::ReadVec3()
 aiColor3D XGLImporter::ReadCol3()
 {
     const aiVector3D& v = ReadVec3();
-    if (v.x < 0.f || v.x > 1.0f || v.y < 0.f || v.y > 1.0f || v.z < 0.f || v.z > 1.0f) {
+    if (v.x < 0.0 || v.x > 1.0 || v.y < 0.0 || v.y > 1.0 || v.z < 0.0 || v.z > 1.0) {
         LogWarn("color values out of range, ignoring");
     }
     return aiColor3D(v.x,v.y,v.z);

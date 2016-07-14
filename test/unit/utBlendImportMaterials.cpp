@@ -83,42 +83,42 @@ TEST_F(BlendImportMaterials, testImportMaterial)
         ASSERT_EQ(aiReturn_SUCCESS, alpha->Get("$mat.blend." key, 0, 0, var)); \
         ASSERT_FLOAT_EQ(expected, var);
 
-    ASSERT_PROPERTY_EQ(aiColor3D(0.1f, 0.2f, 0.3f), "diffuse.color", diffuseColor);
-    ASSERT_PROPERTY_EQ(0.4f, "diffuse.intensity", diffuseIntensity);
+    ASSERT_PROPERTY_EQ(aiColor3D(0.1, 0.2, 0.3), "diffuse.color", diffuseColor);
+    ASSERT_PROPERTY_EQ(0.4, "diffuse.intensity", diffuseIntensity);
     ASSERT_PROPERTY_EQ(1, "diffuse.shader", diffuseShader);
     ASSERT_PROPERTY_EQ(0, "diffuse.ramp", diffuseRamp);
 
-    ASSERT_PROPERTY_EQ(aiColor3D(0.5f, 0.6f, 0.7f), "specular.color", specularColor);
-    ASSERT_PROPERTY_EQ(0.8f, "specular.intensity", specularIntensity);
+    ASSERT_PROPERTY_EQ(aiColor3D(0.5, 0.6, 0.7), "specular.color", specularColor);
+    ASSERT_PROPERTY_EQ(0.8, "specular.intensity", specularIntensity);
     ASSERT_PROPERTY_EQ(1, "specular.shader", specularShader);
     ASSERT_PROPERTY_EQ(0, "specular.ramp", specularRamp);
     ASSERT_PROPERTY_EQ(9, "specular.hardness", specularHardness);
 
     ASSERT_PROPERTY_EQ(1, "transparency.use", transparencyUse);
     ASSERT_PROPERTY_EQ(2, "transparency.method", transparencyMethod);
-    ASSERT_PROPERTY_EQ(0.01f, "transparency.alpha", transparencyAlpha);
-    ASSERT_PROPERTY_EQ(0.02f, "transparency.specular", transparencySpecular);
-    ASSERT_PROPERTY_EQ(0.03f, "transparency.fresnel", transparencyFresnel);
-    ASSERT_PROPERTY_EQ(3.14f, "transparency.blend", transparencyBlend);
-    ASSERT_PROPERTY_EQ(0.85f, "transparency.ior", transparencyIor);
-    ASSERT_PROPERTY_FLOAT_EQ(0.128f, "transparency.filter", transparencyFilter);
-    ASSERT_PROPERTY_FLOAT_EQ(1.298f, "transparency.falloff", transparencyFalloff);
-    ASSERT_PROPERTY_FLOAT_EQ(0.2376f, "transparency.limit", transparencyLimit);
+    ASSERT_PROPERTY_EQ(0.01, "transparency.alpha", transparencyAlpha);
+    ASSERT_PROPERTY_EQ(0.02, "transparency.specular", transparencySpecular);
+    ASSERT_PROPERTY_EQ(0.03, "transparency.fresnel", transparencyFresnel);
+    ASSERT_PROPERTY_EQ(3.14, "transparency.blend", transparencyBlend);
+    ASSERT_PROPERTY_EQ(0.85, "transparency.ior", transparencyIor);
+    ASSERT_PROPERTY_FLOAT_EQ(0.128, "transparency.filter", transparencyFilter);
+    ASSERT_PROPERTY_FLOAT_EQ(1.298, "transparency.falloff", transparencyFalloff);
+    ASSERT_PROPERTY_FLOAT_EQ(0.2376, "transparency.limit", transparencyLimit);
     ASSERT_PROPERTY_EQ(7, "transparency.depth", transparencyDepth);
-    ASSERT_PROPERTY_FLOAT_EQ(0.678f, "transparency.glossAmount", transparencyGlossAmount);
-    ASSERT_PROPERTY_FLOAT_EQ(0.208f, "transparency.glossThreshold", transparencyGlossThreshold);
+    ASSERT_PROPERTY_FLOAT_EQ(0.678, "transparency.glossAmount", transparencyGlossAmount);
+    ASSERT_PROPERTY_FLOAT_EQ(0.208, "transparency.glossThreshold", transparencyGlossThreshold);
     ASSERT_PROPERTY_EQ(17, "transparency.glossSamples", transparencyGlossSamples);
 
     ASSERT_PROPERTY_EQ(1, "mirror.use", mirrorUse);
-    ASSERT_PROPERTY_FLOAT_EQ(0.28f, "mirror.reflectivity", mirrorReflectivity);
-    ASSERT_PROPERTY_EQ(aiColor3D(0.25f, 0.5f, 0.128f), "mirror.color", mirrorColor);
-    ASSERT_PROPERTY_FLOAT_EQ(0.256f, "mirror.fresnel", mirrorFresnel);
-    ASSERT_PROPERTY_FLOAT_EQ(1.61f, "mirror.blend", mirrorBlend);
+    ASSERT_PROPERTY_FLOAT_EQ(0.28, "mirror.reflectivity", mirrorReflectivity);
+    ASSERT_PROPERTY_EQ(aiColor3D(0.25, 0.5, 0.128), "mirror.color", mirrorColor);
+    ASSERT_PROPERTY_FLOAT_EQ(0.256, "mirror.fresnel", mirrorFresnel);
+    ASSERT_PROPERTY_FLOAT_EQ(1.61, "mirror.blend", mirrorBlend);
     ASSERT_PROPERTY_EQ(12, "mirror.depth", mirrorDepth);
-    ASSERT_PROPERTY_FLOAT_EQ(0.4f, "mirror.maxDist", mirrorMaxDist);
+    ASSERT_PROPERTY_FLOAT_EQ(0.4, "mirror.maxDist", mirrorMaxDist);
     ASSERT_PROPERTY_EQ(1, "mirror.fadeTo", mirrorFadeTo);
-    ASSERT_PROPERTY_FLOAT_EQ(0.512f, "mirror.glossAmount", mirrorGlossAmount);
-    ASSERT_PROPERTY_FLOAT_EQ(0.18f, "mirror.glossThreshold", mirrorGlossThreshold);
+    ASSERT_PROPERTY_FLOAT_EQ(0.512, "mirror.glossAmount", mirrorGlossAmount);
+    ASSERT_PROPERTY_FLOAT_EQ(0.18, "mirror.glossThreshold", mirrorGlossThreshold);
     ASSERT_PROPERTY_EQ(61, "mirror.glossSamples", mirrorGlossSamples);
-    ASSERT_PROPERTY_FLOAT_EQ(0.87f, "mirror.glossAnisotropic", mirrorGlossAnisotropic);
+    ASSERT_PROPERTY_FLOAT_EQ(0.87, "mirror.glossAnisotropic", mirrorGlossAnisotropic);
 }

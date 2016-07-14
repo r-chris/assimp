@@ -352,9 +352,9 @@ void ProcessSweptDiskSolid(const IfcSweptDiskSolid solid, TempMesh& result, Conv
     IfcVector3 next;
 
     IfcVector3 startvec;
-    startvec.x = 1.0f;
-    startvec.y = 1.0f;
-    startvec.z = 1.0f;
+    startvec.x = 1.0;
+    startvec.y = 1.0;
+    startvec.z = 1.0;
 
     unsigned int last_dir = 0;
 
@@ -444,7 +444,7 @@ void ProcessSweptDiskSolid(const IfcSweptDiskSolid solid, TempMesh& result, Conv
             IfcVector3& v3 = *(result.verts.end()-3);
             IfcVector3& v4 = *(result.verts.end()-4);
 
-            if (((v4-v3) ^ (v4-v1)) * (v4 - curve_points[i]) < 0.0f) {
+            if (((v4-v3) ^ (v4-v1)) * (v4 - curve_points[i]) < 0.0) {
                 std::swap(v4, v1);
                 std::swap(v3, v2);
             }

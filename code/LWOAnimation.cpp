@@ -234,7 +234,7 @@ void AnimResolver::ExtractBindPose(aiMatrix4x4& out)
         out = aiMatrix4x4();
         return;
     }
-    aiVector3D angles, scaling(1.f,1.f,1.f), translation;
+    aiVector3D angles, scaling(1.0,1.0,1.0), translation;
 
     if (trans_x) translation.x = trans_x->keys[0].value;
     if (trans_y) translation.y = trans_y->keys[0].value;
@@ -280,7 +280,7 @@ void AnimResolver::DoInterpolation(std::vector<LWO::Key>::const_iterator cur,
             return;
 
         case LWO::PrePostBehaviour_Reset:
-            fill = 0.f;
+            fill = 0.0;
             return;
 
         default : //case LWO::PrePostBehaviour_Constant:
@@ -298,7 +298,7 @@ void AnimResolver::DoInterpolation(std::vector<LWO::Key>::const_iterator cur,
             return;
 
         case LWO::PrePostBehaviour_Reset:
-            fill = 0.f;
+            fill = 0.0;
             return;
 
         default : //case LWO::PrePostBehaviour_Constant:
@@ -405,13 +405,13 @@ void AnimResolver::GetKeys(std::vector<aiVectorKey>& out,
     // generate default channels if none are given
     LWO::Envelope def_x, def_y, def_z;
     LWO::Key key_dummy;
-    key_dummy.time = 0.f;
+    key_dummy.time = 0.0;
     if ((envl_x && envl_x->type == LWO::EnvelopeType_Scaling_X) ||
         (envl_y && envl_y->type == LWO::EnvelopeType_Scaling_Y) ||
         (envl_z && envl_z->type == LWO::EnvelopeType_Scaling_Z)) {
-        key_dummy.value = 1.f;
+        key_dummy.value = 1.0;
     }
-    else key_dummy.value = 0.f;
+    else key_dummy.value = 0.0;
 
     if (!envl_x) {
         envl_x = &def_x;
@@ -431,9 +431,9 @@ void AnimResolver::GetKeys(std::vector<aiVectorKey>& out,
     double sr = 1.;
     if (flags & AI_LWO_ANIM_FLAG_SAMPLE_ANIMS) {
         if (!sample_rate)
-            sr = 100.f;
+            sr = 100.0;
         else sr = sample_rate;
-        sample_delta = 1.f / sr;
+        sample_delta = 1.0 / sr;
 
         reserve = (size_t)(
             std::max( envl_x->keys.rbegin()->time,

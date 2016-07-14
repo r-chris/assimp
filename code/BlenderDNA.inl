@@ -587,7 +587,7 @@ template <> inline void Structure :: Convert<short>  (short& dest,const FileData
 {
     // automatic rescaling from short to float and vice versa (seems to be used by normals)
     if (name == "float") {
-        dest = static_cast<short>(db.reader->GetF4() * 32767.f);
+        dest = static_cast<short>(db.reader->GetF4() * 32767.0);
         //db.reader->IncPtr(-4);
         return;
     }
@@ -604,11 +604,11 @@ template <> inline void Structure :: Convert<char>   (char& dest,const FileDatab
 {
     // automatic rescaling from char to float and vice versa (seems useful for RGB colors)
     if (name == "float") {
-        dest = static_cast<char>(db.reader->GetF4() * 255.f);
+        dest = static_cast<char>(db.reader->GetF4() * 255.0);
         return;
     }
     else if (name == "double") {
-        dest = static_cast<char>(db.reader->GetF8() * 255.f);
+        dest = static_cast<char>(db.reader->GetF8() * 255.0);
         return;
     }
     ConvertDispatcher(dest,*this,db);
@@ -619,12 +619,12 @@ template <> inline void Structure :: Convert<float>  (float& dest,const FileData
 {
     // automatic rescaling from char to float and vice versa (seems useful for RGB colors)
     if (name == "char") {
-        dest = db.reader->GetI1() / 255.f;
+        dest = db.reader->GetI1() / 255.0;
         return;
     }
     // automatic rescaling from short to float and vice versa (used by normals)
     else if (name == "short") {
-        dest = db.reader->GetI2() / 32767.f;
+        dest = db.reader->GetI2() / 32767.0;
         return;
     }
     ConvertDispatcher(dest,*this,db);
@@ -634,11 +634,11 @@ template <> inline void Structure :: Convert<float>  (float& dest,const FileData
 template <> inline void Structure :: Convert<double> (double& dest,const FileDatabase& db) const
 {
     if (name == "char") {
-        dest = db.reader->GetI1() / 255.;
+        dest = db.reader->GetI1() / 255.0;
         return;
     }
     else if (name == "short") {
-        dest = db.reader->GetI2() / 32767.;
+        dest = db.reader->GetI2() / 32767.0;
         return;
     }
     ConvertDispatcher(dest,*this,db);

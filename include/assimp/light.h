@@ -237,12 +237,12 @@ struct aiLight
 
     aiLight()
         :   mType                 (aiLightSource_UNDEFINED)
-        ,   mAttenuationConstant  (0.f)
-        ,   mAttenuationLinear    (1.f)
-        ,   mAttenuationQuadratic (0.f)
+        ,   mAttenuationConstant  (0.0)
+        ,   mAttenuationLinear    (1.0)
+        ,   mAttenuationQuadratic (0.0)
         ,   mAngleInnerCone       ((float)AI_MATH_TWO_PI)
         ,   mAngleOuterCone       ((float)AI_MATH_TWO_PI)
-        ,   mSize                 (0.f, 0.f)
+        ,   mSize                 (0.0, 0.0)
     {
     }
 

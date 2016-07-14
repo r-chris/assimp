@@ -176,11 +176,11 @@ void RemoveVCProcess::Execute( aiScene* pScene)
         helper->Clear();
 
         // gray
-        aiColor3D clr(0.6f,0.6f,0.6f);
+        aiColor3D clr(0.6,0.6,0.6);
         helper->AddProperty(&clr,1,AI_MATKEY_COLOR_DIFFUSE);
 
         // add a small ambient color value
-        clr = aiColor3D(0.05f,0.05f,0.05f);
+        clr = aiColor3D(0.05,0.05,0.05);
         helper->AddProperty(&clr,1,AI_MATKEY_COLOR_AMBIENT);
 
         aiString s;

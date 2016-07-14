@@ -101,10 +101,10 @@ void JoinVerticesProcess::Execute( aiScene* pScene)
         } else
         {
             char szBuff[128]; // should be sufficiently large in every case
-            ::ai_snprintf(szBuff,128,"JoinVerticesProcess finished | Verts in: %i out: %i | ~%.1f%%",
+            ::ai_snprintf(szBuff,128,"JoinVerticesProcess finished | Verts in: %i out: %i | ~%.1%%",
                 iNumOldVertices,
                 iNumVertices,
-                ((iNumOldVertices - iNumVertices) / (float)iNumOldVertices) * 100.f);
+                ((iNumOldVertices - iNumVertices) / (float)iNumOldVertices) * 100.0);
             DefaultLogger::get()->info(szBuff);
         }
     }
@@ -280,7 +280,7 @@ int JoinVerticesProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
             " out: ",
             uniqueVertices.size(),
             " | ~",
-            ((pMesh->mNumVertices - uniqueVertices.size()) / (float)pMesh->mNumVertices) * 100.f,
+            ((pMesh->mNumVertices - uniqueVertices.size()) / (float)pMesh->mNumVertices) * 100.0,
             "%"
         ));
     }

@@ -149,7 +149,7 @@ void ColladaExporter::WriteFile()
 // Writes the asset header
 void ColladaExporter::WriteHeader()
 {
-    static const float epsilon = 0.00001f;
+    static const float epsilon = 0.00001;
     static const aiQuaternion x_rot(aiMatrix3x3(
         0, -1,  0,
         1,  0,  0,
@@ -446,7 +446,7 @@ void ColladaExporter::WriteSpotLight(const aiLight *const light){
                             << light->mAttenuationQuadratic
                         <<"</quadratic_attenuation>" << endstr;
     /*
-    out->mAngleOuterCone = AI_DEG_TO_RAD (std::acos(std::pow(0.1f,1.f/srcLight->mFalloffExponent))+
+    out->mAngleOuterCone = AI_DEG_TO_RAD (std::acos(std::pow(0.1,1.0/srcLight->mFalloffExponent))+
                             srcLight->mFalloffAngle);
     */
 

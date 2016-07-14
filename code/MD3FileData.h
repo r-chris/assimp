@@ -76,7 +76,7 @@ namespace MD3   {
 #define AI_MD3_MAX_TRIANGLES    8192
 
 // master scale factor for all vertices in a MD3 model
-#define AI_MD3_XYZ_SCALE        (1.0f/64.0f)
+#define AI_MD3_XYZ_SCALE        (1.0/64.0)
 
 // -------------------------------------------------------------------------------
 /** @brief Data structure for the MD3 main header
@@ -259,10 +259,10 @@ struct Vertex
  */
 inline void LatLngNormalToVec3(uint16_t p_iNormal, ai_real* p_afOut)
 {
-    ai_real lat = (float)(( p_iNormal >> 8u ) & 0xff);
-    ai_real lng = (float)(( p_iNormal & 0xff ));
-    lat *= 3.141926f/128.0f;
-    lng *= 3.141926f/128.0f;
+    ai_real lat = (ai_real)(( p_iNormal >> 8u ) & 0xff);
+    ai_real lng = (ai_real)(( p_iNormal & 0xff ));
+    lat *= 3.141926/128.0;
+    lng *= 3.141926/128.0;
 
     p_afOut[0] = std::cos(lat) * std::sin(lng);
     p_afOut[1] = std::sin(lat) * std::sin(lng);
@@ -280,9 +280,9 @@ inline void LatLngNormalToVec3(uint16_t p_iNormal, ai_real* p_afOut)
 inline void Vec3NormalToLatLng( const aiVector3D& p_vIn, uint16_t& p_iOut )
 {
     // check for singularities
-    if ( 0.0f == p_vIn[0] && 0.0f == p_vIn[1] )
+    if ( 0.0 == p_vIn[0] && 0.0 == p_vIn[1] )
     {
-        if ( p_vIn[2] > 0.0f )
+        if ( p_vIn[2] > 0.0 )
         {
             ((unsigned char*)&p_iOut)[0] = 0;
             ((unsigned char*)&p_iOut)[1] = 0;       // lat = 0, long = 0
@@ -296,10 +296,10 @@ inline void Vec3NormalToLatLng( const aiVector3D& p_vIn, uint16_t& p_iOut )
     else
     {
         int a, b;
-        a = int(57.2957795f * ( atan2f( p_vIn[1], p_vIn[0] ) ) * (255.0f / 360.0f ));
+        a = int(57.2957795f * ( atan2f( p_vIn[1], p_vIn[0] ) ) * (255.0 / 360.0 ));
         a &= 0xff;
 
-        b = int(57.2957795f * ( acosf( p_vIn[2] ) ) * ( 255.0f / 360.0f ));
+        b = int(57.2957795f * ( acosf( p_vIn[2] ) ) * ( 255.0 / 360.0 ));
         b &= 0xff;
 
         ((unsigned char*)&p_iOut)[0] = b;   // longitude
@@ -311,4 +311,3 @@ inline void Vec3NormalToLatLng( const aiVector3D& p_vIn, uint16_t& p_iOut )
 }
 
 #endif // !! AI_MD3FILEHELPER_H_INC
-

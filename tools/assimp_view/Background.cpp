@@ -64,14 +64,14 @@ struct SkyBoxVertex
 // ------------------------------------------------------------------------------
 SkyBoxVertex g_cubeVertices_indexed[] =
 {
-    { -1.0f, 1.0f, -1.0f,   -1.0f,1.0f,-1.0f },     // 0
-    { 1.0f, 1.0f,  -1.0f,   1.0f,1.0f,-1.0f },      // 1
-    { -1.0f, -1.0f, -1.0f,  -1.0f,-1.0f,-1.0f },    // 2
-    { 1.0f,-1.0f,-1.0f,      1.0f,-1.0f,-1.0f },    // 3
-    {-1.0f, 1.0f, 1.0f,     -1.0f,1.0f,1.0f },      // 4
-    {-1.0f,-1.0f, 1.0f,     -1.0f,-1.0f,1.0f },     // 5
-    { 1.0f, 1.0f, 1.0f,     1.0f,1.0f,1.0f },       // 6
-    { 1.0f,-1.0f, 1.0f,     1.0f,-1.0f,1.0f }       // 7
+    { -1.0, 1.0, -1.0,   -1.0,1.0,-1.0 },     // 0
+    { 1.0, 1.0,  -1.0,   1.0,1.0,-1.0 },      // 1
+    { -1.0, -1.0, -1.0,  -1.0,-1.0,-1.0 },    // 2
+    { 1.0,-1.0,-1.0,      1.0,-1.0,-1.0 },    // 3
+    {-1.0, 1.0, 1.0,     -1.0,1.0,1.0 },      // 4
+    {-1.0,-1.0, 1.0,     -1.0,-1.0,1.0 },     // 5
+    { 1.0, 1.0, 1.0,     1.0,1.0,1.0 },       // 6
+    { 1.0,-1.0, 1.0,     1.0,-1.0,1.0 }       // 7
 };
 
 
@@ -224,11 +224,11 @@ void CBackgroundPainter::OnPreRender()
         if (g_sOptions.eDrawMode == RenderOptions::WIREFRAME)
         {
             g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER | D3DCLEAR_TARGET,
-                D3DCOLOR_ARGB(0xff,100,100,100),1.0f,0);
+                D3DCOLOR_ARGB(0xff,100,100,100),1.0,0);
         }
         else
         {
-            g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER,0,1.0f,0);
+            g_piDevice->Clear(0,NULL,D3DCLEAR_ZBUFFER,0,1.0,0);
         }
 
         if (TEXTURE_2D == eMode)
@@ -248,36 +248,36 @@ void CBackgroundPainter::OnPreRender()
             this->piSkyBoxEffect->BeginPass(0);
 
             SVertex as[4];
-            as[1].x = 0.0f;
-            as[1].y = 0.0f;
-            as[1].z = 0.2f;
-            as[1].w = 1.0f;
-            as[1].u = 0.0f;
-            as[1].v = 0.0f;
+            as[1].x = 0.0;
+            as[1].y = 0.0;
+            as[1].z = 0.2;
+            as[1].w = 1.0;
+            as[1].u = 0.0;
+            as[1].v = 0.0;
 
             as[3].x = (float)sRect.right;
-            as[3].y = 0.0f;
-            as[3].z = 0.2f;
-            as[3].w = 1.0f;
-            as[3].u = 1.0f;
-            as[3].v = 0.0f;
+            as[3].y = 0.0;
+            as[3].z = 0.2;
+            as[3].w = 1.0;
+            as[3].u = 1.0;
+            as[3].v = 0.0;
 
-            as[0].x = 0.0f;
+            as[0].x = 0.0;
             as[0].y = (float)sRect.bottom;
-            as[0].z = 0.2f;
-            as[0].w = 1.0f;
-            as[0].u = 0.0f;
-            as[0].v = 1.0f;
+            as[0].z = 0.2;
+            as[0].w = 1.0;
+            as[0].u = 0.0;
+            as[0].v = 1.0;
 
             as[2].x = (float)sRect.right;
             as[2].y = (float)sRect.bottom;
-            as[2].z = 0.2f;
-            as[2].w = 1.0f;
-            as[2].u = 1.0f;
-            as[2].v = 1.0f;
+            as[2].z = 0.2;
+            as[2].w = 1.0;
+            as[2].u = 1.0;
+            as[2].v = 1.0;
 
-            as[0].x -= 0.5f;as[1].x -= 0.5f;as[2].x -= 0.5f;as[3].x -= 0.5f;
-            as[0].y -= 0.5f;as[1].y -= 0.5f;as[2].y -= 0.5f;as[3].y -= 0.5f;
+            as[0].x -= 0.5;as[1].x -= 0.5;as[2].x -= 0.5;as[3].x -= 0.5;
+            as[0].y -= 0.5;as[1].y -= 0.5;as[2].y -= 0.5;as[3].y -= 0.5;
 
             DWORD dw2;g_piDevice->GetFVF(&dw2);
             g_piDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
@@ -294,7 +294,7 @@ void CBackgroundPainter::OnPreRender()
     }
     // clear both the render target and the z-buffer
     g_piDevice->Clear(0,NULL,D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-        clrColor,1.0f,0);
+        clrColor,1.0,0);
 }
 //-------------------------------------------------------------------------------
 void CBackgroundPainter::OnPostRender()

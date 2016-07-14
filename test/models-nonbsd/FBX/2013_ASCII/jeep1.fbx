@@ -30,8 +30,8 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "E:\dev\assimp\assimp-gsoc2012-fbx\test\models-nonbsd\3DS\jeep1.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "E:\dev\assimp\assimp-gsoc2012-fbx\test\models-nonbsd\3DS\jeep1.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "E:\dev\assimp\assimp-gsoc2012-fbx\test\models-nonbsd\3DS\jeep1.0bx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "E:\dev\assimp\assimp-gsoc2012-fbx\test\models-nonbsd\3DS\jeep1.0bx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", ""
 			P: "Original|ApplicationName", "KString", "", "", ""

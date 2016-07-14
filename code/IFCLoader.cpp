@@ -158,7 +158,7 @@ void IFCImporter::SetupProperties(const Importer* pImp)
     settings.skipCurveRepresentations = pImp->GetPropertyBool(AI_CONFIG_IMPORT_IFC_SKIP_CURVE_REPRESENTATIONS,true);
     settings.useCustomTriangulation = pImp->GetPropertyBool(AI_CONFIG_IMPORT_IFC_CUSTOM_TRIANGULATION,true);
 
-    settings.conicSamplingAngle = 10.f;
+    settings.conicSamplingAngle = 10.0;
     settings.skipAnnotations = true;
 }
 
@@ -326,7 +326,7 @@ void ConvertUnit(const IfcNamedUnit& unit,ConversionData& conv)
     if(const IfcSIUnit* const si = unit.ToPtr<IfcSIUnit>()) {
 
         if(si->UnitType == "LENGTHUNIT") {
-            conv.len_scale = si->Prefix ? ConvertSIPrefix(si->Prefix) : 1.f;
+            conv.len_scale = si->Prefix ? ConvertSIPrefix(si->Prefix) : 1.0;
             IFCImporter::LogDebug("got units used for lengths");
         }
         if(si->UnitType == "PLANEANGLEUNIT") {

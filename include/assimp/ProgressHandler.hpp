@@ -71,7 +71,7 @@ public:
     // -------------------------------------------------------------------
     /** @brief Progress callback.
      *  @param percentage An estimate of the current loading progress,
-     *    in percent. Or -1.f if such an estimate is not available.
+     *    in percent. Or -1.0 if such an estimate is not available.
      *
      *  There are restriction on what you may do from within your
      *  implementation of this method: no exceptions may be thrown and no
@@ -85,7 +85,7 @@ public:
      *   caller). If the loading is aborted, #Importer::ReadFile()
      *   returns always NULL.
      *   */
-    virtual bool Update(float percentage = -1.f) = 0;
+    virtual bool Update(float percentage = -1.0) = 0;
 
     // -------------------------------------------------------------------
     /** @brief Progress callback for file loading steps
@@ -100,8 +100,8 @@ public:
      *   of the file parsing.
      *   */
     virtual void UpdateFileRead(int currentStep /*= 0*/, int numberOfSteps /*= 0*/) {
-        float f = numberOfSteps ? currentStep / (float)numberOfSteps : 1.0f;
-        Update( f * 0.5f );
+        float f = numberOfSteps ? currentStep / (float)numberOfSteps : 1.0;
+        Update( f * 0.5 );
     }
 
     // -------------------------------------------------------------------
@@ -114,8 +114,8 @@ public:
      *   increasing, although not necessarily linearly.
      *   */
     virtual void UpdatePostProcess(int currentStep /*= 0*/, int numberOfSteps /*= 0*/) {
-        float f = numberOfSteps ? currentStep / (float)numberOfSteps : 1.0f;
-        Update( f * 0.5f + 0.5f );
+        float f = numberOfSteps ? currentStep / (float)numberOfSteps : 1.0;
+        Update( f * 0.5 + 0.5 );
     }
 
 }; // !class ProgressHandler

@@ -275,9 +275,9 @@ void ASEImporter::GenerateDefaultMaterial()
         mParser->m_vMaterials.push_back ( ASE::Material() );
         ASE::Material& mat = mParser->m_vMaterials.back();
 
-        mat.mDiffuse  = aiColor3D(0.6f,0.6f,0.6f);
-        mat.mSpecular = aiColor3D(1.0f,1.0f,1.0f);
-        mat.mAmbient  = aiColor3D(0.05f,0.05f,0.05f);
+        mat.mDiffuse  = aiColor3D(0.6,0.6,0.6);
+        mat.mSpecular = aiColor3D(1.0,1.0,1.0);
+        mat.mAmbient  = aiColor3D(0.05,0.05,0.05);
         mat.mShading  = Discreet3DS::Gouraud;
         mat.mName     = AI_DEFAULT_MATERIAL_NAME;
     }
@@ -401,7 +401,7 @@ void ASEImporter::BuildAnimations(const std::vector<BaseNode*>& nodes)
                         nd->mRotationKeys[a] = q;
 
                         // need this to get to Assimp quaternion conventions
-                        nd->mRotationKeys[a].mValue.w *= -1.f;
+                        nd->mRotationKeys[a].mValue.w *= -1.0;
                     }
                 }
                 // copy scaling keys
@@ -432,7 +432,7 @@ void ASEImporter::BuildCameras()
 
             // copy members
             out->mClipPlaneFar  = in.mFar;
-            out->mClipPlaneNear = (in.mNear ? in.mNear : 0.1f);
+            out->mClipPlaneNear = (in.mNear ? in.mNear : 0.1);
             out->mHorizontalFOV = in.mFOV;
 
             out->mName.Set(in.mName);
@@ -455,7 +455,7 @@ void ASEImporter::BuildLights()
             // The direction is encoded in the transformation matrix of the node.
             // In 3DS MAX the light source points into negative Z direction if
             // the node transformation is the identity.
-            out->mDirection = aiVector3D(0.f,0.f,-1.f);
+            out->mDirection = aiVector3D(0.0,0.0,-1.0);
 
             out->mName.Set(in.mName);
             switch (in.mLightType)
@@ -729,8 +729,8 @@ void ASEImporter::BuildNodes(std::vector<BaseNode*>& nodes) {
     }
 
     // Now rotate the whole scene 90 degrees around the x axis to convert to internal coordinate system
-    pcScene->mRootNode->mTransformation = aiMatrix4x4(1.f,0.f,0.f,0.f,
-        0.f,0.f,1.f,0.f,0.f,-1.f,0.f,0.f,0.f,0.f,0.f,1.f);
+    pcScene->mRootNode->mTransformation = aiMatrix4x4(1.0,0.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,0.0,-1.0,0.0,0.0,0.0,0.0,0.0,1.0);
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -851,7 +851,7 @@ void ASEImporter::ConvertMaterial(ASE::Material& mat)
     mat.pcInstance->AddProperty( &mat.mEmissive, 1, AI_MATKEY_COLOR_EMISSIVE);
 
     // shininess
-    if (0.0f != mat.mSpecularExponent && 0.0f != mat.mShininessStrength)
+    if (0.0 != mat.mSpecularExponent && 0.0 != mat.mShininessStrength)
     {
         mat.pcInstance->AddProperty( &mat.mSpecularExponent, 1, AI_MATKEY_SHININESS);
         mat.pcInstance->AddProperty( &mat.mShininessStrength, 1, AI_MATKEY_SHININESS_STRENGTH);

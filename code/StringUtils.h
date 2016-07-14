@@ -93,9 +93,9 @@ std::string to_string( T value ) {
 inline
 float ai_strtof( const char *begin, const char *end ) {
     if ( nullptr == begin ) {
-        return 0.0f;
+        return 0.0;
     }
-    float val( 0.0f );
+    float val( 0.0 );
     if ( nullptr == end ) {
         val = static_cast< float >( ::atof( begin ) );
     } else {

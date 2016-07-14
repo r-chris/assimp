@@ -77,7 +77,7 @@ std::string g_szNormalsShader = std::string(
         "VS_OUTPUT Out = (VS_OUTPUT)0;\n"
 
         "// Multiply with the WorldViewProjection matrix\n"
-        "Out.Position = mul(float4(IN.Position,1.0f),WorldViewProjection);\n"
+        "Out.Position = mul(float4(IN.Position,1.0),WorldViewProjection);\n"
 
         "return Out;\n"
     "}\n"
@@ -86,7 +86,7 @@ std::string g_szNormalsShader = std::string(
     "VS_OUTPUT_FF RenderNormalsVS_FF(VS_INPUT IN)\n"
   "{\n"
         "VS_OUTPUT_FF Out;\n"
-        "Out.Position = mul(float4(IN.Position,1.0f),WorldViewProjection);\n"
+        "Out.Position = mul(float4(IN.Position,1.0),WorldViewProjection);\n"
     "Out.Color = OUTPUT_COLOR;\n"
         "return Out;\n"
     "}\n"
@@ -163,7 +163,7 @@ std::string g_szSkyboxShader = std::string(
         "VS_OUTPUT Out;\n"
 
         // Multiply with the WorldViewProjection matrix
-        "Out.Position = mul(float4(IN.Position,1.0f),WorldViewProjection);\n"
+        "Out.Position = mul(float4(IN.Position,1.0),WorldViewProjection);\n"
 
         // Set z to w to ensure z becomes 1.0 after the division through w occurs
         "Out.Position.z = Out.Position.w;\n"
@@ -213,7 +213,7 @@ std::string g_szSkyboxShader = std::string(
         "VS_OUTPUT2 Out;\n"
 
         "Out.Position.xy = INPosition.xy;\n"
-        "Out.Position.z = Out.Position.w = 1.0f;\n"
+        "Out.Position.z = Out.Position.w = 1.0;\n"
         "Out.TexCoord0 = INTexCoord0;\n"
 
         "return Out;\n"
@@ -293,8 +293,8 @@ std::string g_szDefaultShader = std::string(
 
 //		"#ifdef AV_SKINNING \n"
         "float4 weights = IN.BlendWeights; \n"
-        "weights.w = 1.0f - dot( weights.xyz, float3( 1, 1, 1)); \n"
-        "float4 localPos = float4( IN.Position, 1.0f); \n"
+        "weights.w = 1.0 - dot( weights.xyz, float3( 1, 1, 1)); \n"
+        "float4 localPos = float4( IN.Position, 1.0); \n"
         "float3 objPos = mul( localPos, gBoneMatrix[IN.BlendIndices.x]) * weights.x; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.y]) * weights.y; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.z]) * weights.z; \n"
@@ -304,8 +304,8 @@ std::string g_szDefaultShader = std::string(
 //		"#endif // AV_SKINNING \n"
 
         // Multiply with the WorldViewProjection matrix
-        "Out.Position = mul( float4( objPos, 1.0f), WorldViewProjection);\n"
-        "float3 WorldPos = mul( float4( objPos, 1.0f), World);\n"
+        "Out.Position = mul( float4( objPos, 1.0), WorldViewProjection);\n"
+        "float3 WorldPos = mul( float4( objPos, 1.0), World);\n"
         "Out.ViewDir = vCameraPos - WorldPos;\n"
         "Out.Normal = mul(IN.Normal,WorldInverseTranspose);\n"
 
@@ -319,8 +319,8 @@ std::string g_szDefaultShader = std::string(
 
 //		"#ifdef AV_SKINNING \n"
         "float4 weights = IN.BlendWeights; \n"
-        "weights.w = 1.0f - dot( weights.xyz, float3( 1, 1, 1)); \n"
-        "float4 localPos = float4( IN.Position, 1.0f); \n"
+        "weights.w = 1.0 - dot( weights.xyz, float3( 1, 1, 1)); \n"
+        "float4 localPos = float4( IN.Position, 1.0); \n"
         "float3 objPos = mul( localPos, gBoneMatrix[IN.BlendIndices.x]) * weights.x; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.y]) * weights.y; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.z]) * weights.z; \n"
@@ -330,12 +330,12 @@ std::string g_szDefaultShader = std::string(
 //		"#endif // AV_SKINNING \n"
 
         // Multiply with the WorldViewProjection matrix
-        "Out.Position = mul( float4( objPos, 1.0f), WorldViewProjection);\n"
+        "Out.Position = mul( float4( objPos, 1.0), WorldViewProjection);\n"
 
         "float3 worldNormal = normalize( mul( IN.Normal, (float3x3) WorldInverseTranspose)); \n"
 
         // per-vertex lighting. We simply assume light colors of unused lights to be black
-        "Out.Color = float4( 0.2f, 0.2f, 0.2f, 1.0f); \n"
+        "Out.Color = float4( 0.2, 0.2, 0.2, 1.0); \n"
         "for( int a = 0; a < 2; a++)\n"
         "  Out.Color.rgb += saturate( dot( afLightDir[a], worldNormal)) * afLightColor[a].rgb; \n"
             "return Out;\n"
@@ -344,17 +344,17 @@ std::string g_szDefaultShader = std::string(
     // Pixel shader for one light
     "float4 DefaultPShaderSpecular_D1(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "float3 Normal = normalize(IN.Normal);\n"
         "float3 ViewDir = normalize(IN.ViewDir);\n"
 
         "{\n"
-            "float L1 = dot(Normal,afLightDir[0]) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,afLightDir[0]) * 0.5 + 0.5;\n"
             "float3 Reflect = reflect (Normal,afLightDir[0]);\n"
             "float fHalfLambert = L1*L1;\n"
             "OUT.rgb += afLightColor[0] * (fHalfLambert +\n"
-                "saturate(fHalfLambert * 4.0f) * pow(dot(Reflect,ViewDir),9));\n"
+                "saturate(fHalfLambert * 4.0) * pow(dot(Reflect,ViewDir),9));\n"
         "}\n"
         "return OUT;\n"
     "}\n"
@@ -362,31 +362,31 @@ std::string g_szDefaultShader = std::string(
     // Pixel shader for two lights
     "float4 DefaultPShaderSpecular_D2(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "float3 Normal = normalize(IN.Normal);\n"
         "float3 ViewDir = normalize(IN.ViewDir);\n"
 
         "{\n"
-            "float L1 = dot(Normal,afLightDir[0]) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,afLightDir[0]) * 0.5 + 0.5;\n"
             "float3 Reflect = reflect (ViewDir,Normal);\n"
             "float fHalfLambert = L1*L1;\n"
             "OUT.rgb += afLightColor[0] * (fHalfLambert +\n"
-            "saturate(fHalfLambert * 4.0f) * pow(dot(Reflect,afLightDir[0]),9));\n"
+            "saturate(fHalfLambert * 4.0) * pow(dot(Reflect,afLightDir[0]),9));\n"
         "}\n"
         "{\n"
-            "float L1 = dot(Normal,afLightDir[1]) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,afLightDir[1]) * 0.5 + 0.5;\n"
             "float3 Reflect = reflect (ViewDir,Normal);\n"
             "float fHalfLambert = L1*L1;\n"
             "OUT.rgb += afLightColor[1] * (fHalfLambert +\n"
-            "saturate(fHalfLambert * 4.0f) * pow(dot(Reflect,afLightDir[1]),9));\n"
+            "saturate(fHalfLambert * 4.0) * pow(dot(Reflect,afLightDir[1]),9));\n"
         "}\n"
         "return OUT;\n"
     "}\n"
     // ----------------------------------------------------------------------------
     "float4 DefaultPShaderSpecular_PS20_D1(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "float3 Normal = normalize(IN.Normal);\n"
         "float3 ViewDir = normalize(IN.ViewDir);\n"
@@ -403,7 +403,7 @@ std::string g_szDefaultShader = std::string(
     // ----------------------------------------------------------------------------
     "float4 DefaultPShaderSpecular_PS20_D2(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "float3 Normal = normalize(IN.Normal);\n"
         "float3 ViewDir = normalize(IN.ViewDir);\n"
@@ -669,7 +669,7 @@ std::string g_szMaterialShader = std::string(
 
 
     // Selective SuperSampling in screenspace for reflection lookups
-    "#define GetSSSCubeMap(_refl) (texCUBElod(EnvironmentMapSampler,float4(_refl,0.0f)).rgb) \n"
+    "#define GetSSSCubeMap(_refl) (texCUBElod(EnvironmentMapSampler,float4(_refl,0.0)).rgb) \n"
 
 
     // Vertex shader for pixel shader usage and one light
@@ -679,8 +679,8 @@ std::string g_szMaterialShader = std::string(
 
         "#ifdef AV_SKINNING \n"
         "float4 weights = IN.BlendWeights; \n"
-        "weights.w = 1.0f - dot( weights.xyz, float3( 1, 1, 1)); \n"
-        "float4 localPos = float4( IN.Position, 1.0f); \n"
+        "weights.w = 1.0 - dot( weights.xyz, float3( 1, 1, 1)); \n"
+        "float4 localPos = float4( IN.Position, 1.0); \n"
         "float3 objPos = mul( localPos, gBoneMatrix[IN.BlendIndices.x]) * weights.x; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.y]) * weights.y; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.z]) * weights.z; \n"
@@ -690,8 +690,8 @@ std::string g_szMaterialShader = std::string(
         "#endif // AV_SKINNING \n"
 
         // Multiply with the WorldViewProjection matrix
-        "Out.Position = mul( float4( objPos, 1.0f), WorldViewProjection);\n"
-        "float3 WorldPos = mul( float4( objPos, 1.0f), World);\n"
+        "Out.Position = mul( float4( objPos, 1.0), WorldViewProjection);\n"
+        "float3 WorldPos = mul( float4( objPos, 1.0), World);\n"
         "Out.TexCoord0 = IN.TexCoord0;\n"
         "#ifdef AV_TWO_UV \n"
         "Out.TexCoord1 = IN.TexCoord1;\n"
@@ -719,8 +719,8 @@ std::string g_szMaterialShader = std::string(
 
         "#ifdef AV_SKINNING \n"
         "float4 weights = IN.BlendWeights; \n"
-        "weights.w = 1.0f - dot( weights.xyz, float3( 1, 1, 1)); \n"
-        "float4 localPos = float4( IN.Position, 1.0f); \n"
+        "weights.w = 1.0 - dot( weights.xyz, float3( 1, 1, 1)); \n"
+        "float4 localPos = float4( IN.Position, 1.0); \n"
         "float3 objPos = mul( localPos, gBoneMatrix[IN.BlendIndices.x]) * weights.x; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.y]) * weights.y; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.z]) * weights.z; \n"
@@ -730,8 +730,8 @@ std::string g_szMaterialShader = std::string(
         "#endif // AV_SKINNING \n"
 
         // Multiply with the WorldViewProjection matrix
-        "Out.Position = mul( float4( objPos, 1.0f), WorldViewProjection);\n"
-        "float3 WorldPos = mul( float4( objPos, 1.0f), World);\n"
+        "Out.Position = mul( float4( objPos, 1.0), WorldViewProjection);\n"
+        "float3 WorldPos = mul( float4( objPos, 1.0), World);\n"
         "Out.TexCoord0 = IN.TexCoord0;\n"
         "#ifdef AV_TWO_UV \n"
         "Out.TexCoord1 = IN.TexCoord1;\n"
@@ -760,8 +760,8 @@ std::string g_szMaterialShader = std::string(
 
         "#ifdef AV_SKINNING \n"
         "float4 weights = IN.BlendWeights; \n"
-        "weights.w = 1.0f - dot( weights.xyz, float3( 1, 1, 1)); \n"
-        "float4 localPos = float4( IN.Position, 1.0f); \n"
+        "weights.w = 1.0 - dot( weights.xyz, float3( 1, 1, 1)); \n"
+        "float4 localPos = float4( IN.Position, 1.0); \n"
         "float3 objPos = mul( localPos, gBoneMatrix[IN.BlendIndices.x]) * weights.x; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.y]) * weights.y; \n"
         "objPos += mul( localPos, gBoneMatrix[IN.BlendIndices.z]) * weights.z; \n"
@@ -771,20 +771,20 @@ std::string g_szMaterialShader = std::string(
         "#endif // AV_SKINNING \n"
 
         // Multiply with the WorldViewProjection matrix
-        "Out.Position = mul( float4( objPos, 1.0f), WorldViewProjection);\n"
-        "float3 worldPos = mul( float4( objPos, 1.0f), World);\n"
+        "Out.Position = mul( float4( objPos, 1.0), WorldViewProjection);\n"
+        "float3 worldPos = mul( float4( objPos, 1.0), World);\n"
         "float3 worldNormal = normalize( mul( IN.Normal, (float3x3) WorldInverseTranspose)); \n"
         "Out.TexCoord0 = IN.TexCoord0;\n"
 
         // calculate per-vertex diffuse lighting including ambient part
-        "float4 diffuseColor = float4( 0.0f, 0.0f, 0.0f, 1.0f); \n"
+        "float4 diffuseColor = float4( 0.0, 0.0, 0.0, 1.0); \n"
         "for( int a = 0; a < 2; a++) \n"
         "  diffuseColor.rgb += saturate( dot( afLightDir[a], worldNormal)) * afLightColor[a].rgb; \n"
         // factor in material properties and a bit of ambient lighting
-        "Out.DiffuseColor = diffuseColor * DIFFUSE_COLOR + float4( 0.2f, 0.2f, 0.2f, 1.0f) * AMBIENT_COLOR; ; \n"
+        "Out.DiffuseColor = diffuseColor * DIFFUSE_COLOR + float4( 0.2, 0.2, 0.2, 1.0) * AMBIENT_COLOR; ; \n"
 
         // and specular including emissive part
-        "float4 specularColor = float4( 0.0f, 0.0f, 0.0f, 1.0f); \n"
+        "float4 specularColor = float4( 0.0, 0.0, 0.0, 1.0); \n"
         "#ifdef AV_SPECULAR_COMPONENT\n"
         "float3 viewDir = normalize( worldPos - vCameraPos); \n"
         "for( int a = 0; a < 2; a++) \n"
@@ -804,11 +804,11 @@ std::string g_szMaterialShader = std::string(
     // Pixel shader - one light
     "float4 MaterialPShaderSpecular_D1(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "#ifdef AV_NORMAL_TEXTURE\n"
         "float3 IN_Light0 = normalize(IN.Light0);\n"
-        "float3 Normal  =  normalize(2.0f * tex2D(NORMAL_SAMPLER, IN.TexCoord0).rgb - 1.0f);\n"
+        "float3 Normal  =  normalize(2.0 * tex2D(NORMAL_SAMPLER, IN.TexCoord0).rgb - 1.0);\n"
         "#else\n"
         "float3 Normal = normalize(IN.Normal);\n"
         "#endif \n"
@@ -819,16 +819,16 @@ std::string g_szMaterialShader = std::string(
 
         "{\n"
         "#ifdef AV_NORMAL_TEXTURE\n"
-            "float L1 =  dot(Normal,IN_Light0) * 0.5f + 0.5f;\n"
+            "float L1 =  dot(Normal,IN_Light0) * 0.5 + 0.5;\n"
             "#define AV_LIGHT_0 IN_Light0\n"
             // would need to convert the reflection vector into world space ....
             // simply let it ...
         "#else\n"
-            "float L1 = dot(Normal,afLightDir[0]) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,afLightDir[0]) * 0.5 + 0.5;\n"
             "#define AV_LIGHT_0 afLightDir[0]\n"
         "#endif\n"
         "#ifdef AV_DIFFUSE_TEXTURE2\n"
-            "float fHalfLambert = 1.f;\n"
+            "float fHalfLambert = 1.0;\n"
         "#else\n"
             "float fHalfLambert = L1*L1;\n"
         "#endif \n"
@@ -842,15 +842,15 @@ std::string g_szMaterialShader = std::string(
         "#ifdef AV_SPECULAR_COMPONENT\n"
             "#ifndef AV_SKYBOX_LOOKUP\n"
                 "#ifdef AV_SPECULAR_TEXTURE\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#else\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#endif // !AV_SPECULAR_TEXTURE\n"
             "#else\n"
                 "#ifdef AV_SPECULAR_TEXTURE\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#else\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#endif // !AV_SPECULAR_TEXTURE\n"
             "#endif // !AV_SKYBOX_LOOKUP\n"
         "#endif // !AV_SPECULAR_COMPONENT\n"
@@ -883,12 +883,12 @@ std::string g_szMaterialShader = std::string(
     // Pixel shader - two lights
     "float4 MaterialPShaderSpecular_D2(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "#ifdef AV_NORMAL_TEXTURE\n"
         "float3 IN_Light0 = normalize(IN.Light0);\n"
         "float3 IN_Light1 = normalize(IN.Light1);\n"
-        "float3 Normal  =  normalize(2.0f * tex2D(NORMAL_SAMPLER, IN.TexCoord0).rgb - 1.0f);\n"
+        "float3 Normal  =  normalize(2.0 * tex2D(NORMAL_SAMPLER, IN.TexCoord0).rgb - 1.0);\n"
         "#else\n"
         "float3 Normal = normalize(IN.Normal);\n"
         "#endif \n"
@@ -900,10 +900,10 @@ std::string g_szMaterialShader = std::string(
         "{\n"
         
         "#ifdef AV_NORMAL_TEXTURE\n"
-            "float L1 = dot(Normal,IN_Light0) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,IN_Light0) * 0.5 + 0.5;\n"
             "#define AV_LIGHT_0 IN_Light0\n"
         "#else\n"
-            "float L1 = dot(Normal,afLightDir[0]) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,afLightDir[0]) * 0.5 + 0.5;\n"
             "#define AV_LIGHT_0 afLightDir[0]\n"
         "#endif\n"
             "float fHalfLambert = L1*L1;\n"
@@ -917,15 +917,15 @@ std::string g_szMaterialShader = std::string(
         "#ifdef AV_SPECULAR_COMPONENT\n"
             "#ifndef AV_SKYBOX_LOOKUP\n"
                 "#ifdef AV_SPECULAR_TEXTURE\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#else\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#endif // !AV_SPECULAR_TEXTURE\n"
             "#else\n"
                 "#ifdef AV_SPECULAR_TEXTURE\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#else\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * GetSSSCubeMap(Reflect) * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_0),SPECULARITY)) + \n"
                 "#endif // !AV_SPECULAR_TEXTURE\n"
             "#endif // !AV_SKYBOX_LOOKUP\n"
         "#endif // !AV_SPECULAR_COMPONENT\n"
@@ -942,10 +942,10 @@ std::string g_szMaterialShader = std::string(
         "}\n"
         "{\n"
         "#ifdef AV_NORMAL_TEXTURE\n"
-            "float L1 = dot(Normal,IN_Light1) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,IN_Light1) * 0.5 + 0.5;\n"
             "#define AV_LIGHT_1 IN_Light1\n"
         "#else\n"
-            "float L1 = dot(Normal,afLightDir[1]) * 0.5f + 0.5f;\n"
+            "float L1 = dot(Normal,afLightDir[1]) * 0.5 + 0.5;\n"
             "#define AV_LIGHT_1 afLightDir[1]\n"
         "#endif\n"
             "float fHalfLambert = L1*L1;\n"
@@ -958,15 +958,15 @@ std::string g_szMaterialShader = std::string(
         "#ifdef AV_SPECULAR_COMPONENT\n"
             "#ifndef AV_SKYBOX_LOOKUP\n"
                 "#ifdef AV_SPECULAR_TEXTURE\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
                 "#else\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
                 "#endif // !AV_SPECULAR_TEXTURE\n"
             "#else\n"
                 "#ifdef AV_SPECULAR_TEXTURE\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * GetSSSCubeMap(Reflect) * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * GetSSSCubeMap(Reflect) * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
                 "#else\n"
-                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * GetSSSCubeMap(Reflect) * (saturate(fHalfLambert * 2.0f) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
+                    "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * GetSSSCubeMap(Reflect) * (saturate(fHalfLambert * 2.0) * pow(dot(Reflect,AV_LIGHT_1),SPECULARITY)) + \n"
                 "#endif // !AV_SPECULAR_TEXTURE\n"
             "#endif // !AV_SKYBOX_LOOKUP\n"
         "#endif // !AV_SPECULAR_COMPONENT\n"
@@ -999,11 +999,11 @@ std::string g_szMaterialShader = std::string(
     // Same pixel shader again, one light
     "float4 MaterialPShaderSpecular_PS20_D1(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "#ifdef AV_NORMAL_TEXTURE\n"
         "float3 IN_Light0 = normalize(IN.Light0);\n"
-        "float3 Normal  =  normalize(2.0f * tex2D(NORMAL_SAMPLER, IN.TexCoord0).rgb - 1.0f);\n"
+        "float3 Normal  =  normalize(2.0 * tex2D(NORMAL_SAMPLER, IN.TexCoord0).rgb - 1.0);\n"
         "#else\n"
         "float3 Normal = normalize(IN.Normal);\n"
         "#endif \n"
@@ -1011,10 +1011,10 @@ std::string g_szMaterialShader = std::string(
 
         "{\n"
         "#ifdef AV_NORMAL_TEXTURE\n"
-        "float L1 = dot(Normal,IN_Light0) * 0.5f + 0.5f;\n"
+        "float L1 = dot(Normal,IN_Light0) * 0.5 + 0.5;\n"
         "float3 Reflect = reflect (Normal,IN_Light0);\n"
         "#else\n"
-        "float L1 = dot(Normal,afLightDir[0]) * 0.5f + 0.5f;\n"
+        "float L1 = dot(Normal,afLightDir[0]) * 0.5 + 0.5;\n"
         "float3 Reflect = reflect (Normal,afLightDir[0]);\n"
         "#endif\n"
         "#ifdef AV_DIFFUSE_TEXTURE\n"
@@ -1025,9 +1025,9 @@ std::string g_szMaterialShader = std::string(
 
         "#ifdef AV_SPECULAR_COMPONENT\n"
         "#ifdef AV_SPECULAR_TEXTURE\n"
-            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(L1 * 4.0f) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
+            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(L1 * 4.0) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
         "#else\n"
-            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(L1 * 4.0f) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
+            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(L1 * 4.0) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
         "#endif // !AV_SPECULAR_TEXTURE\n"
         "#endif // !AV_SPECULAR_COMPONENT\n"
         "#ifdef AV_AMBIENT_TEXTURE\n"
@@ -1054,12 +1054,12 @@ std::string g_szMaterialShader = std::string(
     // Same pixel shader again, two lights
     "float4 MaterialPShaderSpecular_PS20_D2(VS_OUTPUT IN) : COLOR\n"
     "{\n"
-        "float4 OUT = float4(0.0f,0.0f,0.0f,1.0f);\n"
+        "float4 OUT = float4(0.0,0.0,0.0,1.0);\n"
 
         "#ifdef AV_NORMAL_TEXTURE\n"
         "float3 IN_Light0 = normalize(IN.Light0);\n"
         "float3 IN_Light1 = normalize(IN.Light1);\n"
-        "float3 Normal  =  normalize(2.0f * tex2D(NORMAL_SAMPLER, IN.TexCoord0) - 1.0f);\n"
+        "float3 Normal  =  normalize(2.0 * tex2D(NORMAL_SAMPLER, IN.TexCoord0) - 1.0);\n"
         "#else\n"
         "float3 Normal = normalize(IN.Normal);\n"
         "#endif \n"
@@ -1067,10 +1067,10 @@ std::string g_szMaterialShader = std::string(
 
         "{\n"
         "#ifdef AV_NORMAL_TEXTURE\n"
-        "float L1 = dot(Normal,IN_Light0) * 0.5f + 0.5f;\n"
+        "float L1 = dot(Normal,IN_Light0) * 0.5 + 0.5;\n"
         "float3 Reflect = reflect (Normal,IN_Light0);\n"
         "#else\n"
-        "float L1 = dot(Normal,afLightDir[0]) * 0.5f + 0.5f;\n"
+        "float L1 = dot(Normal,afLightDir[0]) * 0.5 + 0.5;\n"
         "float3 Reflect = reflect (Normal,afLightDir[0]);\n"
         "#endif\n"
         "#ifdef AV_DIFFUSE_TEXTURE\n"
@@ -1081,9 +1081,9 @@ std::string g_szMaterialShader = std::string(
 
         "#ifdef AV_SPECULAR_COMPONENT\n"
         "#ifdef AV_SPECULAR_TEXTURE\n"
-            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(L1 * 4.0f) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
+            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(L1 * 4.0) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
         "#else\n"
-            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(L1 * 4.0f) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
+            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[0].rgb * (saturate(L1 * 4.0) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
         "#endif // !AV_SPECULAR_TEXTURE\n"
         "#endif // !AV_SPECULAR_COMPONENT\n"
         "#ifdef AV_AMBIENT_TEXTURE\n"
@@ -1099,10 +1099,10 @@ std::string g_szMaterialShader = std::string(
         "}\n"
         "{\n"
         "#ifdef AV_NORMAL_TEXTURE\n"
-        "float L1 = dot(Normal,IN_Light1) * 0.5f + 0.5f;\n"
+        "float L1 = dot(Normal,IN_Light1) * 0.5 + 0.5;\n"
         "float3 Reflect = reflect (Normal,IN_Light1);\n"
         "#else\n"
-        "float L1 = dot(Normal,afLightDir[1]) * 0.5f + 0.5f;\n"
+        "float L1 = dot(Normal,afLightDir[1]) * 0.5 + 0.5;\n"
         "float3 Reflect = reflect (Normal,afLightDir[1]);\n"
         "#endif\n"
         "#ifdef AV_DIFFUSE_TEXTURE\n"
@@ -1113,9 +1113,9 @@ std::string g_szMaterialShader = std::string(
 
         "#ifdef AV_SPECULAR_COMPONENT\n"
         "#ifdef AV_SPECULAR_TEXTURE\n"
-            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(L1 * 4.0f) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
+            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * tex2D(SPECULAR_SAMPLER,IN.TexCoord0).rgb * (saturate(L1 * 4.0) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
         "#else\n"
-            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * (saturate(L1 * 4.0f) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
+            "SPECULAR_COLOR.rgb * SPECULAR_STRENGTH * afLightColor[1].rgb * (saturate(L1 * 4.0) * pow(dot(Reflect,ViewDir),SPECULARITY)) + \n"
         "#endif // !AV_SPECULAR_TEXTURE\n"
         "#endif // !AV_SPECULAR_COMPONENT\n"
         "#ifdef AV_AMBIENT_TEXTURE\n"
@@ -1281,13 +1281,13 @@ std::string g_szPassThroughShader = std::string(
         // visualize the alpha channel (in black) -> use a
         "float4 PassThroughAlphaA_PS(float2 IN : TEXCOORD0) : COLOR\n"
         "{\n"
-        "  return float4(0.0f,0.0f,0.0f,tex2D(TEXTURE_SAMPLER,IN).a);\n"
+        "  return float4(0.0,0.0,0.0,tex2D(TEXTURE_SAMPLER,IN).a);\n"
         "}\n"
 
         // visualize the alpha channel (in black) -> use r
         "float4 PassThroughAlphaR_PS(float2 IN : TEXCOORD0) : COLOR\n"
         "{\n"
-        "  return float4(0.0f,0.0f,0.0f,tex2D(TEXTURE_SAMPLER,IN).r);\n"
+        "  return float4(0.0,0.0,0.0,tex2D(TEXTURE_SAMPLER,IN).r);\n"
         "}\n"
 
         // Simple pass-through technique
@@ -1360,11 +1360,11 @@ std::string g_szPassThroughShader = std::string(
 std::string g_szCheckerBackgroundShader = std::string(
 
         // the two colors used to draw the checker pattern
-        "float3 COLOR_ONE = float3(0.4f,0.4f,0.4f);\n"
-        "float3 COLOR_TWO = float3(0.6f,0.6f,0.6f);\n"
+        "float3 COLOR_ONE = float3(0.4,0.4,0.4);\n"
+        "float3 COLOR_TWO = float3(0.6,0.6,0.6);\n"
 
         // size of a square in both x and y direction
-        "float SQUARE_SIZE = 10.0f;\n"
+        "float SQUARE_SIZE = 10.0;\n"
 
     // vertex shader output structure
         "struct VS_OUTPUT\n"
@@ -1391,7 +1391,7 @@ std::string g_szCheckerBackgroundShader = std::string(
           "  if (0 == round(fmod(round(fDiv.y),2))) fColor = COLOR_TWO;\n"
           "}\n"
           "else if (0 != round(fmod(round(fDiv.y),2)))fColor = COLOR_TWO;\n"
-          "return float4(fColor,1.0f);"
+          "return float4(fColor,1.0);"
         "}\n"
     
         // technique to generate a pattern

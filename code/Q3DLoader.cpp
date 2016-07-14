@@ -143,7 +143,7 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
     // Allocate the scene root node
     pScene->mRootNode = new aiNode();
 
-    aiColor3D fgColor (0.6f,0.6f,0.6f);
+    aiColor3D fgColor (0.6,0.6,0.6);
 
     // Now read all file chunks
     while (true)
@@ -462,12 +462,12 @@ outer:
         // unclear how to interpret the data
 #if 0
         if (!(minor > '0' && major == '3'))
-            srcMat.transparency = 1.0f - srcMat.transparency;
+            srcMat.transparency = 1.0 - srcMat.transparency;
         mat->AddProperty(&srcMat.transparency, 1, AI_MATKEY_OPACITY);
 #endif
 
         // add shininess - Quick3D seems to use it ins its viewer
-        srcMat.transparency = 16.f;
+        srcMat.transparency = 16.0;
         mat->AddProperty(&srcMat.transparency, 1, AI_MATKEY_SHININESS);
 
         int m = (int)aiShadingMode_Phong;
@@ -563,7 +563,7 @@ outer:
                         }
                         *uv = m.uv[face.uvindices[n]];
                     }
-                    uv->y = 1.f - uv->y;
+                    uv->y = 1.0 - uv->y;
                     ++uv;
                 }
 
@@ -585,10 +585,10 @@ outer:
         pScene->mRootNode->mMeshes[i] = i;
 
     /*pScene->mRootNode->mTransformation *= aiMatrix4x4(
-        1.f, 0.f, 0.f, 0.f,
-        0.f, -1.f,0.f, 0.f,
-        0.f, 0.f, 1.f, 0.f,
-        0.f, 0.f, 0.f, 1.f);*/
+        1.0, 0.0, 0.0, 0.0,
+        0.0, -1.0,0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 0.0, 1.0);*/
 
     // Add cameras and light sources to the scene root node
     pScene->mRootNode->mNumChildren = pScene->mNumLights+pScene->mNumCameras;

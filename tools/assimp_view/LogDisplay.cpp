@@ -166,15 +166,15 @@ void CLogDisplay::OnRender()
             }
         else if (NULL != this->piFont)
             {
-            float fAlpha = 1.0f;
+            float fAlpha = 1.0;
             if ((*i).dwStartTicks <= dwLimit2)
                 {
                 // linearly interpolate to create the fade out effect
-                fAlpha = 1.0f - (float)(dwLimit2 - (*i).dwStartTicks) / 3000.0f;
+                fAlpha = 1.0 - (float)(dwLimit2 - (*i).dwStartTicks) / 3000.0;
                 }
             D3DCOLOR& clrColor = (*i).clrColor;
             clrColor &= ~(0xFFu << 24);
-            clrColor |= (((unsigned char)(fAlpha * 255.0f)) & 0xFFu) << 24;
+            clrColor |= (((unsigned char)(fAlpha * 255.0)) & 0xFFu) << 24;
 
             const char* szText = (*i).szText.c_str();
             if (sRect.top + 30 > sWndRect.bottom)
@@ -192,7 +192,7 @@ void CLogDisplay::OnRender()
             sCopy.right     = sRect.right+1;
             this->piFont->DrawText(NULL,szText,
                 -1,&sCopy,DT_RIGHT | DT_TOP,D3DCOLOR_ARGB(
-                (unsigned char)(fAlpha * 100.0f),0x0,0x0,0x0));
+                (unsigned char)(fAlpha * 100.0),0x0,0x0,0x0));
 
             sCopy.left      = sRect.left-1;
             sCopy.top       = sRect.top-1;
@@ -200,7 +200,7 @@ void CLogDisplay::OnRender()
             sCopy.right     = sRect.right-1;
             this->piFont->DrawText(NULL,szText,
                 -1,&sCopy,DT_RIGHT | DT_TOP,D3DCOLOR_ARGB(
-                (unsigned char)(fAlpha * 100.0f),0x0,0x0,0x0));
+                (unsigned char)(fAlpha * 100.0),0x0,0x0,0x0));
 
             sCopy.left      = sRect.left-1;
             sCopy.top       = sRect.top-1;
@@ -208,7 +208,7 @@ void CLogDisplay::OnRender()
             sCopy.right     = sRect.right+1;
             this->piFont->DrawText(NULL,szText,
                 -1,&sCopy,DT_RIGHT | DT_TOP,D3DCOLOR_ARGB(
-                (unsigned char)(fAlpha * 100.0f),0x0,0x0,0x0));
+                (unsigned char)(fAlpha * 100.0),0x0,0x0,0x0));
 
             sCopy.left      = sRect.left+1;
             sCopy.top       = sRect.top+1;
@@ -216,7 +216,7 @@ void CLogDisplay::OnRender()
             sCopy.right     = sRect.right-1;
             this->piFont->DrawText(NULL,szText,
                 -1,&sCopy,DT_RIGHT | DT_TOP,D3DCOLOR_ARGB(
-                (unsigned char)(fAlpha * 100.0f),0x0,0x0,0x0));
+                (unsigned char)(fAlpha * 100.0),0x0,0x0,0x0));
 
             // draw the text itself
             int iPX = this->piFont->DrawText(NULL,szText,

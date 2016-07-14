@@ -97,16 +97,16 @@ private:
     struct ShadingInfo
     {
         ShadingInfo()
-            : color     (0.6f,0.6f,0.6f)
-            , diffuse   (1.f,1.f,1.f)
-            , specular  (1.f,1.f,1.f)
-            , ambient   (0.f,0.f,0.f)
-            , emissive  (0.f,0.f,0.f)
-            , refracti  (1.f)
+            : color     (0.6,0.6,0.6)
+            , diffuse   (1.0,1.0,1.0)
+            , specular  (1.0,1.0,1.0)
+            , ambient   (0.0,0.0,0.0)
+            , emissive  (0.0,0.0,0.0)
+            , refracti  (1.0)
             , twoSided  (false) // for NFF2
             , shaded    (true)  // for NFF2
-            , opacity   (1.f)
-            , shininess (0.f)
+            , opacity   (1.0)
+            , shininess (0.0)
             , mapping   (aiTextureMapping_UV)
         {}
 
@@ -148,8 +148,8 @@ private:
     struct Light
     {
         Light()
-            : intensity (1.f)
-            , color     (1.f,1.f,1.f)
+            : intensity (1.0)
+            , color     (1.0,1.0,1.0)
         {}
 
         aiVector3D position;
@@ -170,8 +170,8 @@ private:
         MeshInfo(PatchType _pType, bool bL = false)
             : pType     (_pType)
             , bLocked   (bL)
-            , radius    (1.f,1.f,1.f)
-            , dir       (0.f,1.f,0.f)
+            , radius    (1.0,1.0,1.0)
+            , dir       (0.0,1.0,0.0)
             , matIndex  (0)
         {
             name[0] = '\0'; // by default meshes are unnamed

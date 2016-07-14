@@ -226,7 +226,7 @@ public enum AiConfigOptions {
 //
 //    // default value for AI_CONFIG_PP_LBW_MAX_WEIGHTS
 //    #if (!defined AI_DEBONE_THRESHOLD)
-//    #   define AI_DEBONE_THRESHOLD  1.0f
+//    #   define AI_DEBONE_THRESHOLD  1.0
 //    #endif // !! AI_DEBONE_THRESHOLD
 //
 //    // ---------------------------------------------------------------------------
@@ -365,7 +365,7 @@ public enum AiConfigOptions {
 //     *  and removes them. This tweakable controls the epsilon for floating-point
 //     *  comparisons - two keys are considered equal if the invariant 
 //     *  abs(n0-n1)>epsilon holds true for all vector respectively quaternion
-//     *  components. The default value is 0.f - comparisons are exact then.
+//     *  components. The default value is 0.0 - comparisons are exact then.
 //     */
 //    #define AI_CONFIG_PP_FID_ANIM_ACCURACY              \
 //        "PP_FID_ANIM_ACCURACY"

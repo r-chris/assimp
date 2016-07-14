@@ -905,7 +905,7 @@ All material key constants start with 'AI_MATKEY' (it's an ugly macro for histor
   <tr>
     <td><tt>SHININESS</tt></td>
     <td>float</td>
-    <td>0.f</td>
+    <td>0.0</td>
 	<td>Defines the shininess of a phong-shaded material. This is actually the exponent of the phong specular equation</td>
 	<td><tt>SHININESS</tt>=0 is equivalent to <tt>SHADING_MODEL</tt>=<tt>aiShadingMode_Gouraud</tt>.</td>
   </tr>
@@ -1028,7 +1028,7 @@ Or for the diffuse color ('color' won't be modified if the property is not set)
 
 @code
 
-aiColor3D color (0.f,0.f,0.f);
+aiColor3D color (0.0,0.0,0.0);
 mat->Get(AI_MATKEY_COLOR_DIFFUSE,color);
 
 @endcode
@@ -1064,7 +1064,7 @@ Or for the diffuse color ('color' won't be modified if the property is not set)
 
 @code
 
-aiColor3D color (0.f,0.f,0.f);
+aiColor3D color (0.0,0.0,0.0);
 aiGetMaterialColor(mat,AI_MATKEY_COLOR_DIFFUSE,&color);
 
 @endcode
@@ -1135,7 +1135,7 @@ float3 ComputeDiffuseContribution()
   float3 intensity (0,0,0);
   for (all lights in range)
   {
-    float fac = 1.f;
+    float fac = 1.0;
     if (shading == gouraud)
       fac =  lambert-term ..
     else // other shading modes go here
@@ -1160,7 +1160,7 @@ float3 ComputeSpecularContribution()
   float3 intensity (0,0,0);
   for (all lights in range)
   {
-    float fac = 1.f;
+    float fac = 1.0;
     if (shading == phong)
       fac =  phong-term ..
     else // other specular shading modes go here
@@ -1185,7 +1185,7 @@ float3 ComputeAmbientContribution()
   float3 intensity (0,0,0);
   for (all lights in range)
   {
-    float fac = 1.f;
+    float fac = 1.0;
 
     // handling of different types of lights, such as point or spot lights
     // ...
@@ -1610,7 +1610,7 @@ The required definitions zo set/remove/query keys in #aiMaterial structures are 
 @code
 aiMaterial* mat = new aiMaterial();
 
-const float spec = 16.f;
+const float spec = 16.0;
 mat->AddProperty(&spec, 1, AI_MATKEY_SHININESS);
 
 //set the name of the material:

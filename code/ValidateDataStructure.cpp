@@ -468,7 +468,7 @@ void ValidateDSProcess::Validate( const aiMesh* pMesh)
         {
             afSum.reset(new float[pMesh->mNumVertices]);
             for (unsigned int i = 0; i < pMesh->mNumVertices;++i)
-                afSum[i] = 0.0f;
+                afSum[i] = 0.0;
         }
 
         // check whether there are duplicate bone names
@@ -525,7 +525,7 @@ void ValidateDSProcess::Validate( const aiMesh* pMesh,
         if (pBone->mWeights[i].mVertexId >= pMesh->mNumVertices)    {
             ReportError("aiBone::mWeights[%i].mVertexId is out of range",i);
         }
-        else if (!pBone->mWeights[i].mWeight || pBone->mWeights[i].mWeight > 1.0f)  {
+        else if (!pBone->mWeights[i].mWeight || pBone->mWeights[i].mWeight > 1.0)  {
             ReportWarning("aiBone::mWeights[%i].mWeight has an invalid value",i);
         }
         afSum[pBone->mWeights[i].mVertexId] += pBone->mWeights[i].mWeight;
@@ -821,15 +821,15 @@ void ValidateDSProcess::Validate( const aiAnimation* pAnimation,
             //  seems to be due the compilers register usage/width.
             if (pAnimation->mDuration > 0. && pNodeAnim->mPositionKeys[i].mTime > pAnimation->mDuration+0.001)
             {
-                ReportError("aiNodeAnim::mPositionKeys[%i].mTime (%.5f) is larger "
-                    "than aiAnimation::mDuration (which is %.5f)",i,
+                ReportError("aiNodeAnim::mPositionKeys[%i].mTime (%.5) is larger "
+                    "than aiAnimation::mDuration (which is %.5)",i,
                     (float)pNodeAnim->mPositionKeys[i].mTime,
                     (float)pAnimation->mDuration);
             }
             if (i && pNodeAnim->mPositionKeys[i].mTime <= dLast)
             {
-                ReportWarning("aiNodeAnim::mPositionKeys[%i].mTime (%.5f) is smaller "
-                    "than aiAnimation::mPositionKeys[%i] (which is %.5f)",i,
+                ReportWarning("aiNodeAnim::mPositionKeys[%i].mTime (%.5) is smaller "
+                    "than aiAnimation::mPositionKeys[%i] (which is %.5)",i,
                     (float)pNodeAnim->mPositionKeys[i].mTime,
                     i-1, (float)dLast);
             }
@@ -849,15 +849,15 @@ void ValidateDSProcess::Validate( const aiAnimation* pAnimation,
         {
             if (pAnimation->mDuration > 0. && pNodeAnim->mRotationKeys[i].mTime > pAnimation->mDuration+0.001)
             {
-                ReportError("aiNodeAnim::mRotationKeys[%i].mTime (%.5f) is larger "
-                    "than aiAnimation::mDuration (which is %.5f)",i,
+                ReportError("aiNodeAnim::mRotationKeys[%i].mTime (%.5) is larger "
+                    "than aiAnimation::mDuration (which is %.5)",i,
                     (float)pNodeAnim->mRotationKeys[i].mTime,
                     (float)pAnimation->mDuration);
             }
             if (i && pNodeAnim->mRotationKeys[i].mTime <= dLast)
             {
-                ReportWarning("aiNodeAnim::mRotationKeys[%i].mTime (%.5f) is smaller "
-                    "than aiAnimation::mRotationKeys[%i] (which is %.5f)",i,
+                ReportWarning("aiNodeAnim::mRotationKeys[%i].mTime (%.5) is smaller "
+                    "than aiAnimation::mRotationKeys[%i] (which is %.5)",i,
                     (float)pNodeAnim->mRotationKeys[i].mTime,
                     i-1, (float)dLast);
             }
@@ -876,15 +876,15 @@ void ValidateDSProcess::Validate( const aiAnimation* pAnimation,
         {
             if (pAnimation->mDuration > 0. && pNodeAnim->mScalingKeys[i].mTime > pAnimation->mDuration+0.001)
             {
-                ReportError("aiNodeAnim::mScalingKeys[%i].mTime (%.5f) is larger "
-                    "than aiAnimation::mDuration (which is %.5f)",i,
+                ReportError("aiNodeAnim::mScalingKeys[%i].mTime (%.5) is larger "
+                    "than aiAnimation::mDuration (which is %.5)",i,
                     (float)pNodeAnim->mScalingKeys[i].mTime,
                     (float)pAnimation->mDuration);
             }
             if (i && pNodeAnim->mScalingKeys[i].mTime <= dLast)
             {
-                ReportWarning("aiNodeAnim::mScalingKeys[%i].mTime (%.5f) is smaller "
-                    "than aiAnimation::mScalingKeys[%i] (which is %.5f)",i,
+                ReportWarning("aiNodeAnim::mScalingKeys[%i].mTime (%.5) is smaller "
+                    "than aiAnimation::mScalingKeys[%i] (which is %.5)",i,
                     (float)pNodeAnim->mScalingKeys[i].mTime,
                     i-1, (float)dLast);
             }

@@ -333,7 +333,7 @@ void ColladaLoader::BuildLightsForNode( const ColladaParser& pParser, const Coll
         out->mType = (aiLightSourceType)srcLight->mType;
 
         // collada lights point in -Z by default, rest is specified in node transform
-        out->mDirection = aiVector3D(0.f,0.f,-1.f);
+        out->mDirection = aiVector3D(0.0,0.0,-1.0);
 
         out->mAttenuationConstant = srcLight->mAttConstant;
         out->mAttenuationLinear = srcLight->mAttLinear;
@@ -356,14 +356,14 @@ void ColladaLoader::BuildLightsForNode( const ColladaParser& pParser, const Coll
             out->mAngleInnerCone = AI_DEG_TO_RAD( srcLight->mFalloffAngle );
 
             // ... some extension magic.
-            if (srcLight->mOuterAngle >= ASSIMP_COLLADA_LIGHT_ANGLE_NOT_SET*(1-1e-6f))
+            if (srcLight->mOuterAngle >= ASSIMP_COLLADA_LIGHT_ANGLE_NOT_SET*(1-1e-6))
             {
                 // ... some deprecation magic.
-                if (srcLight->mPenumbraAngle >= ASSIMP_COLLADA_LIGHT_ANGLE_NOT_SET*(1-1e-6f))
+                if (srcLight->mPenumbraAngle >= ASSIMP_COLLADA_LIGHT_ANGLE_NOT_SET*(1-1e-6))
                 {
                     // Need to rely on falloff_exponent. I don't know how to interpret it, so I need to guess ....
                     // epsilon chosen to be 0.1
-                    out->mAngleOuterCone = std::acos(std::pow(0.1f,1.f/srcLight->mFalloffExponent))+
+                    out->mAngleOuterCone = std::acos(std::pow(0.1,1.0/srcLight->mFalloffExponent))+
                             out->mAngleInnerCone;
                 }
                 else {
@@ -405,7 +405,7 @@ void ColladaLoader::BuildCamerasForNode( const ColladaParser& pParser, const Col
         out->mName = pTarget->mName;
 
         // collada cameras point in -Z by default, rest is specified in node transform
-        out->mLookAt = aiVector3D(0.f,0.f,-1.f);
+        out->mLookAt = aiVector3D(0.0,0.0,-1.0);
 
         // near/far z is already ok
         out->mClipPlaneFar = srcCamera->mZFar;
@@ -413,20 +413,20 @@ void ColladaLoader::BuildCamerasForNode( const ColladaParser& pParser, const Col
 
         // ... but for the rest some values are optional
         // and we need to compute the others in any combination.
-         if (srcCamera->mAspect != 10e10f)
+         if (srcCamera->mAspect != 10e10)
             out->mAspect = srcCamera->mAspect;
 
-        if (srcCamera->mHorFov != 10e10f) {
+        if (srcCamera->mHorFov != 10e10) {
             out->mHorizontalFOV = srcCamera->mHorFov;
 
-            if (srcCamera->mVerFov != 10e10f && srcCamera->mAspect == 10e10f) {
+            if (srcCamera->mVerFov != 10e10 && srcCamera->mAspect == 10e10) {
                 out->mAspect = tan(AI_DEG_TO_RAD(srcCamera->mHorFov)) /
                     tan(AI_DEG_TO_RAD(srcCamera->mVerFov));
             }
         }
-        else if (srcCamera->mAspect != 10e10f && srcCamera->mVerFov != 10e10f)  {
-            out->mHorizontalFOV = 2.0f * AI_RAD_TO_DEG(atan(srcCamera->mAspect *
-                tan(AI_DEG_TO_RAD(srcCamera->mVerFov) * 0.5f)));
+        else if (srcCamera->mAspect != 10e10 && srcCamera->mVerFov != 10e10)  {
+            out->mHorizontalFOV = 2.0 * AI_RAD_TO_DEG(atan(srcCamera->mAspect *
+                tan(AI_DEG_TO_RAD(srcCamera->mVerFov) * 0.5)));
         }
 
         // Collada uses degrees, we use radians
@@ -707,7 +707,7 @@ aiMesh* ColladaLoader::CreateMesh( const ColladaParser& pParser, const Collada::
                 float weight = ReadFloat( weightsAcc, weights, vertexIndex, 0);
 
                 // one day I gonna kill that XSI Collada exporter
-                if( weight > 0.0f)
+                if( weight > 0.0)
                 {
                     aiVertexWeight w;
                     w.mVertexId = a - pStartVertex;
@@ -1109,7 +1109,7 @@ void ColladaLoader::CreateAnimation( aiScene* pScene, const ColladaParser& pPars
 
                   // find the keyframe behind the current point in time
                   size_t pos = 0;
-                  float postTime = 0.f;
+                  float postTime = 0.0;
                   while( 1)
                   {
                       if( pos >= e.mTimeAccessor->mCount)
@@ -1180,8 +1180,8 @@ void ColladaLoader::CreateAnimation( aiScene* pScene, const ColladaParser& pPars
                       const float last_key_time = ReadFloat(*channelElement.mTimeAccessor, *channelElement.mTimeData, pos - 1, 0);
                       const float last_eval_angle = last_key_angle + (cur_key_angle - last_key_angle) * (time - last_key_time) / (cur_key_time - last_key_time);
                       const float delta = std::fabs(cur_key_angle - last_eval_angle);
-				      if (delta >= 180.0f) {
-						const int subSampleCount = static_cast<int>(floorf(delta / 90.0f));
+				      if (delta >= 180.0) {
+						const int subSampleCount = static_cast<int>(floorf(delta / 90.0));
 						if (cur_key_time != time) {
 							const float nextSampleTime = time + (cur_key_time - time) / subSampleCount;
 							nextTime = std::min(nextTime, nextSampleTime);
@@ -1218,7 +1218,7 @@ void ColladaLoader::CreateAnimation( aiScene* pScene, const ColladaParser& pPars
           {
               aiMatrix4x4 mat = resultTrafos[a];
               double time = double( mat.d4); // remember? time is stored in mat.d4
-        mat.d4 = 1.0f;
+        mat.d4 = 1.0;
 
               dstAnim->mPositionKeys[a].mTime = time;
               dstAnim->mRotationKeys[a].mTime = time;
@@ -1240,7 +1240,7 @@ void ColladaLoader::CreateAnimation( aiScene* pScene, const ColladaParser& pPars
         anim->mNumChannels = anims.size();
         anim->mChannels = new aiNodeAnim*[anims.size()];
         std::copy( anims.begin(), anims.end(), anim->mChannels);
-        anim->mDuration = 0.0f;
+        anim->mDuration = 0.0;
         for( size_t a = 0; a < anims.size(); ++a)
         {
             anim->mDuration = std::max( anim->mDuration, anims[a]->mPositionKeys[anims[a]->mNumPositionKeys-1].mTime);
@@ -1376,17 +1376,17 @@ void ColladaLoader::FillMaterials( const ColladaParser& pParser, aiScene* /*pSce
         // specification here (1.0 transparency => completly opaque)...
         // therefore, we let the opportunity for the user to manually invert
         // the transparency if necessary and we add preliminary support for RGB_ZERO mode
-        if(effect.mTransparency >= 0.f && effect.mTransparency <= 1.f) {
+        if(effect.mTransparency >= 0.0 && effect.mTransparency <= 1.0) {
             // handle RGB transparency completely, cf Collada specs 1.5.0 pages 249 and 304
             if(effect.mRGBTransparency) {
 				// use luminance as defined by ISO/CIE color standards (see ITU-R Recommendation BT.709-4)
                 effect.mTransparency *= (
-                    0.212671f * effect.mTransparent.r +
-                    0.715160f * effect.mTransparent.g +
-                    0.072169f * effect.mTransparent.b
+                    0.212671 * effect.mTransparent.r +
+                    0.715160 * effect.mTransparent.g +
+                    0.072169 * effect.mTransparent.b
                 );
 
-                effect.mTransparent.a = 1.f;
+                effect.mTransparent.a = 1.0;
 
                 mat.AddProperty( &effect.mTransparent, 1, AI_MATKEY_COLOR_TRANSPARENT );
             } else {
@@ -1394,11 +1394,11 @@ void ColladaLoader::FillMaterials( const ColladaParser& pParser, aiScene* /*pSce
             }
 
             if(effect.mInvertTransparency) {
-                effect.mTransparency = 1.f - effect.mTransparency;
+                effect.mTransparency = 1.0 - effect.mTransparency;
             }
 
             // Is the material finally transparent ?
-            if (effect.mHasTransparency || effect.mTransparency < 1.f) {
+            if (effect.mHasTransparency || effect.mTransparency < 1.0) {
                 mat.AddProperty( &effect.mTransparency, 1, AI_MATKEY_OPACITY );
             }
         }
@@ -1464,11 +1464,11 @@ void ColladaLoader::BuildMaterials( ColladaParser& pParser, aiScene* /*pScene*/)
 
         const int shadeMode = aiShadingMode_Phong;
         mat->AddProperty<int>( &shadeMode, 1, AI_MATKEY_SHADING_MODEL);
-        aiColor4D colAmbient( 0.2f, 0.2f, 0.2f, 1.0f), colDiffuse( 0.8f, 0.8f, 0.8f, 1.0f), colSpecular( 0.5f, 0.5f, 0.5f, 0.5f);
+        aiColor4D colAmbient( 0.2, 0.2, 0.2, 1.0), colDiffuse( 0.8, 0.8, 0.8, 1.0), colSpecular( 0.5, 0.5, 0.5, 0.5);
         mat->AddProperty( &colAmbient, 1, AI_MATKEY_COLOR_AMBIENT);
         mat->AddProperty( &colDiffuse, 1, AI_MATKEY_COLOR_DIFFUSE);
         mat->AddProperty( &colSpecular, 1, AI_MATKEY_COLOR_SPECULAR);
-        const float specExp = 5.0f;
+        const float specExp = 5.0;
         mat->AddProperty( &specExp, 1, AI_MATKEY_SHININESS);
     }
 #endif

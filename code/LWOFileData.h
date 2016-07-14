@@ -319,7 +319,7 @@ struct VMapEntry
 
         const unsigned int m = num*dims;
         rawData.reserve(m + (m>>2u)); // 25% as  extra storage for VMADs
-        rawData.resize(m,0.f);
+        rawData.resize(m,0.0);
         abAssigned.resize(num,false);
     }
 
@@ -351,7 +351,7 @@ struct VColorChannel : public VMapEntry
         rawData.resize(m);
 
         for (aiColor4D* p = (aiColor4D*)&rawData[0]; p < (aiColor4D*)&rawData[m-1]; ++p)
-            p->a = 1.f;
+            p->a = 1.0;
 
         abAssigned.resize(num,false);
     }
@@ -432,7 +432,7 @@ struct Texture
 
     Texture()
         : mClipIdx(UINT_MAX)
-        , mStrength         (1.0f)
+        , mStrength         (1.0)
         , type()
         , mUVChannelIndex   ("unknown")
         , mRealUVIndex      (UINT_MAX)
@@ -441,8 +441,8 @@ struct Texture
         , bCanUse           (true)
         , mapMode           (UV)
         , majorAxis         (AXIS_X)
-        , wrapAmountH       (1.0f)
-        , wrapAmountW       (1.0f)
+        , wrapAmountH       (1.0)
+        , wrapAmountW       (1.0)
         , wrapModeWidth     (REPEAT)
         , wrapModeHeight    (REPEAT)
         , ordinal           ("\x00")
@@ -546,21 +546,21 @@ typedef std::list < Shader >        ShaderList;
 struct Surface
 {
     Surface()
-        : mColor                (0.78431f,0.78431f,0.78431f)
+        : mColor                (0.78431,0.78431,0.78431)
         , bDoubleSided          (false)
-        , mDiffuseValue         (1.f)
-        , mSpecularValue        (0.f)
-        , mTransparency         (0.f)
-        , mGlossiness           (0.4f)
-        , mLuminosity           (0.f)
-        , mColorHighlights      (0.f)
-        , mMaximumSmoothAngle   (0.f) // 0 == not specified, no smoothing
+        , mDiffuseValue         (1.0)
+        , mSpecularValue        (0.0)
+        , mTransparency         (0.0)
+        , mGlossiness           (0.4)
+        , mLuminosity           (0.0)
+        , mColorHighlights      (0.0)
+        , mMaximumSmoothAngle   (0.0) // 0 == not specified, no smoothing
         , mVCMap                ("")
         , mVCMapType            (AI_LWO_RGBA)
-        , mIOR                  (1.f) // vakuum
-        , mBumpIntensity        (1.f)
+        , mIOR                  (1.0) // vakuum
+        , mBumpIntensity        (1.0)
         , mWireframe            (false)
-        , mAdditiveTransparency (0.f)
+        , mAdditiveTransparency (0.0)
     {}
 
     //! Name of the surface
@@ -698,4 +698,3 @@ typedef std::list<LWO::Layer>       LayerList;
 
 
 #endif // !! AI_LWO_FILEDATA_INCLUDED
-

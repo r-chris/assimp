@@ -53,7 +53,7 @@ SGSpatialSort::SGSpatialSort()
 {
     // define the reference plane. We choose some arbitrary vector away from all basic axises
     // in the hope that no model spreads all its vertices along this plane.
-    mPlaneNormal.Set( 0.8523f, 0.34321f, 0.5736f);
+    mPlaneNormal.Set( 0.8523, 0.34321, 0.5736);
     mPlaneNormal.Normalize();
 }
 // ------------------------------------------------------------------------------------------------
@@ -164,5 +164,3 @@ void SGSpatialSort::FindPositions( const aiVector3D& pPosition,
         }
     }
 }
-
-

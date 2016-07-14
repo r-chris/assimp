@@ -110,7 +110,7 @@ public:
             , skipCurveRepresentations()
             , useCustomTriangulation()
             , skipAnnotations()
-            , conicSamplingAngle(10.f)
+            , conicSamplingAngle(10.0)
         {}
 
 

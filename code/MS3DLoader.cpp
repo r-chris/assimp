@@ -247,8 +247,8 @@ void MS3DImporter::InternReadFile( const std::string& pFile,
         v.ref_cnt = stream.GetI1();
 
         v.bone_id[1] = v.bone_id[2] = v.bone_id[3] = UINT_MAX;
-        v.weights[1] = v.weights[2] = v.weights[3] = 0.f;
-        v.weights[0] = 1.f;
+        v.weights[1] = v.weights[2] = v.weights[3] = 0.0;
+        v.weights[0] = 1.0;
     }
 
     uint16_t tris;
@@ -389,10 +389,10 @@ void MS3DImporter::InternReadFile( const std::string& pFile,
             if(stream.GetRemainingSize() > 4 && inrange((stream >> subversion,subversion),1u,3u)) {
                 for(unsigned int i = 0; i < verts; ++i) {
                     TempVertex& v = vertices[i];
-                    v.weights[3]=1.f;
+                    v.weights[3]=1.0;
                     for(unsigned int n = 0; n < 3; v.weights[3]-=v.weights[n++]) {
                         v.bone_id[n+1] = stream.GetI1();
-                        v.weights[n] = static_cast<float>(static_cast<unsigned int>(stream.GetI1()))/255.f;
+                        v.weights[n] = static_cast<float>(static_cast<unsigned int>(stream.GetI1()))/255.0;
                     }
                     stream.IncPtr((subversion-1)<<2u);
                 }
@@ -413,9 +413,9 @@ void MS3DImporter::InternReadFile( const std::string& pFile,
         TempMaterial& m = materials.back();
 
         strcpy(m.name,"<MS3D_DefaultMat>");
-        m.diffuse = aiColor4D(0.6f,0.6f,0.6f,1.0);
-        m.transparency = 1.f;
-        m.shininess = 0.f;
+        m.diffuse = aiColor4D(0.6,0.6,0.6,1.0);
+        m.transparency = 1.0;
+        m.shininess = 0.0;
 
         // this is because these TempXXX struct's have no c'tors.
         m.texture[0] = m.alphamap[0] = '\0';
@@ -460,7 +460,7 @@ void MS3DImporter::InternReadFile( const std::string& pFile,
             mo->AddProperty(&mi.shininess,1,AI_MATKEY_SHININESS);
             mo->AddProperty(&mi.transparency,1,AI_MATKEY_OPACITY);
 
-            const int sm = mi.shininess>0.f?aiShadingMode_Phong:aiShadingMode_Gouraud;
+            const int sm = mi.shininess>0.0?aiShadingMode_Phong:aiShadingMode_Gouraud;
             mo->AddProperty(&sm,1,AI_MATKEY_SHADING_MODEL);
         }
     }
@@ -526,7 +526,7 @@ void MS3DImporter::InternReadFile( const std::string& pFile,
                 m->mVertices[n] = v.pos;
 
                 m->mNormals[n] = t.normals[i];
-                m->mTextureCoords[0][n] = aiVector3D(t.uv[i].x,1.f-t.uv[i].y,0.0);
+                m->mTextureCoords[0][n] = aiVector3D(t.uv[i].x,1.0-t.uv[i].y,0.0);
                 f.mIndices[i] = n;
             }
         }

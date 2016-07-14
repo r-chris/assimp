@@ -61,10 +61,10 @@ using namespace irr::io;
 
 // Transformation matrix to convert from Assimp to IRR space
 const aiMatrix4x4 Assimp::AI_TO_IRR_MATRIX = aiMatrix4x4 (
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f);
+    1.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 1.0);
 
 // ------------------------------------------------------------------------------------------------
 // read a property in hexadecimal format (i.e. ffffffff)
@@ -467,7 +467,7 @@ aiMaterial* IrrlichtBase::ParseMaterial(unsigned int& matFlags)
                     // We should have at least one textur to do that ..
                     if (cnt && matFlags & AI_IRRMESH_MAT_lightmap)
                     {
-                        float f = 1.f;
+                        float f = 1.0;
                         unsigned int unmasked = matFlags&~AI_IRRMESH_MAT_lightmap;
 
                         // Additive lightmap?
@@ -478,12 +478,12 @@ aiMaterial* IrrlichtBase::ParseMaterial(unsigned int& matFlags)
                         if (unmasked & AI_IRRMESH_MAT_lightmap_m2 ||
                             unmasked & AI_IRRMESH_MAT_lightmap_light_m2)
                         {
-                            f = 2.f;
+                            f = 2.0;
                         }
                         else if (unmasked & AI_IRRMESH_MAT_lightmap_m4 ||
                             unmasked & AI_IRRMESH_MAT_lightmap_light_m4)
                         {
-                            f = 4.f;
+                            f = 4.0;
                         }
                         mat->AddProperty( &f, 1, AI_MATKEY_TEXBLEND_LIGHTMAP(0));
                         mat->AddProperty( &op,1, AI_MATKEY_TEXOP_LIGHTMAP(0));

@@ -151,14 +151,14 @@ void ProcessBooleanHalfSpaceDifference(const IfcHalfSpaceSolid* hs, TempMesh& re
     }
 
     // extract plane base position vector and normal vector
-    IfcVector3 p,n(0.f,0.f,1.f);
+    IfcVector3 p,n(0.0,0.0,1.0);
     if (plane->Position->Axis) {
         ConvertDirection(n,plane->Position->Axis.Get());
     }
     ConvertCartesianPoint(p,plane->Position->Location);
 
     if(!IsTrue(hs->AgreementFlag)) {
-        n *= -1.f;
+        n *= -1.0;
     }
 
     // clip the current contents of `meshout` against the plane we obtained from the second operand
@@ -258,7 +258,7 @@ bool IntersectsBoundaryProfile(const IfcVector3& e0, const IfcVector3& e1, const
     for( size_t i = 0, bcount = boundary.size(); i < bcount; ++i ) {
         IfcVector3 b01 = boundary[(i + 1) % bcount] - boundary[i];
         IfcVector3 b12 = boundary[(i + 2) % bcount] - boundary[(i + 1) % bcount];
-        IfcVector3 b1_side = IfcVector3(b01.y, -b01.x, 0.0); // rotated 90° clockwise in Z plane
+        IfcVector3 b1_side = IfcVector3(b01.y, -b01.x, 0.0); // rotated 90ï¿½ clockwise in Z plane
         // Warning: rough estimate only. A concave poly with lots of small segments each featuring a small counter rotation
         // could fool the accumulation. Correct implementation would be sum( acos( b01 * b2) * sign( b12 * b1_side))
         windingOrder += (b1_side.x*b12.x + b1_side.y*b12.y);
@@ -400,14 +400,14 @@ void ProcessPolygonalBoundedBooleanHalfSpaceDifference(const IfcPolygonalBounded
     }
 
     // extract plane base position vector and normal vector
-    IfcVector3 p,n(0.f,0.f,1.f);
+    IfcVector3 p,n(0.0,0.0,1.0);
     if (plane->Position->Axis) {
         ConvertDirection(n,plane->Position->Axis.Get());
     }
     ConvertCartesianPoint(p,plane->Position->Location);
 
     if(!IsTrue(hs->AgreementFlag)) {
-        n *= -1.f;
+        n *= -1.0;
     }
 
     n.Normalize();

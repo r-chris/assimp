@@ -408,7 +408,7 @@ void MDCImporter::InternReadFile(
 
                     // copy texture coordinates
                     pcUVCur->x = pcUVs[quak].u;
-                    pcUVCur->y = 1.0f-pcUVs[quak].v; // DX to OGL
+                    pcUVCur->y = 1.0-pcUVs[quak].v; // DX to OGL
                 }
                 pcVertCur->x += pcFrame->localOrigin[0] ;
                 pcVertCur->y += pcFrame->localOrigin[1] ;
@@ -474,8 +474,8 @@ void MDCImporter::InternReadFile(
         clr.b = clr.g = clr.r = 0.05f;
         pcMat->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_AMBIENT);
 
-        if (name.length())clr.b = clr.g = clr.r = 1.0f;
-        else clr.b = clr.g = clr.r = 0.6f;
+        if (name.length())clr.b = clr.g = clr.r = 1.0;
+        else clr.b = clr.g = clr.r = 0.6;
 
         pcMat->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcMat->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);

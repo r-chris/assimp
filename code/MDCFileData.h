@@ -69,9 +69,9 @@ namespace MDC {
 #define AI_MDC_MAXQPATH         64
 #define AI_MDC_MAX_BONES        128
 
-#define AI_MDC_CVERT_BIAS       127.0f
-#define AI_MDC_DELTA_SCALING    4.0f
-#define AI_MDC_BASE_SCALING     (1.0f / 64.0f)
+#define AI_MDC_CVERT_BIAS       127.0
+#define AI_MDC_DELTA_SCALING    4.0
+#define AI_MDC_BASE_SCALING     (1.0 / 64.0)
 
 
 // ---------------------------------------------------------------------------

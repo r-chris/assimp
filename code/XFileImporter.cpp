@@ -192,7 +192,7 @@ void XFileImporter::CreateDataRepresentationFromImport( aiScene* pScene, XFile::
         mat->AddProperty( &clr, 1, AI_MATKEY_COLOR_EMISSIVE);
         mat->AddProperty( &clr, 1, AI_MATKEY_COLOR_SPECULAR);
 
-        clr = aiColor3D( 0.5f, 0.5f, 0.5f);
+        clr = aiColor3D( 0.5, 0.5, 0.5);
         mat->AddProperty( &clr, 1, AI_MATKEY_COLOR_DIFFUSE);
         mat->AddProperty( &specExp, 1, AI_MATKEY_SHININESS);
 
@@ -351,7 +351,7 @@ void XFileImporter::CreateMeshes( aiScene* pScene, aiNode* pNode, const std::vec
                         if( mesh->HasTextureCoords( e))
                         {
                             aiVector2D tex = sourceMesh->mTexCoords[e][pf.mIndices[d]];
-                            mesh->mTextureCoords[e][newIndex] = aiVector3D( tex.x, 1.0f - tex.y, 0.0f);
+                            mesh->mTextureCoords[e][newIndex] = aiVector3D( tex.x, 1.0 - tex.y, 0.0);
                         }
                     }
                     // vertex color sets
@@ -373,7 +373,7 @@ void XFileImporter::CreateMeshes( aiScene* pScene, aiNode* pNode, const std::vec
             {
                 const XFile::Bone& obone = bones[c];
                 // set up a vertex-linear array of the weights for quick searching if a bone influences a vertex
-                std::vector<float> oldWeights( sourceMesh->mPositions.size(), 0.0f);
+                std::vector<float> oldWeights( sourceMesh->mPositions.size(), 0.0);
                 for( unsigned int d = 0; d < obone.mWeights.size(); d++)
                     oldWeights[obone.mWeights[d].mVertex] = obone.mWeights[d].mWeight;
 
@@ -384,7 +384,7 @@ void XFileImporter::CreateMeshes( aiScene* pScene, aiNode* pNode, const std::vec
                 {
                     // does the new vertex stem from an old vertex which was influenced by this bone?
                     float w = oldWeights[orgPoints[d]];
-                    if( w > 0.0f)
+                    if( w > 0.0)
                         newWeights.push_back( aiVertexWeight( d, w));
                 }
 
@@ -531,7 +531,7 @@ void XFileImporter::CreateAnimations( aiScene* pScene, const XFile::Scene* pData
 
                     nbone->mRotationKeys[c].mTime = bone->mRotKeys[c].mTime;
                     nbone->mRotationKeys[c].mValue = aiQuaternion( rotmat);
-                    nbone->mRotationKeys[c].mValue.w *= -1.0f; // needs quat inversion
+                    nbone->mRotationKeys[c].mValue.w *= -1.0; // needs quat inversion
                 }
 
                 // scaling
@@ -618,7 +618,7 @@ void XFileImporter::ConvertMaterials( aiScene* pScene, std::vector<XFile::Materi
         // Shading model: hardcoded to PHONG, there is no such information in an XFile
         // FIX (aramis): If the specular exponent is 0, use gouraud shading. This is a bugfix
         // for some models in the SDK (e.g. good old tiny.x)
-        int shadeMode = (int)oldMat.mSpecularExponent == 0.0f
+        int shadeMode = (int)oldMat.mSpecularExponent == 0.0
             ? aiShadingMode_Gouraud : aiShadingMode_Phong;
 
         mat->AddProperty<int>( &shadeMode, 1, AI_MATKEY_SHADING_MODEL);

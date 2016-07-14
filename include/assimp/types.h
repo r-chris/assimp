@@ -126,7 +126,7 @@ static const size_t MAXLEN = 1024;
 struct aiPlane
 {
 #ifdef __cplusplus
-    aiPlane () : a(0.f), b(0.f), c(0.f), d(0.f) {}
+    aiPlane () : a(0.), b(0.), c(0.), d(0.) {}
     aiPlane( ai_real _a, ai_real _b, ai_real _c, ai_real _d )
         : a( _a ), b( _b ), c( _c ), d( _d ) {}
 

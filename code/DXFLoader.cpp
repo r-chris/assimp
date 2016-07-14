@@ -63,28 +63,28 @@ using namespace Assimp;
 #define AI_DXF_BINARY_IDENT_LEN (24)
 
 // default vertex color that all uncolored vertices will receive
-#define AI_DXF_DEFAULT_COLOR aiColor4D(0.6f,0.6f,0.6f,0.6f)
+#define AI_DXF_DEFAULT_COLOR aiColor4D(0.6,0.6,0.6,0.6)
 
 // color indices for DXF - 16 are supported, the table is
 // taken directly from the DXF spec.
 static aiColor4D g_aclrDxfIndexColors[] =
 {
-    aiColor4D (0.6f, 0.6f, 0.6f, 1.0f),
-    aiColor4D (1.0f, 0.0f, 0.0f, 1.0f), // red
-    aiColor4D (0.0f, 1.0f, 0.0f, 1.0f), // green
-    aiColor4D (0.0f, 0.0f, 1.0f, 1.0f), // blue
-    aiColor4D (0.3f, 1.0f, 0.3f, 1.0f), // light green
-    aiColor4D (0.3f, 0.3f, 1.0f, 1.0f), // light blue
-    aiColor4D (1.0f, 0.3f, 0.3f, 1.0f), // light red
-    aiColor4D (1.0f, 0.0f, 1.0f, 1.0f), // pink
-    aiColor4D (1.0f, 0.6f, 0.0f, 1.0f), // orange
-    aiColor4D (0.6f, 0.3f, 0.0f, 1.0f), // dark orange
-    aiColor4D (1.0f, 1.0f, 0.0f, 1.0f), // yellow
-    aiColor4D (0.3f, 0.3f, 0.3f, 1.0f), // dark gray
-    aiColor4D (0.8f, 0.8f, 0.8f, 1.0f), // light gray
-    aiColor4D (0.0f, 00.f, 0.0f, 1.0f), // black
-    aiColor4D (1.0f, 1.0f, 1.0f, 1.0f), // white
-    aiColor4D (0.6f, 0.0f, 1.0f, 1.0f)  // violet
+    aiColor4D (0.6, 0.6, 0.6, 1.0),
+    aiColor4D (1.0, 0.0, 0.0, 1.0), // red
+    aiColor4D (0.0, 1.0, 0.0, 1.0), // green
+    aiColor4D (0.0, 0.0, 1.0, 1.0), // blue
+    aiColor4D (0.3, 1.0, 0.3, 1.0), // light green
+    aiColor4D (0.3, 0.3, 1.0, 1.0), // light blue
+    aiColor4D (1.0, 0.3, 0.3, 1.0), // light red
+    aiColor4D (1.0, 0.0, 1.0, 1.0), // pink
+    aiColor4D (1.0, 0.6, 0.0, 1.0), // orange
+    aiColor4D (0.6, 0.3, 0.0, 1.0), // dark orange
+    aiColor4D (1.0, 1.0, 0.0, 1.0), // yellow
+    aiColor4D (0.3, 0.3, 0.3, 1.0), // dark gray
+    aiColor4D (0.8, 0.8, 0.8, 1.0), // light gray
+    aiColor4D (0.0, 00., 0.0, 1.0), // black
+    aiColor4D (1.0, 1.0, 1.0, 1.0), // white
+    aiColor4D (0.6, 0.0, 1.0, 1.0)  // violet
 };
 #define AI_DXF_NUM_INDEX_COLORS (sizeof(g_aclrDxfIndexColors)/sizeof(g_aclrDxfIndexColors[0]))
 #define AI_DXF_ENTITIES_MAGIC_BLOCK "$ASSIMP_ENTITIES_MAGIC"
@@ -206,10 +206,10 @@ void DXFImporter::InternReadFile( const std::string& pFile,
 
     // Now rotate the whole scene by 90 degrees around the x axis to convert from AutoCAD's to Assimp's coordinate system
     pScene->mRootNode->mTransformation = aiMatrix4x4(
-        1.f,0.f,0.f,0.f,
-        0.f,0.f,1.f,0.f,
-        0.f,-1.f,0.f,0.f,
-        0.f,0.f,0.f,1.f) * pScene->mRootNode->mTransformation;
+        1.0,0.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,
+        0.0,-1.0,0.0,0.0,
+        0.0,0.0,0.0,1.0) * pScene->mRootNode->mTransformation;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -374,7 +374,7 @@ void DXFImporter::ExpandBlockReferences(DXF::Block& bl,const DXF::BlockMap& bloc
         for (std::shared_ptr<const DXF::PolyLine> pl_in : bl_src.lines) {
             std::shared_ptr<DXF::PolyLine> pl_out = std::shared_ptr<DXF::PolyLine>(new DXF::PolyLine(*pl_in));
 
-            if (bl_src.base.Length() || insert.scale.x!=1.f || insert.scale.y!=1.f || insert.scale.z!=1.f || insert.angle || insert.pos.Length()) {
+            if (bl_src.base.Length() || insert.scale.x!=1.0 || insert.scale.y!=1.0 || insert.scale.z!=1.0 || insert.angle || insert.pos.Length()) {
                 // manual coordinate system transformation
                 // XXX order
                 aiMatrix4x4 trafo, tmp;
@@ -383,7 +383,7 @@ void DXFImporter::ExpandBlockReferences(DXF::Block& bl,const DXF::BlockMap& bloc
                 trafo *= aiMatrix4x4::Translation(insert.pos,tmp);
 
                 // XXX rotation currently ignored - I didn't find an appropriate sample model.
-                if (insert.angle != 0.f) {
+                if (insert.angle != 0.0) {
                     DefaultLogger::get()->warn("DXF: BLOCK rotation not currently implemented");
                 }
 
@@ -410,13 +410,13 @@ void DXFImporter::GenerateMaterials(aiScene* pScene, DXF::FileData& /*output*/)
     s.Set(AI_DEFAULT_MATERIAL_NAME);
     pcMat->AddProperty(&s, AI_MATKEY_NAME);
 
-    aiColor4D clrDiffuse(0.9f,0.9f,0.9f,1.0f);
+    aiColor4D clrDiffuse(0.9,0.9,0.9,1.0);
     pcMat->AddProperty(&clrDiffuse,1,AI_MATKEY_COLOR_DIFFUSE);
 
-    clrDiffuse = aiColor4D(1.0f,1.0f,1.0f,1.0f);
+    clrDiffuse = aiColor4D(1.0,1.0,1.0,1.0);
     pcMat->AddProperty(&clrDiffuse,1,AI_MATKEY_COLOR_SPECULAR);
 
-    clrDiffuse = aiColor4D(0.05f,0.05f,0.05f,1.0f);
+    clrDiffuse = aiColor4D(0.05,0.05,0.05,1.0);
     pcMat->AddProperty(&clrDiffuse,1,AI_MATKEY_COLOR_AMBIENT);
 
     pScene->mNumMaterials = 1;
@@ -913,4 +913,3 @@ void DXFImporter::Parse3DFace(DXF::LineReader& reader, DXF::FileData& output)
 }
 
 #endif // !! ASSIMP_BUILD_NO_DXF_IMPORTER
-

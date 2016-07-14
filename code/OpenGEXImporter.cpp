@@ -734,7 +734,7 @@ static void fillVector3( aiVector3D *vec3, Value *vals ) {
     ai_assert( nullptr != vec3 );
     ai_assert( nullptr != vals );
 
-    float x( 0.0f ), y( 0.0f ), z( 0.0f );
+    float x( 0.0 ), y( 0.0 ), z( 0.0 );
     Value *next( vals );
     x = next->getFloat();
     next = next->m_next;

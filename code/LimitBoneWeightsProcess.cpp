@@ -134,12 +134,12 @@ void LimitBoneWeightsProcess::ProcessMesh( aiMesh* pMesh)
         removed += m-vit->size();
 
         // and renormalize the weights
-        float sum = 0.0f;
+        float sum = 0.0;
         for( std::vector<Weight>::const_iterator it = vit->begin(); it != vit->end(); ++it ) {
             sum += it->mWeight;
         }
-        if( 0.0f != sum ) {
-            const float invSum = 1.0f / sum;
+        if( 0.0 != sum ) {
+            const float invSum = 1.0 / sum;
             for( std::vector<Weight>::iterator it = vit->begin(); it != vit->end(); ++it ) {
                 it->mWeight *= invSum;
             }

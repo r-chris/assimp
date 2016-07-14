@@ -7,8 +7,8 @@ Copyright (c) 2006-2015, assimp team
 
 All rights reserved.
 
-Redistribution and use of this software in source and binary forms, 
-with or without modification, are permitted provided that the following 
+Redistribution and use of this software in source and binary forms,
+with or without modification, are permitted provided that the following
 conditions are met:
 
 * Redistributions of source code must retain the above
@@ -25,16 +25,16 @@ contributors may be used to endorse or promote products
 derived from this software without specific prior
 written permission of the assimp team.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
 OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
@@ -58,7 +58,7 @@ HWND g_hDlg							= NULL;
 IDirect3D9* g_piD3D					= NULL;
 IDirect3DDevice9* g_piDevice		= NULL;
 IDirect3DVertexDeclaration9* gDefaultVertexDecl = NULL;
-double g_fFPS						= 0.0f;
+double g_fFPS						= 0.0;
 char g_szFileName[MAX_PATH];
 ID3DXEffect* g_piDefaultEffect		= NULL;
 ID3DXEffect* g_piNormalsEffect		= NULL;
@@ -72,7 +72,7 @@ ai_real g_fElpasedTime = 0.0;
 D3DCAPS9 g_sCaps;
 bool g_bLoadingFinished				= false;
 HANDLE g_hThreadHandle				= NULL;
-float g_fWheelPos					= -10.0f;
+float g_fWheelPos					= -10.0;
 bool g_bLoadingCanceled				= false;
 IDirect3DTexture9* g_pcTexture		= NULL;
 bool g_bPlay						= false;
@@ -102,13 +102,13 @@ extern bool g_bWasFlipped			/*= false*/;
 
 aiMatrix4x4 g_mWorld;
 aiMatrix4x4 g_mWorldRotate;
-aiVector3D g_vRotateSpeed			= aiVector3D(0.5f,0.5f,0.5f);
+aiVector3D g_vRotateSpeed			= aiVector3D(0.5,0.5,0.5);
 
 // NOTE: The second light direction is now computed from the first
-aiVector3D g_avLightDirs[1] = 
-{	aiVector3D(-0.5f,0.6f,0.2f)  };
+aiVector3D g_avLightDirs[1] =
+{	aiVector3D(-0.5,0.6,0.2)  };
 
-D3DCOLOR g_avLightColors[3] = 
+D3DCOLOR g_avLightColors[3] =
 {
     D3DCOLOR_ARGB(0xFF,0xFF,0xFF,0xFF),
     D3DCOLOR_ARGB(0xFF,0xFF,0x00,0x00),
@@ -122,20 +122,20 @@ bool g_bInvert						= false;
 EClickPos g_eClick					= EClickPos_Circle;
 unsigned int g_iCurrentColor		= 0;
 
-float g_fLightIntensity				= 1.0f;
-float g_fLightColor					= 1.0f;
+float g_fLightIntensity				= 1.0;
+float g_fLightColor					= 1.0;
 
 RenderOptions g_sOptions;
 Camera g_sCamera;
 AssetHelper *g_pcAsset				= NULL;
 
 //
-// Contains the mask image for the HUD 
+// Contains the mask image for the HUD
 // (used to determine the position of a click)
 //
 unsigned char* g_szImageMask		= NULL;
 
-float g_fLoadTime = 0.0f;
+float g_fLoadTime = 0.0;
 
 
 //-------------------------------------------------------------------------------
@@ -267,10 +267,10 @@ int LoadAsset(void)
     ScaleAsset();
 
     // reset the camera view to the default position
-    g_sCamera.vPos = aiVector3D(0.0f,0.0f,-10.0f);
-    g_sCamera.vLookAt = aiVector3D(0.0f,0.0f,1.0f);
-    g_sCamera.vUp = aiVector3D(0.0f,1.0f,0.0f);
-    g_sCamera.vRight = aiVector3D(0.0f,1.0f,0.0f);
+    g_sCamera.vPos = aiVector3D(0.0,0.0,-10.0);
+    g_sCamera.vLookAt = aiVector3D(0.0,0.0,1.0);
+    g_sCamera.vUp = aiVector3D(0.0,1.0,0.0);
+    g_sCamera.vRight = aiVector3D(0.0,1.0,0.0);
 
     // build native D3D vertex/index buffers, textures, materials
     if( 1 != CreateAssetData())
@@ -290,7 +290,7 @@ int LoadAsset(void)
     CDisplay::Instance().FillAnimList();
 
     CDisplay::Instance().FillDefaultStatistics();
-    
+
     // render the scene once
     CDisplay::Instance().OnRender();
 
@@ -343,7 +343,7 @@ int DeleteAsset(void)
 // p_avOut Receives the min/max boundaries. Must point to 2 vec3s
 // piMatrix Transformation matrix of the graph at this position
 //-------------------------------------------------------------------------------
-int CalculateBounds(aiNode* piNode, aiVector3D* p_avOut, 
+int CalculateBounds(aiNode* piNode, aiVector3D* p_avOut,
     const aiMatrix4x4& piMatrix)
 {
     ai_assert(NULL != piNode);
@@ -385,8 +385,8 @@ int CalculateBounds(aiNode* piNode, aiVector3D* p_avOut,
 //-------------------------------------------------------------------------------
 int ScaleAsset(void)
 {
-    aiVector3D aiVecs[2] = {aiVector3D( 1e10f, 1e10f, 1e10f),
-        aiVector3D( -1e10f, -1e10f, -1e10f) };
+    aiVector3D aiVecs[2] = {aiVector3D( 1e10, 1e10, 1e10),
+        aiVector3D( -1e10, -1e10, -1e10) };
 
     if (g_pcAsset->pcScene->mRootNode)
     {
@@ -399,15 +399,15 @@ int ScaleAsset(void)
     ai_real fScale = 10.0 / vDelta.Length();
 
     g_mWorld =  aiMatrix4x4(
-        1.0f,0.0f,0.0f,0.0f,
-        0.0f,1.0f,0.0f,0.0f,
-        0.0f,0.0f,1.0f,0.0f,
-        -vHalf.x,-vHalf.y,-vHalf.z,1.0f) *
+        1.0,0.0,0.0,0.0,
+        0.0,1.0,0.0,0.0,
+        0.0,0.0,1.0,0.0,
+        -vHalf.x,-vHalf.y,-vHalf.z,1.0) *
         aiMatrix4x4(
-        fScale,0.0f,0.0f,0.0f,
-        0.0f,fScale,0.0f,0.0f,
-        0.0f,0.0f,fScale,0.0f,
-        0.0f,0.0f,0.0f,1.0f);
+        fScale,0.0,0.0,0.0,
+        0.0,fScale,0.0,0.0,
+        0.0,0.0,fScale,0.0,
+        0.0,0.0,0.0,1.0);
     return 1;
 }
 
@@ -497,7 +497,7 @@ int CreateAssetData()
         }
 
         DWORD dwUsage = 0;
-        if (g_pcAsset->apcMeshes[i]->piOpacityTexture || 1.0f != g_pcAsset->apcMeshes[i]->fOpacity)
+        if (g_pcAsset->apcMeshes[i]->piOpacityTexture || 1.0 != g_pcAsset->apcMeshes[i]->fOpacity)
             dwUsage |= D3DUSAGE_DYNAMIC;
 
         unsigned int nidx;
@@ -518,7 +518,7 @@ int CreateAssetData()
                 mesh->mNumFaces * nidx,
                 D3DUSAGE_WRITEONLY | dwUsage,
                 D3DFMT_INDEX32,
-                D3DPOOL_DEFAULT, 
+                D3DPOOL_DEFAULT,
                 &g_pcAsset->apcMeshes[i]->piIB,
                 NULL)))
             {
@@ -582,12 +582,12 @@ int CreateAssetData()
             pbData2->vPosition = mesh->mVertices[x];
 
             if (NULL == mesh->mNormals)
-                pbData2->vNormal = aiVector3D(0.0f,0.0f,0.0f);
+                pbData2->vNormal = aiVector3D(0.0,0.0,0.0);
             else pbData2->vNormal = mesh->mNormals[x];
 
             if (NULL == mesh->mTangents)	{
-                pbData2->vTangent = aiVector3D(0.0f,0.0f,0.0f);
-                pbData2->vBitangent = aiVector3D(0.0f,0.0f,0.0f);
+                pbData2->vTangent = aiVector3D(0.0,0.0,0.0);
+                pbData2->vBitangent = aiVector3D(0.0,0.0,0.0);
             }
             else	{
                 pbData2->vTangent = mesh->mTangents[x];
@@ -596,10 +596,10 @@ int CreateAssetData()
 
             if (mesh->HasVertexColors( 0))	{
                 pbData2->dColorDiffuse = D3DCOLOR_ARGB(
-                    ((unsigned char)max( min( mesh->mColors[0][x].a * 255.0f, 255.0f),0.0f)),
-                    ((unsigned char)max( min( mesh->mColors[0][x].r * 255.0f, 255.0f),0.0f)),
-                    ((unsigned char)max( min( mesh->mColors[0][x].g * 255.0f, 255.0f),0.0f)),
-                    ((unsigned char)max( min( mesh->mColors[0][x].b * 255.0f, 255.0f),0.0f)));
+                    ((unsigned char)max( min( mesh->mColors[0][x].a * 255.0, 255.0),0.0)),
+                    ((unsigned char)max( min( mesh->mColors[0][x].r * 255.0, 255.0),0.0)),
+                    ((unsigned char)max( min( mesh->mColors[0][x].g * 255.0, 255.0),0.0)),
+                    ((unsigned char)max( min( mesh->mColors[0][x].b * 255.0, 255.0),0.0)));
             }
             else pbData2->dColorDiffuse = D3DCOLOR_ARGB(0xFF,0xff,0xff,0xff);
 
@@ -609,14 +609,14 @@ int CreateAssetData()
                     mesh->mTextureCoords[0][x].x,
                     mesh->mTextureCoords[0][x].y);
             }
-            else pbData2->vTextureUV = aiVector2D(0.5f,0.5f);
+            else pbData2->vTextureUV = aiVector2D(0.5,0.5);
 
             if (mesh->HasTextureCoords( 1))	{
                 pbData2->vTextureUV2 = aiVector2D(
                     mesh->mTextureCoords[1][x].x,
                     mesh->mTextureCoords[1][x].y);
             }
-            else pbData2->vTextureUV2 = aiVector2D(0.5f,0.5f);
+            else pbData2->vTextureUV2 = aiVector2D(0.5,0.5);
 
             // Bone indices and weights
             if( mesh->HasBones())	{
@@ -626,7 +626,7 @@ int CreateAssetData()
                 for( unsigned int a = 0; a < weightsPerVertex[x].size(); a++)
                 {
                     boneIndices[a] = weightsPerVertex[x][a].mVertexId;
-                    boneWeights[a] = (unsigned char) (weightsPerVertex[x][a].mWeight * 255.0f);
+                    boneWeights[a] = (unsigned char) (weightsPerVertex[x][a].mWeight * 255.0);
                 }
 
                 memcpy( pbData2->mBoneIndices, boneIndices, sizeof( boneIndices));
@@ -740,18 +740,18 @@ int SetupFPSView()
 {
     if (!g_bFPSView)
     {
-        g_sCamera.vPos = aiVector3D(0.0f,0.0f,g_fWheelPos);
-        g_sCamera.vLookAt = aiVector3D(0.0f,0.0f,1.0f);
-        g_sCamera.vUp = aiVector3D(0.0f,1.0f,0.0f);
-        g_sCamera.vRight = aiVector3D(0.0f,1.0f,0.0f);
+        g_sCamera.vPos = aiVector3D(0.0,0.0,g_fWheelPos);
+        g_sCamera.vLookAt = aiVector3D(0.0,0.0,1.0);
+        g_sCamera.vUp = aiVector3D(0.0,1.0,0.0);
+        g_sCamera.vRight = aiVector3D(0.0,1.0,0.0);
     }
     else
     {
         g_fWheelPos = g_sCamera.vPos.z;
-        g_sCamera.vPos = aiVector3D(0.0f,0.0f,-10.0f);
-        g_sCamera.vLookAt = aiVector3D(0.0f,0.0f,1.0f);
-        g_sCamera.vUp = aiVector3D(0.0f,1.0f,0.0f);
-        g_sCamera.vRight = aiVector3D(0.0f,1.0f,0.0f);
+        g_sCamera.vPos = aiVector3D(0.0,0.0,-10.0);
+        g_sCamera.vLookAt = aiVector3D(0.0,0.0,1.0);
+        g_sCamera.vUp = aiVector3D(0.0,1.0,0.0);
+        g_sCamera.vRight = aiVector3D(0.0,1.0,0.0);
     }
     return 1;
 }
@@ -981,7 +981,7 @@ int CreateDevice (bool p_bMultiSample,bool p_bSuperSample,bool bHW /*= true*/)
     DWORD dwQuality = 0;
     if (p_bMultiSample)
     {
-        while ((D3DMULTISAMPLE_TYPE)(D3DMULTISAMPLE_16_SAMPLES + 1)  != 
+        while ((D3DMULTISAMPLE_TYPE)(D3DMULTISAMPLE_16_SAMPLES + 1)  !=
             (sMS = (D3DMULTISAMPLE_TYPE)(sMS + 1)))
         {
             if(SUCCEEDED( g_piD3D->CheckDeviceMultiSampleType(0,eType,
@@ -1040,14 +1040,14 @@ int CreateDevice (bool p_bMultiSample,bool p_bSuperSample,bool bHW /*= true*/)
         NULL,
         &g_piDefaultEffect,&piBuffer)))
     {
-        if( piBuffer) 
+        if( piBuffer)
         {
             MessageBox(g_hDlg,(LPCSTR)piBuffer->GetBufferPointer(),"HLSL",MB_OK);
             piBuffer->Release();
         }
         return 0;
     }
-    if( piBuffer) 
+    if( piBuffer)
     {
         piBuffer->Release();
         piBuffer = NULL;
@@ -1062,14 +1062,14 @@ int CreateDevice (bool p_bMultiSample,bool p_bSuperSample,bool bHW /*= true*/)
         g_szPassThroughShader.c_str(),(UINT)g_szPassThroughShader.length(),
         NULL,NULL,AI_SHADER_COMPILE_FLAGS,NULL,&g_piPassThroughEffect,&piBuffer)))
     {
-        if( piBuffer) 
+        if( piBuffer)
         {
             MessageBox(g_hDlg,(LPCSTR)piBuffer->GetBufferPointer(),"HLSL",MB_OK);
             piBuffer->Release();
         }
         return 0;
     }
-    if( piBuffer) 
+    if( piBuffer)
     {
         piBuffer->Release();
         piBuffer = NULL;
@@ -1084,14 +1084,14 @@ int CreateDevice (bool p_bMultiSample,bool p_bSuperSample,bool bHW /*= true*/)
         g_szNormalsShader.c_str(),(UINT)g_szNormalsShader.length(),
         NULL,NULL,AI_SHADER_COMPILE_FLAGS,NULL,&g_piNormalsEffect, &piBuffer)))
     {
-        if( piBuffer) 
+        if( piBuffer)
         {
             MessageBox(g_hDlg,(LPCSTR)piBuffer->GetBufferPointer(),"HLSL",MB_OK);
             piBuffer->Release();
         }
         return 0;
     }
-    if( piBuffer) 
+    if( piBuffer)
     {
         piBuffer->Release();
         piBuffer = NULL;
@@ -1128,11 +1128,11 @@ int CreateDevice (void)
 //-------------------------------------------------------------------------------
 int GetProjectionMatrix (aiMatrix4x4& p_mOut)
 {
-    const float fFarPlane = 100.0f;
-    const float fNearPlane = 0.1f;
+    const float fFarPlane = 100.0;
+    const float fNearPlane = 0.1;
     const float fFOV = (float)(45.0 * 0.0174532925);
 
-    const float s = 1.0f / tanf(fFOV * 0.5f);
+    const float s = 1.0 / tanf(fFOV * 0.5);
     const float Q = fFarPlane / (fFarPlane - fNearPlane);
 
     RECT sRect;
@@ -1142,10 +1142,10 @@ int GetProjectionMatrix (aiMatrix4x4& p_mOut)
     const float fAspect = (float)sRect.right / (float)sRect.bottom;
 
     p_mOut = aiMatrix4x4(
-        s / fAspect, 0.0f, 0.0f, 0.0f,
-        0.0f, s, 0.0f, 0.0f,
-        0.0f, 0.0f, Q, 1.0f,
-        0.0f, 0.0f, -Q * fNearPlane, 0.0f);
+        s / fAspect, 0.0, 0.0, 0.0,
+        0.0, s, 0.0, 0.0,
+        0.0, 0.0, Q, 1.0,
+        0.0, 0.0, -Q * fNearPlane, 0.0);
     return 1;
 }
 
@@ -1166,22 +1166,22 @@ aiVector3D GetCameraMatrix (aiMatrix4x4& p_mOut)
     view._11 = g_sCamera.vRight.x;
     view._12 = g_sCamera.vUp.x;
     view._13 = g_sCamera.vLookAt.x;
-    view._14 = 0.0f;
+    view._14 = 0.0;
 
     view._21 = g_sCamera.vRight.y;
     view._22 = g_sCamera.vUp.y;
     view._23 = g_sCamera.vLookAt.y;
-    view._24 = 0.0f;
+    view._24 = 0.0;
 
     view._31 = g_sCamera.vRight.z;
     view._32 = g_sCamera.vUp.z;
     view._33 = g_sCamera.vLookAt.z;
-    view._34 = 0.0f;
+    view._34 = 0.0;
 
     view._41 = -D3DXVec3Dot( (D3DXVECTOR3*)&g_sCamera.vPos, (D3DXVECTOR3*)&g_sCamera.vRight );
     view._42 = -D3DXVec3Dot( (D3DXVECTOR3*)&g_sCamera.vPos, (D3DXVECTOR3*)&g_sCamera.vUp );
     view._43 = -D3DXVec3Dot( (D3DXVECTOR3*)&g_sCamera.vPos, (D3DXVECTOR3*)&g_sCamera.vLookAt );
-    view._44 =  1.0f;
+    view._44 =  1.0;
 
     memcpy(&p_mOut,&view,sizeof(aiMatrix4x4));
 

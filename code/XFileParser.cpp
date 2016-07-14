@@ -1372,16 +1372,16 @@ float XFileParser::ReadFloat()
     {
         P += 9;
         CheckForSeparator();
-        return 0.0f;
+        return 0.0;
     } else
     if( strncmp( P, "1.#QNAN0", 8) == 0)
     {
         P += 8;
         CheckForSeparator();
-        return 0.0f;
+        return 0.0;
     }
 
-    float result = 0.0f;
+    float result = 0.0;
     P = fast_atoreal_move<float>( P, result);
 
     CheckForSeparator();

@@ -72,10 +72,10 @@ public:
     struct Material
     {
         Material()
-            :   rgb     (0.6f,0.6f,0.6f)
-            ,   spec    (1.f,1.f,1.f)
-            ,   shin    (0.f)
-            ,   trans   (0.f)
+            :   rgb     (0.6,0.6,0.6)
+            ,   spec    (1.0,1.0,1.0)
+            ,   shin    (0.0)
+            ,   trans   (0.0)
         {}
 
         // base color of the material
@@ -122,8 +122,8 @@ public:
             ,   name( "" )
             ,   children()
             ,   texture( "" )
-            ,   texRepeat( 1.f, 1.f )
-            ,   texOffset( 0.0f, 0.0f )
+            ,   texRepeat( 1.0, 1.0 )
+            ,   texOffset( 0.0, 0.0 )
             ,   rotation()
             ,   translation()
             ,   vertices()

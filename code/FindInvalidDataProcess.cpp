@@ -58,7 +58,7 @@ using namespace Assimp;
 // ------------------------------------------------------------------------------------------------
 // Constructor to be privately used by Importer
 FindInvalidDataProcess::FindInvalidDataProcess()
-    : configEpsilon(0.0f)
+    : configEpsilon(0.0)
 {
     // nothing to do here
 }
@@ -260,7 +260,7 @@ inline bool AllIdentical(T* in, unsigned int num, float epsilon)
         return true;
     }
 
-    if (epsilon > 0.f) {
+    if (epsilon > 0.0) {
         for (unsigned int i = 0; i < num-1;++i) {
 
             if (!EpsilonCompare(in[i],in[i+1],epsilon)) {

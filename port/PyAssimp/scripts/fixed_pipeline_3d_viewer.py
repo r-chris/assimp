@@ -241,7 +241,7 @@ class GLRenderer():
         self.frames += 1
         if gl_time - self.prev_fps_time >= 1000:
             current_fps = self.frames * 1000 / (gl_time - self.prev_fps_time)
-            logger.info('%.0f fps' % current_fps)
+            logger.info('%.0 fps' % current_fps)
             self.frames = 0
             self.prev_fps_time = gl_time
 

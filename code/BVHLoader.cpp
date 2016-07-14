@@ -293,8 +293,8 @@ void BVHLoader::ReadNodeOffset( aiNode* pNode)
     offset.z = GetNextTokenAsFloat();
 
     // build a transformation matrix from it
-    pNode->mTransformation = aiMatrix4x4( 1.0f, 0.0f, 0.0f, offset.x, 0.0f, 1.0f, 0.0f, offset.y,
-        0.0f, 0.0f, 1.0f, offset.z, 0.0f, 0.0f, 0.0f, 1.0f);
+    pNode->mTransformation = aiMatrix4x4( 1.0, 0.0, 0.0, offset.x, 0.0, 1.0, 0.0, offset.y,
+        0.0, 0.0, 1.0, offset.z, 0.0, 0.0, 0.0, 1.0);
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -411,7 +411,7 @@ float BVHLoader::GetNextTokenAsFloat()
 
     // check if the float is valid by testing if the atof() function consumed every char of the token
     const char* ctoken = token.c_str();
-    float result = 0.0f;
+    float result = 0.0;
     ctoken = fast_atoreal_move<float>( ctoken, result);
 
     if( ctoken != token.c_str() + token.length())
@@ -512,7 +512,7 @@ void BVHLoader::CreateAnimation( aiScene* pScene)
                 for( unsigned int channel = 0; channel < 3; ++channel)
                 {
                     // translate ZXY euler angels into a quaternion
-                    const float angle = node.mChannelValues[fr * node.mChannels.size() + rotOffset + channel] * float( AI_MATH_PI) / 180.0f;
+                    const ai_real angle = node.mChannelValues[fr * node.mChannels.size() + rotOffset + channel] * ai_real( AI_MATH_PI) / 180.0;
 
                     // Compute rotation transformations in the right order
                     switch (node.mChannels[rotOffset+channel])
@@ -535,7 +535,7 @@ void BVHLoader::CreateAnimation( aiScene* pScene)
             nodeAnim->mNumScalingKeys = 1;
             nodeAnim->mScalingKeys = new aiVectorKey[1];
             nodeAnim->mScalingKeys[0].mTime = 0.0;
-            nodeAnim->mScalingKeys[0].mValue.Set( 1.0f, 1.0f, 1.0f);
+            nodeAnim->mScalingKeys[0].mValue.Set( 1.0, 1.0, 1.0);
         }
     }
 }

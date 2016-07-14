@@ -123,7 +123,7 @@ void TempMesh::Transform(const IfcMatrix4& mat)
 // ------------------------------------------------------------------------------
 IfcVector3 TempMesh::Center() const
 {
-    return (verts.size() == 0) ? IfcVector3(0.0f, 0.0f, 0.0f) : (std::accumulate(verts.begin(),verts.end(),IfcVector3()) / static_cast<IfcFloat>(verts.size()));
+    return (verts.size() == 0) ? IfcVector3(0.0, 0.0, 0.0) : (std::accumulate(verts.begin(),verts.end(),IfcVector3()) / static_cast<IfcFloat>(verts.size()));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -409,10 +409,10 @@ void TempMesh::RemoveAdjacentDuplicates()
 
         //  const IfcFloat d = (d0/std::sqrt(l0))*(d1/std::sqrt(l1));
 
-        //  if ( d >= 1.f-dotepsilon ) {
+        //  if ( d >= 1.0-dotepsilon ) {
         //      v1 = v0;
         //  }
-        //  else if ( d < -1.f+dotepsilon ) {
+        //  else if ( d < -1.0+dotepsilon ) {
         //      v2 = v1;
         //      continue;
         //  }
@@ -460,52 +460,52 @@ bool IsTrue(const EXPRESS::BOOLEAN& in)
 IfcFloat ConvertSIPrefix(const std::string& prefix)
 {
     if (prefix == "EXA") {
-        return 1e18f;
+        return 1e18;
     }
     else if (prefix == "PETA") {
-        return 1e15f;
+        return 1e15;
     }
     else if (prefix == "TERA") {
-        return 1e12f;
+        return 1e12;
     }
     else if (prefix == "GIGA") {
-        return 1e9f;
+        return 1e9;
     }
     else if (prefix == "MEGA") {
-        return 1e6f;
+        return 1e6;
     }
     else if (prefix == "KILO") {
-        return 1e3f;
+        return 1e3;
     }
     else if (prefix == "HECTO") {
-        return 1e2f;
+        return 1e2;
     }
     else if (prefix == "DECA") {
-        return 1e-0f;
+        return 1e-0;
     }
     else if (prefix == "DECI") {
-        return 1e-1f;
+        return 1e-1;
     }
     else if (prefix == "CENTI") {
-        return 1e-2f;
+        return 1e-2;
     }
     else if (prefix == "MILLI") {
-        return 1e-3f;
+        return 1e-3;
     }
     else if (prefix == "MICRO") {
-        return 1e-6f;
+        return 1e-6;
     }
     else if (prefix == "NANO") {
-        return 1e-9f;
+        return 1e-9;
     }
     else if (prefix == "PICO") {
-        return 1e-12f;
+        return 1e-12;
     }
     else if (prefix == "FEMTO") {
-        return 1e-15f;
+        return 1e-15;
     }
     else if (prefix == "ATTO") {
-        return 1e-18f;
+        return 1e-18;
     }
     else {
         IFCImporter::LogError("Unrecognized SI prefix: " + prefix);
@@ -519,7 +519,7 @@ void ConvertColor(aiColor4D& out, const IfcColourRgb& in)
     out.r = static_cast<float>( in.Red );
     out.g = static_cast<float>( in.Green );
     out.b = static_cast<float>( in.Blue );
-    out.a = static_cast<float>( 1.f );
+    out.a = static_cast<float>( 1.0 );
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -596,7 +596,7 @@ void ConvertAxisPlacement(IfcMatrix4& out, const IfcAxis2Placement3D& in)
     IfcVector3 loc;
     ConvertCartesianPoint(loc,in.Location);
 
-    IfcVector3 z(0.f,0.f,1.f),r(1.f,0.f,0.f),x;
+    IfcVector3 z(0.0,0.0,1.0),r(1.0,0.0,0.0),x;
 
     if (in.Axis) {
         ConvertDirection(z,*in.Axis.Get());
@@ -621,15 +621,15 @@ void ConvertAxisPlacement(IfcMatrix4& out, const IfcAxis2Placement2D& in)
     IfcVector3 loc;
     ConvertCartesianPoint(loc,in.Location);
 
-    IfcVector3 x(1.f,0.f,0.f);
+    IfcVector3 x(1.0,0.0,0.0);
     if (in.RefDirection) {
         ConvertDirection(x,*in.RefDirection.Get());
     }
 
-    const IfcVector3 y = IfcVector3(x.y,-x.x,0.f);
+    const IfcVector3 y = IfcVector3(x.y,-x.x,0.0);
 
     IfcMatrix4::Translation(loc,out);
-    AssignMatrixAxes(out,x,y,IfcVector3(0.f,0.f,1.f));
+    AssignMatrixAxes(out,x,y,IfcVector3(0.0,0.0,1.0));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -640,7 +640,7 @@ void ConvertAxisPlacement(IfcVector3& axis, IfcVector3& pos, const IfcAxis1Place
         ConvertDirection(axis,in.Axis.Get());
     }
     else {
-        axis = IfcVector3(0.f,0.f,1.f);
+        axis = IfcVector3(0.0,0.0,1.0);
     }
 }
 
@@ -664,7 +664,7 @@ void ConvertTransformOperator(IfcMatrix4& out, const IfcCartesianTransformationO
     IfcVector3 loc;
     ConvertCartesianPoint(loc,op.LocalOrigin);
 
-    IfcVector3 x(1.f,0.f,0.f),y(0.f,1.f,0.f),z(0.f,0.f,1.f);
+    IfcVector3 x(1.0,0.0,0.0),y(0.0,1.0,0.0),z(0.0,0.0,1.0);
     if (op.Axis1) {
         ConvertDirection(x,*op.Axis1.Get());
     }
@@ -684,12 +684,12 @@ void ConvertTransformOperator(IfcMatrix4& out, const IfcCartesianTransformationO
 
     IfcVector3 vscale;
     if (const IfcCartesianTransformationOperator3DnonUniform* nuni = op.ToPtr<IfcCartesianTransformationOperator3DnonUniform>()) {
-        vscale.x = nuni->Scale?op.Scale.Get():1.f;
-        vscale.y = nuni->Scale2?nuni->Scale2.Get():1.f;
-        vscale.z = nuni->Scale3?nuni->Scale3.Get():1.f;
+        vscale.x = nuni->Scale?op.Scale.Get():1.0;
+        vscale.y = nuni->Scale2?nuni->Scale2.Get():1.0;
+        vscale.z = nuni->Scale3?nuni->Scale3.Get():1.0;
     }
     else {
-        const IfcFloat sc = op.Scale?op.Scale.Get():1.f;
+        const IfcFloat sc = op.Scale?op.Scale.Get():1.0;
         vscale = IfcVector3(sc,sc,sc);
     }
 

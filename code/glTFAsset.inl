@@ -43,7 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace glTF {
 
 namespace {
-    
+
     //
     // JSON Value reading helpers
     //
@@ -52,7 +52,7 @@ namespace {
     struct ReadHelper { static bool Read(Value& val, T& out) {
         return val.IsInt() ? out = static_cast<T>(val.GetInt()), true : false;
     }};
-    
+
     template<> struct ReadHelper<bool> { static bool Read(Value& val, bool& out) {
         return val.IsBool() ? out = val.GetBool(), true : false;
     }};
@@ -60,7 +60,7 @@ namespace {
     template<> struct ReadHelper<float> { static bool Read(Value& val, float& out) {
         return val.IsNumber() ? out = static_cast<float>(val.GetDouble()), true : false;
     }};
-    
+
     template<unsigned int N> struct ReadHelper<float[N]> { static bool Read(Value& val, float (&out)[N]) {
         if (!val.IsArray() || val.Size() != N) return false;
         for (unsigned int i = 0; i < N; ++i) {
@@ -297,7 +297,7 @@ inline void Buffer::Read(Value& obj, Asset& r)
             if (file) {
                 bool ok = LoadFromStream(*file, byteLength);
                 delete file;
-                
+
                 if (!ok)
                     throw DeadlyImportError("GLTF: error while reading referenced file \"" + std::string(uri) + "\"" );
             }
@@ -348,7 +348,7 @@ inline void BufferView::Read(Value& obj, Asset& r)
     if (bufferId) {
         buffer = r.buffers.Get(bufferId);
     }
-        
+
     byteOffset = MemberOrDefault(obj, "byteOffset", 0u);
     byteLength = MemberOrDefault(obj, "byteLength", 0u);
 }
@@ -495,7 +495,7 @@ inline Image::Image()
 
 inline void Image::Read(Value& obj, Asset& r)
 {
-    // Check for extensions first (to detect binary embedded data) 
+    // Check for extensions first (to detect binary embedded data)
     if (Value* extensions = FindObject(obj, "extensions")) {
         if (r.extensionsUsed.KHR_binary_glTF) {
             if (Value* ext = FindObject(*extensions, "KHR_binary_glTF")) {
@@ -677,7 +677,7 @@ namespace {
 }
 
 inline void Mesh::Read(Value& obj, Asset& r)
-{  
+{
     if (Value* primitives = FindArray(obj, "primitives")) {
         this->primitives.resize(primitives->Size());
         for (unsigned int i = 0; i < primitives->Size(); ++i) {
@@ -725,16 +725,16 @@ inline void Camera::Read(Value& obj, Asset& r)
     if (!it) throw DeadlyImportError("GLTF: Camera missing its parameters");
 
     if (type == Camera::Perspective) {
-        perspective.aspectRatio = MemberOrDefault(*it, "aspectRatio", 0.f);
-        perspective.yfov        = MemberOrDefault(*it, "yfov", 3.1415f/2.f);
-        perspective.zfar        = MemberOrDefault(*it, "zfar", 100.f);
-        perspective.znear       = MemberOrDefault(*it, "znear", 0.01f);
+        perspective.aspectRatio = MemberOrDefault(*it, "aspectRatio", 0.0);
+        perspective.yfov        = MemberOrDefault(*it, "yfov", 3.1415/2.0);
+        perspective.zfar        = MemberOrDefault(*it, "zfar", 100.0);
+        perspective.znear       = MemberOrDefault(*it, "znear", 0.01);
     }
     else {
-        ortographic.xmag  = MemberOrDefault(obj, "xmag", 1.f);
-        ortographic.ymag  = MemberOrDefault(obj, "ymag", 1.f);
-        ortographic.zfar  = MemberOrDefault(obj, "zfar", 100.f);
-        ortographic.znear = MemberOrDefault(obj, "znear", 0.01f);
+        ortographic.xmag  = MemberOrDefault(obj, "xmag", 1.0);
+        ortographic.ymag  = MemberOrDefault(obj, "ymag", 1.0);
+        ortographic.zfar  = MemberOrDefault(obj, "zfar", 100.0);
+        ortographic.znear = MemberOrDefault(obj, "znear", 0.01);
     }
 }
 
@@ -773,15 +773,15 @@ inline void Light::SetDefaults()
 
     type = Type_undefined;
 
-    SetVector(color, 0.f, 0.f, 0.f, 1.f);
+    SetVector(color, 0.0, 0.0, 0.0, 1.0);
 
-    constantAttenuation = 0.f;
-    linearAttenuation = 1.f;
-    quadraticAttenuation = 1.f;
-    distance = 0.f;
+    constantAttenuation = 0.0;
+    linearAttenuation = 1.0;
+    quadraticAttenuation = 1.0;
+    distance = 0.0;
 
-    falloffAngle = static_cast<float>(M_PI / 2.f);
-    falloffExponent = 0.f;
+    falloffAngle = static_cast<float>(M_PI / 2.0);
+    falloffExponent = 0.0;
 }
 
 inline void Node::Read(Value& obj, Asset& r)
@@ -798,7 +798,7 @@ inline void Node::Read(Value& obj, Asset& r)
         }
     }
 
-    
+
     if (Value* matrix = FindArray(obj, "matrix")) {
         ReadValue(*matrix, this->matrix);
     }
@@ -1074,13 +1074,13 @@ inline std::string Asset::FindUniqueID(const std::string& str, const char* suffi
         id = buffer;
         it = mUsedIds.find(id);
     }
-    
+
     return id;
 }
 
 namespace Util {
 
-    inline 
+    inline
     bool ParseDataURI(const char* const_uri, size_t uriLen, DataURI& out) {
         if ( NULL == const_uri ) {
             return false;
@@ -1265,5 +1265,3 @@ namespace Util {
 }
 
 }
-
-

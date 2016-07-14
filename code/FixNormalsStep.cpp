@@ -106,10 +106,10 @@ bool FixInfacingNormalsProcess::ProcessMesh( aiMesh* pcMesh, unsigned int index)
     // normals need to be flipped, although there are a few special cases ..
     // convex, concave, planar models ...
 
-    aiVector3D vMin0 (1e10f,1e10f,1e10f);
-    aiVector3D vMin1 (1e10f,1e10f,1e10f);
-    aiVector3D vMax0 (-1e10f,-1e10f,-1e10f);
-    aiVector3D vMax1 (-1e10f,-1e10f,-1e10f);
+    aiVector3D vMin0 (1e10,1e10,1e10);
+    aiVector3D vMin1 (1e10,1e10,1e10);
+    aiVector3D vMax0 (-1e10,-1e10,-1e10);
+    aiVector3D vMax1 (-1e10,-1e10,-1e10);
 
     for (unsigned int i = 0; i < pcMesh->mNumVertices;++i)
     {
@@ -141,26 +141,26 @@ bool FixInfacingNormalsProcess::ProcessMesh( aiMesh* pcMesh, unsigned int index)
     const ai_real fDelta1_z = (vMax1.z - vMin1.z);
 
     // Check whether the boxes are overlapping
-    if ( ( fDelta0_x > 0.0f ) != ( fDelta1_x > 0.0f ) ) {
+    if ( ( fDelta0_x > 0.0 ) != ( fDelta1_x > 0.0 ) ) {
         return false;
     }
-    if ( ( fDelta0_y > 0.0f ) != ( fDelta1_y > 0.0f ) ) {
+    if ( ( fDelta0_y > 0.0 ) != ( fDelta1_y > 0.0 ) ) {
         return false;
     }
-    if ( ( fDelta0_z > 0.0f ) != ( fDelta1_z > 0.0f ) ) {
+    if ( ( fDelta0_z > 0.0 ) != ( fDelta1_z > 0.0 ) ) {
         return false;
     }
 
     // Check whether this is a planar surface
     const ai_real fDelta1_yz = fDelta1_y * fDelta1_z;
 
-    if ( fDelta1_x < 0.05f * sqrtf( fDelta1_yz ) ) {
+    if ( fDelta1_x < 0.05 * sqrtf( fDelta1_yz ) ) {
         return false;
     }
-    if ( fDelta1_y < 0.05f * sqrtf( fDelta1_z * fDelta1_x ) ) {
+    if ( fDelta1_y < 0.05 * sqrtf( fDelta1_z * fDelta1_x ) ) {
         return false;
     }
-    if ( fDelta1_z < 0.05f * sqrtf( fDelta1_y * fDelta1_x ) ) {
+    if ( fDelta1_z < 0.05 * sqrtf( fDelta1_y * fDelta1_x ) ) {
         return false;
     }
 
@@ -177,7 +177,7 @@ bool FixInfacingNormalsProcess::ProcessMesh( aiMesh* pcMesh, unsigned int index)
 
         // Invert normals
         for (unsigned int i = 0; i < pcMesh->mNumVertices;++i)
-            pcMesh->mNormals[i] *= -1.0f;
+            pcMesh->mNormals[i] *= -1.0;
 
         // ... and flip faces
         for (unsigned int i = 0; i < pcMesh->mNumFaces;++i)

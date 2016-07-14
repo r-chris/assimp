@@ -413,7 +413,7 @@ void PLYImporter::ReplaceDefaultMaterial(std::vector<PLY::Face>* avFaces,
         pcHelper->AddProperty<int>(&iMode, 1, AI_MATKEY_SHADING_MODEL);
 
         aiColor3D clr;
-        clr.b = clr.g = clr.r = 0.6f;
+        clr.b = clr.g = clr.r = 0.6;
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_DIFFUSE);
         pcHelper->AddProperty<aiColor3D>(&clr, 1,AI_MATKEY_COLOR_SPECULAR);
 
@@ -636,10 +636,10 @@ float PLYImporter::NormalizeColorValue (PLY::PropertyInstance::ValueUnion val,
     case EDT_UInt:
         return (float)val.iUInt / (float)0xFFFF;
     case EDT_Int:
-        return ((float)val.iInt / (float)0xFF) + 0.5f;
+        return ((float)val.iInt / (float)0xFF) + 0.5;
     default: ;
     };
-    return 0.0f;
+    return 0.0;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -727,7 +727,7 @@ void PLYImporter::LoadVertexColor(std::vector<aiColor4D>* pvOut)
             }
 
             // assume 1.0 for the alpha channel ifit is not set
-            if (0xFFFFFFFF == aiPositions[3])vOut.a = 1.0f;
+            if (0xFFFFFFFF == aiPositions[3])vOut.a = 1.0;
             else
             {
                 vOut.a = NormalizeColorValue(GetProperty((*i).alProperties,
@@ -899,21 +899,21 @@ void PLYImporter::GetMaterialColor(const std::vector<PLY::PropertyInstance>& avL
 {
     ai_assert(NULL != clrOut);
 
-    if (0xFFFFFFFF == aiPositions[0])clrOut->r = 0.0f;
+    if (0xFFFFFFFF == aiPositions[0])clrOut->r = 0.0;
     else
     {
         clrOut->r = NormalizeColorValue(GetProperty(avList,
             aiPositions[0]).avList.front(),aiTypes[0]);
     }
 
-    if (0xFFFFFFFF == aiPositions[1])clrOut->g = 0.0f;
+    if (0xFFFFFFFF == aiPositions[1])clrOut->g = 0.0;
     else
     {
         clrOut->g = NormalizeColorValue(GetProperty(avList,
             aiPositions[1]).avList.front(),aiTypes[1]);
     }
 
-    if (0xFFFFFFFF == aiPositions[2])clrOut->b = 0.0f;
+    if (0xFFFFFFFF == aiPositions[2])clrOut->b = 0.0;
     else
     {
         clrOut->b = NormalizeColorValue(GetProperty(avList,
@@ -921,7 +921,7 @@ void PLYImporter::GetMaterialColor(const std::vector<PLY::PropertyInstance>& avL
     }
 
     // assume 1.0 for the alpha channel ifit is not set
-    if (0xFFFFFFFF == aiPositions[3])clrOut->a = 1.0f;
+    if (0xFFFFFFFF == aiPositions[3])clrOut->a = 1.0;
     else
     {
         clrOut->a = NormalizeColorValue(GetProperty(avList,

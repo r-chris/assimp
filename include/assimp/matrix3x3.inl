@@ -205,8 +205,8 @@ inline aiMatrix3x3t<TReal>& aiMatrix3x3t<TReal>::RotationZ(TReal a, aiMatrix3x3t
     out.b1 = std::sin(a);
     out.a2 = - out.b1;
 
-    out.a3 = out.b3 = out.c1 = out.c2 = 0.f;
-    out.c3 = 1.f;
+    out.a3 = out.b3 = out.c1 = out.c2 = 0.0;
+    out.c3 = 1.0;
 
     return out;
 }

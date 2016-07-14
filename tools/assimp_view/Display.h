@@ -85,7 +85,7 @@ namespace AssimpView
             m_pcCurrentMaterial( NULL ),
             m_hImageList( NULL ),
             m_hRoot( NULL ),
-            m_fTextureZoom( 1000.0f )
+            m_fTextureZoom( 1000.0 )
         {
             this->m_aiImageList[ 0 ] = 0;
             this->m_aiImageList[ 1 ] = 1;
@@ -93,8 +93,8 @@ namespace AssimpView
             this->m_aiImageList[ 3 ] = 3;
             this->m_aiImageList[ 4 ] = 4;
 
-            this->m_avCheckerColors[ 0 ].x = this->m_avCheckerColors[ 0 ].y = this->m_avCheckerColors[ 0 ].z = 0.4f;
-            this->m_avCheckerColors[ 1 ].x = this->m_avCheckerColors[ 1 ].y = this->m_avCheckerColors[ 1 ].z = 0.6f;
+            this->m_avCheckerColors[ 0 ].x = this->m_avCheckerColors[ 0 ].y = this->m_avCheckerColors[ 0 ].z = 0.4;
+            this->m_avCheckerColors[ 1 ].x = this->m_avCheckerColors[ 1 ].y = this->m_avCheckerColors[ 1 ].z = 0.6;
         }
 
     public:
@@ -252,7 +252,7 @@ namespace AssimpView
             const aiString* szPath,
             HTREEITEM hFX,
             unsigned int iUVIndex = 0,
-            const float fBlendFactor = 0.0f,
+            const float fBlendFactor = 0.0,
             aiTextureOp eTextureOp = aiTextureOp_Multiply,
             unsigned int iMesh = 0 );
 

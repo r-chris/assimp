@@ -92,16 +92,16 @@ void JoinVerticesTest::SetUp()
 
     // generate extra members - set them to zero to make sure they're identical
     pcMesh->mTextureCoords[0] = new aiVector3D[900];
-    for (unsigned int i = 0; i < 900;++i)pcMesh->mTextureCoords[0][i] = aiVector3D( 0.f );
+    for (unsigned int i = 0; i < 900;++i)pcMesh->mTextureCoords[0][i] = aiVector3D( 0.0 );
 
     pcMesh->mNormals = new aiVector3D[900];
-    for (unsigned int i = 0; i < 900;++i)pcMesh->mNormals[i] = aiVector3D( 0.f );
+    for (unsigned int i = 0; i < 900;++i)pcMesh->mNormals[i] = aiVector3D( 0.0 );
 
     pcMesh->mTangents = new aiVector3D[900];
-    for (unsigned int i = 0; i < 900;++i)pcMesh->mTangents[i] = aiVector3D( 0.f );
+    for (unsigned int i = 0; i < 900;++i)pcMesh->mTangents[i] = aiVector3D( 0.0 );
 
     pcMesh->mBitangents = new aiVector3D[900];
-    for (unsigned int i = 0; i < 900;++i)pcMesh->mBitangents[i] = aiVector3D( 0.f );
+    for (unsigned int i = 0; i < 900;++i)pcMesh->mBitangents[i] = aiVector3D( 0.0 );
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ TEST_F(JoinVerticesTest, testProcess)
     ASSERT_TRUE(NULL != pcMesh->mTextureCoords[0]);
 
     // the order doesn't care
-    float fSum = 0.f;
+    float fSum = 0.0;
     for (unsigned int i = 0; i < 300;++i)
     {
         aiVector3D& v = pcMesh->mVertices[i];
@@ -138,6 +138,6 @@ TEST_F(JoinVerticesTest, testProcess)
         EXPECT_FALSE(pcMesh->mBitangents[i].x);
         EXPECT_FALSE(pcMesh->mTextureCoords[0][i].x);
     }
-    EXPECT_EQ(150.f*299.f*3.f, fSum); // gaussian sum equation
+    EXPECT_EQ(150.0*299.0*3.0, fSum); // gaussian sum equation
 }
 

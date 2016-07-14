@@ -273,7 +273,7 @@ inline aiQuaterniont<TReal>& aiQuaterniont<TReal>::Conjugate ()
 template<typename TReal>
 inline aiVector3t<TReal> aiQuaterniont<TReal>::Rotate (const aiVector3t<TReal>& v)
 {
-    aiQuaterniont q2(0.f,v.x,v.y,v.z), q = *this, qinv = q;
+    aiQuaterniont q2(0.0,v.x,v.y,v.z), q = *this, qinv = q;
     qinv.Conjugate();
 
     q = q*q2*qinv;

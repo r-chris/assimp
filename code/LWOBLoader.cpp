@@ -282,37 +282,37 @@ void LWOImporter::LoadLWOBSurface(unsigned int size)
         case AI_LWO_COLR:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,COLR,3);
-                surf.mColor.r = GetU1() / 255.0f;
-                surf.mColor.g = GetU1() / 255.0f;
-                surf.mColor.b = GetU1() / 255.0f;
+                surf.mColor.r = GetU1() / 255.0;
+                surf.mColor.g = GetU1() / 255.0;
+                surf.mColor.b = GetU1() / 255.0;
                 break;
             }
         // diffuse strength ...
         case AI_LWO_DIFF:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,DIFF,2);
-                surf.mDiffuseValue = GetU2() / 255.0f;
+                surf.mDiffuseValue = GetU2() / 255.0;
                 break;
             }
         // specular strength ...
         case AI_LWO_SPEC:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,SPEC,2);
-                surf.mSpecularValue = GetU2() / 255.0f;
+                surf.mSpecularValue = GetU2() / 255.0;
                 break;
             }
         // luminosity ...
         case AI_LWO_LUMI:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,LUMI,2);
-                surf.mLuminosity = GetU2() / 255.0f;
+                surf.mLuminosity = GetU2() / 255.0;
                 break;
             }
         // transparency
         case AI_LWO_TRAN:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,TRAN,2);
-                surf.mTransparency = GetU2() / 255.0f;
+                surf.mTransparency = GetU2() / 255.0;
                 break;
             }
         // surface flags
@@ -321,7 +321,7 @@ void LWOImporter::LoadLWOBSurface(unsigned int size)
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,FLAG,2);
                 uint16_t flag = GetU2();
                 if (flag & 0x4 )   surf.mMaximumSmoothAngle = 1.56207f;
-                if (flag & 0x8 )   surf.mColorHighlights = 1.f;
+                if (flag & 0x8 )   surf.mColorHighlights = 1.0;
                 if (flag & 0x100)  surf.bDoubleSided = true;
                 break;
             }
@@ -388,7 +388,7 @@ void LWOImporter::LoadLWOBSurface(unsigned int size)
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,TVAL,1);
                 if (pTex)   {
-                    pTex->mStrength = (float)GetU1()/ 255.f;
+                    pTex->mStrength = (float)GetU1()/ 255.0;
                 }
                 else DefaultLogger::get()->warn("LWOB: Unexpected TVAL chunk");
                 break;

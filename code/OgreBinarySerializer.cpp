@@ -503,13 +503,13 @@ void OgreBinarySerializer::NormalizeBoneWeights(VertexData *vertexData) const
     const float epsilon = 0.05f;
     for (const uint32_t vertexIndex : influencedVertices)
     {
-        float sum = 0.0f;
+        float sum = 0.0;
         for (VertexBoneAssignmentList::const_iterator baIter=vertexData->boneAssignments.begin(), baEnd=vertexData->boneAssignments.end(); baIter != baEnd; ++baIter)
         {
             if (baIter->vertexIndex == vertexIndex)
                 sum += baIter->weight;
         }
-        if ((sum < (1.0f - epsilon)) || (sum > (1.0f + epsilon)))
+        if ((sum < (1.0 - epsilon)) || (sum > (1.0 + epsilon)))
         {
             for (auto &boneAssign : vertexData->boneAssignments)
             {

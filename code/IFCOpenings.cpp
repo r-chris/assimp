@@ -137,7 +137,7 @@ void QuadrifyPart(const IfcVector2& pmin, const IfcVector2& pmax, XYSortedField&
 
             found = true;
             const IfcFloat ys = std::max(bb.first.y,pmin.y), ye = std::min(bb.second.y,pmax.y);
-            if (ys - ylast > 0.0f) {
+            if (ys - ylast > 0.0) {
                 QuadrifyPart( IfcVector2(xs,ylast), IfcVector2(xe,ys) ,field,bbs,out);
             }
 
@@ -286,7 +286,7 @@ void InsertWindowContours(const ContourVector& contours,
         }
 
         const IfcFloat diag = (bb.first-bb.second).Length();
-        const IfcFloat epsilon = diag/1000.f;
+        const IfcFloat epsilon = diag/1000.0;
 
         // walk through all contour points and find those that lie on the BB corner
         size_t last_hit = -1, very_first_hit = -1;
@@ -335,7 +335,7 @@ void InsertWindowContours(const ContourVector& contours,
                         if ((contour[a] - edge).SquareLength() > diag*diag*0.7) {
                             continue;
                         }
-                        curmesh.verts.push_back(IfcVector3(contour[a].x, contour[a].y, 0.0f));
+                        curmesh.verts.push_back(IfcVector3(contour[a].x, contour[a].y, 0.0));
                     }
 
                     if (edge != contour[last_hit]) {
@@ -356,7 +356,7 @@ void InsertWindowContours(const ContourVector& contours,
                             corner.y = bb.second.y;
                         }
 
-                        curmesh.verts.push_back(IfcVector3(corner.x, corner.y, 0.0f));
+                        curmesh.verts.push_back(IfcVector3(corner.x, corner.y, 0.0));
                     }
                     else if (cnt == 1) {
                         // avoid degenerate polygons (also known as lines or points)
@@ -554,7 +554,7 @@ void CleanupOuterContour(const std::vector<IfcVector2>& contour_flat, TempMesh& 
                         vold.push_back(IfcVector3(
                             from_int64(point.X),
                             from_int64(point.Y),
-                            0.0f));
+                            0.0));
                     }
                 }
 
@@ -927,7 +927,7 @@ size_t CloseWindows(ContourVector& contours,
                 IfcFloat best = static_cast<IfcFloat>(1e10);
                 IfcVector3 bestv;
 
-                const IfcVector3 world_point = minv * IfcVector3(proj_point.x,proj_point.y,0.0f);
+                const IfcVector3 world_point = minv * IfcVector3(proj_point.x,proj_point.y,0.0);
 
                 for(const TempOpening* opening : refs) {
                     for(const IfcVector3& other : opening->wallPoints) {
@@ -993,7 +993,7 @@ size_t CloseWindows(ContourVector& contours,
                 for (Contour::const_iterator cit = cbegin; cit != cend; ++cit) {
 
                     const IfcVector2& proj_point = *cit;
-                    opening->wallPoints.push_back(minv * IfcVector3(proj_point.x,proj_point.y,0.0f));
+                    opening->wallPoints.push_back(minv * IfcVector3(proj_point.x,proj_point.y,0.0));
                 }
             }
         }
@@ -1073,7 +1073,7 @@ IfcMatrix4 ProjectOntoPlane(std::vector<IfcVector2>& out_contour, const TempMesh
 
         // XXX this should be guarded, but we somehow need to pick a suitable
         // epsilon
-        // if(coord != -1.0f) {
+        // if(coord != -1.0) {
         //  assert(std::fabs(coord - vv.z) < 1e-3f);
         // }
         zcoord += vv.z;
@@ -1465,7 +1465,7 @@ bool TryAddOpenings_Poly2Tri(const std::vector<TempOpening>& openings,const std:
 
         // XXX this should be guarded, but we somehow need to pick a suitable
         // epsilon
-        // if(coord != -1.0f) {
+        // if(coord != -1.0) {
         //  assert(std::fabs(coord - vv.z) < 1e-3f);
         // }
 
@@ -1501,7 +1501,7 @@ bool TryAddOpenings_Poly2Tri(const std::vector<TempOpening>& openings,const std:
         for(const TempOpening& t :openings) {
             const IfcVector3& outernor = nors[c++];
             const IfcFloat dot = nor * outernor;
-            if (std::fabs(dot)<1.f-1e-6f) {
+            if (std::fabs(dot)<1.0-1e-6f) {
                 continue;
             }
 
@@ -1518,7 +1518,7 @@ bool TryAddOpenings_Poly2Tri(const std::vector<TempOpening>& openings,const std:
                 const bool is_extruded_side = std::fabs(vv.z - coord) > std::fabs(vv_extr.z - coord);
                 if (first) {
                     first = false;
-                    if (dot > 0.f) {
+                    if (dot > 0.0) {
                         do_connections = true;
                         wall_extrusion = t.extrusionDir;
                         if (is_extruded_side) {

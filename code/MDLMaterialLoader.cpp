@@ -117,10 +117,10 @@ aiColor4D MDLImporter::ReplaceTextureWithColor(const aiTexture* pcTexture)
     }
     if (pcTexel)
     {
-        clrOut.r = pcTexture->pcData->r / 255.0f;
-        clrOut.g = pcTexture->pcData->g / 255.0f;
-        clrOut.b = pcTexture->pcData->b / 255.0f;
-        clrOut.a = pcTexture->pcData->a / 255.0f;
+        clrOut.r = pcTexture->pcData->r / 255.0;
+        clrOut.g = pcTexture->pcData->g / 255.0;
+        clrOut.b = pcTexture->pcData->b / 255.0;
+        clrOut.a = pcTexture->pcData->a / 255.0;
     }
     return clrOut;
 }
@@ -662,7 +662,7 @@ void MDLImporter::ParseSkinLump_3DGS_MDL7(
         // read phong power
         int iShadingMode = (int)aiShadingMode_Gouraud;
         AI_SWAP4(pcMatIn->Power);
-        if (0.0f != pcMatIn->Power)
+        if (0.0 != pcMatIn->Power)
         {
             iShadingMode = (int)aiShadingMode_Phong;
             pcMatOut->AddProperty<ai_real>(&pcMatIn->Power,1,AI_MATKEY_SHININESS);

@@ -56,9 +56,9 @@ GLboolean abortGLInit(const char*);
 
 const char* windowTitle = "OpenGL Framework";
 
-GLfloat LightAmbient[]= { 0.5f, 0.5f, 0.5f, 1.0f };
-GLfloat LightDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat LightPosition[]= { 0.0f, 0.0f, 15.0f, 1.0f };
+GLfloat LightAmbient[]= { 0.5, 0.5, 0.5, 1.0 };
+GLfloat LightDiffuse[]= { 1.0, 1.0, 1.0, 1.0 };
+GLfloat LightPosition[]= { 0.0, 0.0, 15.0, 1.0 };
 
 
 
@@ -157,7 +157,7 @@ void ReSizeGLScene(GLsizei width, GLsizei height)
 	glLoadIdentity();							// Reset The Projection Matrix
 
 	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+	gluPerspective(45.0,(GLfloat)width/(GLfloat)height,0.1,100.0);
 
 	glMatrixMode(GL_MODELVIEW);						// Select The Modelview Matrix
 	glLoadIdentity();							// Reset The Modelview Matrix
@@ -289,8 +289,8 @@ int InitGL()
 
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);		 // Enables Smooth Shading
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-	glClearDepth(1.0f);				// Depth Buffer Setup
+	glClearColor(1.0, 1.0, 1.0, 0.0);
+	glClearDepth(1.0);				// Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);		// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);			// The Type Of Depth Test To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculation
@@ -357,22 +357,22 @@ void apply_material(const aiMaterial *mtl)
 		glBindTexture(GL_TEXTURE_2D, texId);
 	}
 
-	set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
+	set_float4(c, 0.8, 0.8, 0.8, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
 		color4_to_float4(&diffuse, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, c);
 
-	set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
+	set_float4(c, 0.0, 0.0, 0.0, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_SPECULAR, &specular))
 		color4_to_float4(&specular, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, c);
 
-	set_float4(c, 0.2f, 0.2f, 0.2f, 1.0f);
+	set_float4(c, 0.2, 0.2, 0.2, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_AMBIENT, &ambient))
 		color4_to_float4(&ambient, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, c);
 
-	set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
+	set_float4(c, 0.0, 0.0, 0.0, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_EMISSIVE, &emission))
 		color4_to_float4(&emission, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, c);
@@ -384,8 +384,8 @@ void apply_material(const aiMaterial *mtl)
 	if((ret1 == AI_SUCCESS) && (ret2 == AI_SUCCESS))
 		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess * strength);
 	else {
-		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0f);
-		set_float4(c, 0.0f, 0.0f, 0.0f, 0.0f);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0);
+		set_float4(c, 0.0, 0.0, 0.0, 0.0);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, c);
 	}
 
@@ -502,18 +502,18 @@ int DrawGLScene()				//Here's where we do all the drawing
 	glLoadIdentity();				// Reset MV Matrix
 
 
-	glTranslatef(0.0f, -10.0f, -40.0f);	// Move 40 Units And Into The Screen
+	glTranslatef(0.0, -10.0, -40.0);	// Move 40 Units And Into The Screen
 
 
-	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
-	glRotatef(zrot, 0.0f, 0.0f, 1.0f);
+	glRotatef(xrot, 1.0, 0.0, 0.0);
+	glRotatef(yrot, 0.0, 1.0, 0.0);
+	glRotatef(zrot, 0.0, 0.0, 1.0);
 
 	drawAiScene(scene);
 
-	//xrot+=0.3f;
-	yrot+=0.2f;
-	//zrot+=0.4f;
+	//xrot+=0.3;
+	yrot+=0.2;
+	//zrot+=0.4;
 
 	return TRUE;					// okay
 }

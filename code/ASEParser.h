@@ -308,10 +308,10 @@ struct Light : public BaseNode
     Light()
         : BaseNode   (BaseNode::Light)
         , mLightType (OMNI)
-        , mColor     (1.f,1.f,1.f)
-        , mIntensity (1.f) // light is white by default
-        , mAngle     (45.f)
-        , mFalloff   (0.f)
+        , mColor     (1.0,1.0,1.0)
+        , mIntensity (1.0) // light is white by default
+        , mAngle     (45.0)
+        , mFalloff   (0.0)
     {
     }
 
@@ -336,8 +336,8 @@ struct Camera : public BaseNode
     Camera()
         : BaseNode    (BaseNode::Camera)
         , mFOV        (0.75f)   // in radians
-        , mNear       (0.1f)
-        , mFar        (1000.f)  // could be zero
+        , mNear       (0.1)
+        , mFar        (1000.0)  // could be zero
         , mCameraType (FREE)
     {
     }

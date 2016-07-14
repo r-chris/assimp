@@ -239,8 +239,8 @@ SKIP_FUNCTION_MACROS = YES
 
 /* And this is to avoid endless casts to float */
 #define AI_MATH_PI_F        (3.1415926538f)
-#define AI_MATH_TWO_PI_F    (AI_MATH_PI_F * 2.0f)
-#define AI_MATH_HALF_PI_F   (AI_MATH_PI_F * 0.5f)
+#define AI_MATH_TWO_PI_F    (AI_MATH_PI_F * 2.0)
+#define AI_MATH_HALF_PI_F   (AI_MATH_PI_F * 0.5)
 
 /* Tiny macro to convert from radians to degrees and back */
 #define AI_DEG_TO_RAD(x) ((x)*0.0174532925)

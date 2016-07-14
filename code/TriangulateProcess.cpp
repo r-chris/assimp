@@ -204,7 +204,7 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
         for (unsigned int i = 0; i < face.mNumIndices; ++i) {
             aiColor4D& c = clr[idx[i]];
             c.r = (i+1) / (float)max;
-            c.b = 1.f - c.r;
+            c.b = 1.0 - c.r;
         }
 #endif
 
@@ -315,7 +315,7 @@ bool TriangulateProcess::TriangulateMesh( aiMesh* pMesh)
             }
 
             // Swap projection axes to take the negated projection vector into account
-            if (inv < 0.f) {
+            if (inv < 0.0) {
                 std::swap(ac,bc);
             }
 

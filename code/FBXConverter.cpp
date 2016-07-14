@@ -690,17 +690,17 @@ void Converter::ConvertLight( const Model& model, const Light& light )
     switch ( light.DecayType() )
     {
     case Light::Decay_None:
-        out_light->mAttenuationConstant = 1.0f;
+        out_light->mAttenuationConstant = 1.0;
         break;
     case Light::Decay_Linear:
-        out_light->mAttenuationLinear = 1.0f;
+        out_light->mAttenuationLinear = 1.0;
         break;
     case Light::Decay_Quadratic:
-        out_light->mAttenuationQuadratic = 1.0f;
+        out_light->mAttenuationQuadratic = 1.0;
         break;
     case Light::Decay_Cubic:
         FBXImporter::LogWarn( "cannot represent cubic attenuation, set to Quadratic" );
-        out_light->mAttenuationQuadratic = 1.0f;
+        out_light->mAttenuationQuadratic = 1.0;
         break;
     default:
         ai_assert( false );
@@ -808,7 +808,7 @@ aiVector3D Converter::TransformationCompDefaultValue( TransformationComp comp )
 {
     // XXX a neat way to solve the never-ending special cases for scaling
     // would be to do everything in log space!
-    return comp == TransformationComp_Scaling ? aiVector3D( 1.f, 1.f, 1.f ) : aiVector3D();
+    return comp == TransformationComp_Scaling ? aiVector3D( 1.0, 1.0, 1.0 ) : aiVector3D();
 }
 
 void Converter::GetRotationMatrix( Model::RotOrder mode, const aiVector3D& rotation, aiMatrix4x4& out )
@@ -996,7 +996,7 @@ void Converter::GenerateTransformationNodeChain( const Model& model,
     }
 
     const aiVector3D& Scaling = PropertyGet<aiVector3D>( props, "Lcl Scaling", ok );
-    if ( ok && std::fabs( Scaling.SquareLength() - 1.0f ) > zero_epsilon ) {
+    if ( ok && std::fabs( Scaling.SquareLength() - 1.0 ) > zero_epsilon ) {
         aiMatrix4x4::Scaling( Scaling, chain[ TransformationComp_Scaling ] );
     }
 
@@ -1006,7 +1006,7 @@ void Converter::GenerateTransformationNodeChain( const Model& model,
     }
 
     const aiVector3D& GeometricScaling = PropertyGet<aiVector3D>( props, "GeometricScaling", ok );
-    if ( ok && std::fabs( GeometricScaling.SquareLength() - 1.0f ) > zero_epsilon ) {
+    if ( ok && std::fabs( GeometricScaling.SquareLength() - 1.0 ) > zero_epsilon ) {
         aiMatrix4x4::Scaling( GeometricScaling, chain[ TransformationComp_GeometricScaling ] );
     }
 
@@ -1289,7 +1289,7 @@ unsigned int Converter::ConvertMeshSingleMaterial( const MeshGeometry& mesh, con
 
         aiVector3D* out_uv = out_mesh->mTextureCoords[ i ] = new aiVector3D[ vertices.size() ];
         for( const aiVector2D& v : uvs ) {
-            *out_uv++ = aiVector3D( v.x, v.y, 0.0f );
+            *out_uv++ = aiVector3D( v.x, v.y, 0.0 );
         }
 
         out_mesh->mNumUVComponents[ i ] = 2;
@@ -1497,7 +1497,7 @@ unsigned int Converter::ConvertMeshMultiMaterial( const MeshGeometry& mesh, cons
 
             for ( unsigned int i = 0; i < num_uvs; ++i ) {
                 const std::vector<aiVector2D>& uvs = mesh.GetTextureCoords( i );
-                out_mesh->mTextureCoords[ i ][ cursor ] = aiVector3D( uvs[ in_cursor ].x, uvs[ in_cursor ].y, 0.0f );
+                out_mesh->mTextureCoords[ i ][ cursor ] = aiVector3D( uvs[ in_cursor ].x, uvs[ in_cursor ].y, 0.0 );
             }
 
             for ( unsigned int i = 0; i < num_vcs; ++i ) {
@@ -1695,7 +1695,7 @@ unsigned int Converter::GetDefaultMaterial()
     aiMaterial* out_mat = new aiMaterial();
     materials.push_back( out_mat );
 
-    const aiColor3D diffuse = aiColor3D( 0.8f, 0.8f, 0.8f );
+    const aiColor3D diffuse = aiColor3D( 0.8, 0.8, 0.8 );
     out_mat->AddProperty( &diffuse, 1, AI_MATKEY_COLOR_DIFFUSE );
 
     aiString s;
@@ -2076,7 +2076,7 @@ aiColor3D Converter::GetColorPropertyFromMaterial( const PropertyTable& props, c
         }
     }
     result = false;
-    return aiColor3D( 0.0f, 0.0f, 0.0f );
+    return aiColor3D( 0.0, 0.0, 0.0 );
 }
 
 
@@ -2179,7 +2179,7 @@ double Converter::FrameRateToDouble( FileGlobalSettings::FrameRate fp, double cu
     }
 
     ai_assert( false );
-    return -1.0f;
+    return -1.0;
 }
 
 
@@ -2703,7 +2703,7 @@ aiNodeAnim* Converter::GenerateRotationNodeAnim( const std::string& name,
     na->mNumScalingKeys = 1;
 
     na->mScalingKeys[ 0 ].mTime = 0.;
-    na->mScalingKeys[ 0 ].mValue = aiVector3D( 1.0f, 1.0f, 1.0f );
+    na->mScalingKeys[ 0 ].mValue = aiVector3D( 1.0, 1.0, 1.0 );
 
     // dummy position key
     na->mPositionKeys = new aiVectorKey[ 1 ];
@@ -2762,7 +2762,7 @@ aiNodeAnim* Converter::GenerateTranslationNodeAnim( const std::string& name,
 
     if ( inverse ) {
         for ( unsigned int i = 0; i < na->mNumPositionKeys; ++i ) {
-            na->mPositionKeys[ i ].mValue *= -1.0f;
+            na->mPositionKeys[ i ].mValue *= -1.0;
         }
     }
 
@@ -2771,7 +2771,7 @@ aiNodeAnim* Converter::GenerateTranslationNodeAnim( const std::string& name,
     na->mNumScalingKeys = 1;
 
     na->mScalingKeys[ 0 ].mTime = 0.;
-    na->mScalingKeys[ 0 ].mValue = aiVector3D( 1.0f, 1.0f, 1.0f );
+    na->mScalingKeys[ 0 ].mValue = aiVector3D( 1.0, 1.0, 1.0 );
 
     // dummy rotation key
     na->mRotationKeys = new aiQuatKey[ 1 ];
@@ -2802,9 +2802,9 @@ aiNodeAnim* Converter::GenerateSimpleNodeAnim( const std::string& name,
     // need to convert from TRS order to SRT?
     if ( reverse_order ) {
 
-        aiVector3D def_scale = PropertyGet( props, "Lcl Scaling", aiVector3D( 1.f, 1.f, 1.f ) );
-        aiVector3D def_translate = PropertyGet( props, "Lcl Translation", aiVector3D( 0.f, 0.f, 0.f ) );
-        aiVector3D def_rot = PropertyGet( props, "Lcl Rotation", aiVector3D( 0.f, 0.f, 0.f ) );
+        aiVector3D def_scale = PropertyGet( props, "Lcl Scaling", aiVector3D( 1.0, 1.0, 1.0 ) );
+        aiVector3D def_translate = PropertyGet( props, "Lcl Translation", aiVector3D( 0.0, 0.0, 0.0 ) );
+        aiVector3D def_rot = PropertyGet( props, "Lcl Rotation", aiVector3D( 0.0, 0.0, 0.0 ) );
 
         KeyFrameListList scaling;
         KeyFrameListList translation;
@@ -2878,7 +2878,7 @@ aiNodeAnim* Converter::GenerateSimpleNodeAnim( const std::string& name,
 
             na->mScalingKeys[ 0 ].mTime = 0.;
             na->mScalingKeys[ 0 ].mValue = PropertyGet( props, "Lcl Scaling",
-                aiVector3D( 1.f, 1.f, 1.f ) );
+                aiVector3D( 1.0, 1.0, 1.0 ) );
         }
 
         if ( chain[ TransformationComp_Rotation ] != iter_end ) {
@@ -2895,7 +2895,7 @@ aiNodeAnim* Converter::GenerateSimpleNodeAnim( const std::string& name,
 
             na->mRotationKeys[ 0 ].mTime = 0.;
             na->mRotationKeys[ 0 ].mValue = EulerToQuaternion(
-                PropertyGet( props, "Lcl Rotation", aiVector3D( 0.f, 0.f, 0.f ) ),
+                PropertyGet( props, "Lcl Rotation", aiVector3D( 0.0, 0.0, 0.0 ) ),
                 target.RotationOrder() );
         }
 
@@ -2912,7 +2912,7 @@ aiNodeAnim* Converter::GenerateSimpleNodeAnim( const std::string& name,
 
             na->mPositionKeys[ 0 ].mTime = 0.;
             na->mPositionKeys[ 0 ].mValue = PropertyGet( props, "Lcl Translation",
-                aiVector3D( 0.f, 0.f, 0.f ) );
+                aiVector3D( 0.0, 0.0, 0.0 ) );
         }
 
     }
@@ -3207,7 +3207,7 @@ void Converter::ConvertScaleKeys( aiNodeAnim* na, const std::vector<const Animat
     na->mNumScalingKeys = static_cast<unsigned int>( keys.size() );
     na->mScalingKeys = new aiVectorKey[ keys.size() ];
     if ( keys.size() > 0 )
-        InterpolateKeys( na->mScalingKeys, keys, inputs, aiVector3D( 1.0f, 1.0f, 1.0f ), maxTime, minTime );
+        InterpolateKeys( na->mScalingKeys, keys, inputs, aiVector3D( 1.0, 1.0, 1.0 ), maxTime, minTime );
 }
 
 
@@ -3226,7 +3226,7 @@ void Converter::ConvertTranslationKeys( aiNodeAnim* na, const std::vector<const 
     na->mNumPositionKeys = static_cast<unsigned int>( keys.size() );
     na->mPositionKeys = new aiVectorKey[ keys.size() ];
     if ( keys.size() > 0 )
-        InterpolateKeys( na->mPositionKeys, keys, inputs, aiVector3D( 0.0f, 0.0f, 0.0f ), maxTime, minTime );
+        InterpolateKeys( na->mPositionKeys, keys, inputs, aiVector3D( 0.0, 0.0, 0.0 ), maxTime, minTime );
 }
 
 
@@ -3246,7 +3246,7 @@ void Converter::ConvertRotationKeys( aiNodeAnim* na, const std::vector<const Ani
     na->mNumRotationKeys = static_cast<unsigned int>( keys.size() );
     na->mRotationKeys = new aiQuatKey[ keys.size() ];
     if ( keys.size() > 0 )
-        InterpolateKeys( na->mRotationKeys, keys, inputs, aiVector3D( 0.0f, 0.0f, 0.0f ), maxTime, minTime, order );
+        InterpolateKeys( na->mRotationKeys, keys, inputs, aiVector3D( 0.0, 0.0, 0.0 ), maxTime, minTime, order );
 }
 
 void Converter::TransferDataToScene()

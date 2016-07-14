@@ -923,16 +923,16 @@ aiMesh *SubMeshXml::ConvertToAssimpMesh(MeshXml *parent)
 Animation::Animation(Skeleton *parent) :
     parentMesh(NULL),
     parentSkeleton(parent),
-    length(0.0f),
-    baseTime(-1.0f)
+    length(0.0),
+    baseTime(-1.0)
 {
 }
 
 Animation::Animation(Mesh *parent) :
     parentMesh(parent),
     parentSkeleton(0),
-    length(0.0f),
-    baseTime(-1.0f)
+    length(0.0),
+    baseTime(-1.0)
 {
 }
 
@@ -1043,7 +1043,7 @@ Bone::Bone() :
     id(0),
     parent(0),
     parentId(-1),
-    scale(1.0f, 1.0f, 1.0f)
+    scale(1.0, 1.0, 1.0)
 {
 }
 
@@ -1188,8 +1188,8 @@ aiNodeAnim *VertexAnimationTrack::ConvertToAssimpAnimationNode(Skeleton *skeleto
 // TransformKeyFrame
 
 TransformKeyFrame::TransformKeyFrame() :
-    timePos(0.0f),
-    scale(1.0f, 1.0f, 1.0f)
+    timePos(0.0),
+    scale(1.0, 1.0, 1.0)
 {
 }
 

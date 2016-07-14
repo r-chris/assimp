@@ -31,7 +31,7 @@ GLuint scene_list = 0;
 struct aiVector3D scene_min, scene_max, scene_center;
 
 /* current rotation angle */
-static float angle = 0.f;
+static float angle = 0.0;
 
 #define aisgl_min(x,y) (x<y?x:y)
 #define aisgl_max(x,y) (y>x?y:x)
@@ -128,22 +128,22 @@ void apply_material(const struct aiMaterial *mtl)
 	int wireframe;
 	unsigned int max;
 
-	set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
+	set_float4(c, 0.8, 0.8, 0.8, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
 		color4_to_float4(&diffuse, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, c);
 
-	set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
+	set_float4(c, 0.0, 0.0, 0.0, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_SPECULAR, &specular))
 		color4_to_float4(&specular, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, c);
 
-	set_float4(c, 0.2f, 0.2f, 0.2f, 1.0f);
+	set_float4(c, 0.2, 0.2, 0.2, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_AMBIENT, &ambient))
 		color4_to_float4(&ambient, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, c);
 
-	set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
+	set_float4(c, 0.0, 0.0, 0.0, 1.0);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_EMISSIVE, &emission))
 		color4_to_float4(&emission, c);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, c);
@@ -159,8 +159,8 @@ void apply_material(const struct aiMaterial *mtl)
         	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
     }
 	else {
-		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0f);
-		set_float4(c, 0.0f, 0.0f, 0.0f, 0.0f);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 0.0);
+		set_float4(c, 0.0, 0.0, 0.0, 0.0);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, c);
 	}
 
@@ -270,16 +270,16 @@ void display(void)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0.f,0.f,3.f,0.f,0.f,-5.f,0.f,1.f,0.f);
+	gluLookAt(0.0,0.0,3.0,0.0,0.0,-5.0,0.0,1.0,0.0);
 
 	/* rotate it around the y axis */
-	glRotatef(angle,0.f,1.f,0.f);
+	glRotatef(angle,0.0,1.0,0.0);
 
 	/* scale the whole asset to fit into our view frustum */
 	tmp = scene_max.x-scene_min.x;
 	tmp = aisgl_max(scene_max.y - scene_min.y,tmp);
 	tmp = aisgl_max(scene_max.z - scene_min.z,tmp);
-	tmp = 1.f / tmp;
+	tmp = 1.0 / tmp;
 	glScalef(tmp, tmp, tmp);
 
         /* center the model */
@@ -313,9 +313,9 @@ int loadasset (const char* path)
 
 	if (scene) {
 		get_bounding_box(&scene_min,&scene_max);
-		scene_center.x = (scene_min.x + scene_max.x) / 2.0f;
-		scene_center.y = (scene_min.y + scene_max.y) / 2.0f;
-		scene_center.z = (scene_min.z + scene_max.z) / 2.0f;
+		scene_center.x = (scene_min.x + scene_max.x) / 2.0;
+		scene_center.y = (scene_min.y + scene_max.y) / 2.0;
+		scene_center.z = (scene_min.z + scene_max.z) / 2.0;
 		return 0;
 	}
 	return 1;
@@ -356,7 +356,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	glClearColor(0.1f,0.1f,0.1f,1.f);
+	glClearColor(0.1,0.1,0.1,1.0);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);    /* Uses default lighting parameters */

@@ -65,14 +65,14 @@ using namespace Assimp::Formatter;
 
 
 static const float units[] = {
-    1000.f,
-    100.f,
-    1.f,
-    0.001f,
-    1.f/0.0254f,
-    1.f/0.3048f,
-    1.f/0.9144f,
-    1.f/1609.344f
+    1000.0,
+    100.0,
+    1.0,
+    0.001,
+    1.0/0.0254,
+    1.0/0.3048,
+    1.0/0.9144,
+    1.0/1609.344
 };
 
 static const aiImporterDesc desc = {
@@ -283,7 +283,7 @@ aiNode* COBImporter::BuildNodes(const Node& root,const Scene& scin,aiScene* fill
                             outmesh->mTextureCoords[0][outmesh->mNumVertices] = aiVector3D(
                                 ndmesh.texture_coords[ v.uv_idx ].x,
                                 ndmesh.texture_coords[ v.uv_idx ].y,
-                                0.f
+                                0.0
                             );
 
                             fout.mIndices[fout.mNumIndices++] = outmesh->mNumVertices++;
@@ -650,7 +650,7 @@ void COBImporter::ReadUnit_Ascii(Scene& out, LineSplitter& splitter, const Chunk
 
             nd->unit_scale = t>=sizeof(units)/sizeof(units[0])?(
                 LogWarn_Ascii(splitter,format()<<t<<" is not a valid value for `Units` attribute in `Unit chunk` "<<nfo.id)
-                ,1.f):units[t];
+                ,1.0):units[t];
             return;
         }
     }
@@ -1285,7 +1285,7 @@ void COBImporter::ReadUnit_Binary(COB::Scene& out, StreamReaderLE& reader, const
             const unsigned int t=reader.GetI2();
             nd->unit_scale = t>=sizeof(units)/sizeof(units[0])?(
                 LogWarn_Ascii(format()<<t<<" is not a valid value for `Units` attribute in `Unit chunk` "<<nfo.id)
-                ,1.f):units[t];
+                ,1.0):units[t];
 
             return;
         }

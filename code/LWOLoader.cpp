@@ -276,7 +276,7 @@ void LWOImporter::InternReadFile( const std::string& pFile,
                         iDefaultSurface = (unsigned int)mSurfaces->size();
                         mSurfaces->push_back(LWO::Surface());
                         LWO::Surface& surf = mSurfaces->back();
-                        surf.mColor.r = surf.mColor.g = surf.mColor.b = 0.6f;
+                        surf.mColor.r = surf.mColor.g = surf.mColor.b = 0.6;
                         surf.mName = "LWODefaultSurface";
                     }
                     idx = iDefaultSurface;
@@ -379,7 +379,7 @@ void LWOImporter::InternReadFile( const std::string& pFile,
                         // process normals (MODO extension)
                         if (nrm)    {
                             *nrm = ((aiVector3D*)&layer.mNormals.rawData[0])[idx];
-                            nrm->z *= -1.f;
+                            nrm->z *= -1.0;
                             ++nrm;
                         }
 
@@ -393,7 +393,7 @@ void LWOImporter::InternReadFile( const std::string& pFile,
                             // If a RGB color map is explicitly requested delete the
                             // alpha channel - it could theoretically be != 1.
                             if(_mSurfaces[i].mVCMapType == AI_LWO_RGB)
-                                pvVC[w]->a = 1.f;
+                                pvVC[w]->a = 1.0;
 
                             pvVC[w]++;
                         }
@@ -519,7 +519,7 @@ void LWOImporter::ComputeNormals(aiMesh* mesh, const std::vector<unsigned int>& 
 
     // Generate vertex normals. We have O(logn) for the binary lookup, which we need
     // for n elements, thus the EXPECTED complexity is O(nlogn)
-    if (surface.mMaximumSmoothAngle < 3.f && !configSpeedFlag)  {
+    if (surface.mMaximumSmoothAngle < 3.0 && !configSpeedFlag)  {
         const float fLimit = std::cos(surface.mMaximumSmoothAngle);
 
         for( begin =  mesh->mFaces, it = smoothingGroups.begin(); begin != end; ++begin, ++it)  {

@@ -62,38 +62,38 @@ TEST_F( utMatrix4x4Test, badIndexOperatorTest ) {
 TEST_F( utMatrix4x4Test, indexOperatorTest ) {
     aiMatrix4x4 m;
     ai_real *a0 = m[ 0 ];
-    EXPECT_AI_REAL_EQ( 1.0f, *a0 );
+    EXPECT_AI_REAL_EQ( 1.0, *a0 );
     ai_real *a1 = a0+1;
-    EXPECT_AI_REAL_EQ( 0.0f, *a1 );
+    EXPECT_AI_REAL_EQ( 0.0, *a1 );
     ai_real *a2 = a0 + 2;
-    EXPECT_AI_REAL_EQ( 0.0f, *a2 );
+    EXPECT_AI_REAL_EQ( 0.0, *a2 );
     ai_real *a3 = a0 + 3;
-    EXPECT_AI_REAL_EQ( 0.0f, *a3 );
+    EXPECT_AI_REAL_EQ( 0.0, *a3 );
 
     ai_real *a4 = m[ 1 ];
-    EXPECT_AI_REAL_EQ( 0.0f, *a4 );
+    EXPECT_AI_REAL_EQ( 0.0, *a4 );
     ai_real *a5 = a4 + 1;
-    EXPECT_AI_REAL_EQ( 1.0f, *a5 );
+    EXPECT_AI_REAL_EQ( 1.0, *a5 );
     ai_real *a6 = a4 + 2;
-    EXPECT_AI_REAL_EQ( 0.0f, *a6 );
+    EXPECT_AI_REAL_EQ( 0.0, *a6 );
     ai_real *a7 = a4 + 3;
-    EXPECT_AI_REAL_EQ( 0.0f, *a7 );
+    EXPECT_AI_REAL_EQ( 0.0, *a7 );
 
     ai_real *a8 = m[ 2 ];
-    EXPECT_AI_REAL_EQ( 0.0f, *a8 );
+    EXPECT_AI_REAL_EQ( 0.0, *a8 );
     ai_real *a9 = a8 + 1;
-    EXPECT_AI_REAL_EQ( 0.0f, *a9 );
+    EXPECT_AI_REAL_EQ( 0.0, *a9 );
     ai_real *a10 = a8 + 2;
-    EXPECT_AI_REAL_EQ( 1.0f, *a10 );
+    EXPECT_AI_REAL_EQ( 1.0, *a10 );
     ai_real *a11 = a8 + 3;
-    EXPECT_AI_REAL_EQ( 0.0f, *a11 );
+    EXPECT_AI_REAL_EQ( 0.0, *a11 );
 
     ai_real *a12 = m[ 3 ];
-    EXPECT_AI_REAL_EQ( 0.0f, *a12 );
+    EXPECT_AI_REAL_EQ( 0.0, *a12 );
     ai_real *a13 = a12 + 1;
-    EXPECT_AI_REAL_EQ( 0.0f, *a13 );
+    EXPECT_AI_REAL_EQ( 0.0, *a13 );
     ai_real *a14 = a12 + 2;
-    EXPECT_AI_REAL_EQ( 0.0f, *a14 );
+    EXPECT_AI_REAL_EQ( 0.0, *a14 );
     ai_real *a15 = a12 + 3;
-    EXPECT_AI_REAL_EQ( 1.0f, *a15 );
+    EXPECT_AI_REAL_EQ( 1.0, *a15 );
 }

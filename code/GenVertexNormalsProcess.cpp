@@ -56,7 +56,7 @@ using namespace Assimp;
 // ------------------------------------------------------------------------------------------------
 // Constructor to be privately used by Importer
 GenVertexNormalsProcess::GenVertexNormalsProcess()
-: configMaxAngle( AI_DEG_TO_RAD( 175.f ) ) {
+: configMaxAngle( AI_DEG_TO_RAD( 175.0 ) ) {
     // empty
 }
 
@@ -79,7 +79,7 @@ void GenVertexNormalsProcess::SetupProperties(const Importer* pImp)
 {
     // Get the current value of the AI_CONFIG_PP_GSN_MAX_SMOOTHING_ANGLE property
     configMaxAngle = pImp->GetPropertyFloat(AI_CONFIG_PP_GSN_MAX_SMOOTHING_ANGLE,175.);
-    configMaxAngle = AI_DEG_TO_RAD(std::max(std::min(configMaxAngle,175.0f),0.0f));
+    configMaxAngle = AI_DEG_TO_RAD(std::max(std::min(configMaxAngle,175.0),0.0));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ bool GenVertexNormalsProcess::GenMeshVertexNormals (aiMesh* pMesh, unsigned int 
     std::vector<unsigned int> verticesFound;
     aiVector3D* pcNew = new aiVector3D[pMesh->mNumVertices];
 
-    if (configMaxAngle >= AI_DEG_TO_RAD( 175.f ))   {
+    if (configMaxAngle >= AI_DEG_TO_RAD( 175.0 ))   {
         // There is no angle limit. Thus all vertices with positions close
         // to each other will receive the same vertex normal. This allows us
         // to optimize the whole algorithm a little bit ...

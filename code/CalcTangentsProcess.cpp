@@ -54,7 +54,7 @@ using namespace Assimp;
 // ------------------------------------------------------------------------------------------------
 // Constructor to be privately used by Importer
 CalcTangentsProcess::CalcTangentsProcess()
-: configMaxAngle( AI_DEG_TO_RAD(45.f) )
+: configMaxAngle( AI_DEG_TO_RAD(45.0) )
 , configSourceUV( 0 ) {
     // nothing to do here
 }
@@ -81,7 +81,7 @@ void CalcTangentsProcess::SetupProperties(const Importer* pImp)
 
     // get the current value of the property
     configMaxAngle = pImp->GetPropertyFloat(AI_CONFIG_PP_CT_MAX_SMOOTHING_ANGLE,45.);
-    configMaxAngle = std::max(std::min(configMaxAngle,45.0f),0.0f);
+    configMaxAngle = std::max(std::min(configMaxAngle,45.0),0.0);
     configMaxAngle = AI_DEG_TO_RAD(configMaxAngle);
 
     configSourceUV = pImp->GetPropertyInteger(AI_CONFIG_PP_CT_TEXTURE_CHANNEL_INDEX,0);
@@ -186,7 +186,7 @@ bool CalcTangentsProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
         // texture offset p1->p2 and p1->p3
         ai_real sx = meshTex[p1].x - meshTex[p0].x, sy = meshTex[p1].y - meshTex[p0].y;
         ai_real tx = meshTex[p2].x - meshTex[p0].x, ty = meshTex[p2].y - meshTex[p0].y;
-        ai_real dirCorrection = (tx * sy - ty * sx) < 0.0f ? -1.0f : 1.0f;
+        ai_real dirCorrection = (tx * sy - ty * sx) < 0.0 ? -1.0 : 1.0;
         // when t1, t2, t3 in same position in UV space, just use default UV direction.
         if ( 0 == sx && 0 ==sy && 0 == tx && 0 == ty ) {
             sx = 0.0; sy = 1.0;
@@ -256,7 +256,7 @@ bool CalcTangentsProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
     }
     std::vector<unsigned int> verticesFound;
 
-    const float fLimit = cosf(configMaxAngle);
+    const ai_real fLimit = cos(configMaxAngle); //cosf
     std::vector<unsigned int> closeVertices;
 
     // in the second pass we now smooth out all tangents and bitangents at the same local position

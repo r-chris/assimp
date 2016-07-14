@@ -66,7 +66,7 @@ void HandleMouseInputFPS( void )
 
         if( 0 != nYDiff)
             {
-            D3DXMatrixRotationAxis( &matRotation, (D3DXVECTOR3*)& g_sCamera.vRight, D3DXToRadian((float)nYDiff / 6.0f));
+            D3DXMatrixRotationAxis( &matRotation, (D3DXVECTOR3*)& g_sCamera.vRight, D3DXToRadian((float)nYDiff / 6.0));
             D3DXVec3TransformCoord( (D3DXVECTOR3*)&g_sCamera.vLookAt, (D3DXVECTOR3*)& g_sCamera.vLookAt, &matRotation );
             D3DXVec3TransformCoord( (D3DXVECTOR3*)&g_sCamera.vUp, (D3DXVECTOR3*)&g_sCamera.vUp, &matRotation );
             }
@@ -74,7 +74,7 @@ void HandleMouseInputFPS( void )
         if( 0 != nXDiff )
             {
             D3DXVECTOR3 v(0,1,0);
-            D3DXMatrixRotationAxis( &matRotation, (D3DXVECTOR3*)&g_sCamera.vUp, D3DXToRadian((float)nXDiff / 6.0f) );
+            D3DXMatrixRotationAxis( &matRotation, (D3DXVECTOR3*)&g_sCamera.vUp, D3DXToRadian((float)nXDiff / 6.0) );
             D3DXVec3TransformCoord( (D3DXVECTOR3*)&g_sCamera.vLookAt, (D3DXVECTOR3*)&g_sCamera.vLookAt, &matRotation );
             D3DXVec3TransformCoord( (D3DXVECTOR3*)&g_sCamera.vRight,(D3DXVECTOR3*) &g_sCamera.vRight, &matRotation );
             }
@@ -130,14 +130,14 @@ void HandleMouseInputLightRotate( void )
         int nXDiff = -(g_mousePos.x - g_LastmousePos.x);
         int nYDiff = -(g_mousePos.y - g_LastmousePos.y);
 
-        aiVector3D v = aiVector3D(1.0f,0.0f,0.0f);
+        aiVector3D v = aiVector3D(1.0,0.0,0.0);
         aiMatrix4x4 mTemp;
-        D3DXMatrixRotationAxis( (D3DXMATRIX*) &mTemp, (D3DXVECTOR3*)&v, D3DXToRadian((float)nYDiff / 2.0f));
+        D3DXMatrixRotationAxis( (D3DXMATRIX*) &mTemp, (D3DXVECTOR3*)&v, D3DXToRadian((float)nYDiff / 2.0));
         D3DXVec3TransformCoord((D3DXVECTOR3*)&g_avLightDirs[0],
             (const D3DXVECTOR3*)&g_avLightDirs[0],(const D3DXMATRIX*)&mTemp);
 
-        v = aiVector3D(0.0f,1.0f,0.0f);
-        D3DXMatrixRotationAxis( (D3DXMATRIX*) &mTemp, (D3DXVECTOR3*)&v, D3DXToRadian((float)nXDiff / 2.0f));
+        v = aiVector3D(0.0,1.0,0.0);
+        D3DXMatrixRotationAxis( (D3DXMATRIX*) &mTemp, (D3DXVECTOR3*)&v, D3DXToRadian((float)nXDiff / 2.0));
         D3DXVec3TransformCoord((D3DXVECTOR3*)&g_avLightDirs[0],
             (const D3DXVECTOR3*)&g_avLightDirs[0],(const D3DXMATRIX*)&mTemp);
         }
@@ -171,8 +171,8 @@ void HandleMouseInputSkyBox( void )
 
         if( 0 != nYDiff)
             {
-            aiVector3D v = aiVector3D(1.0f,0.0f,0.0f);
-            D3DXMatrixRotationAxis( (D3DXMATRIX*) &matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nYDiff / 2.0f));
+            aiVector3D v = aiVector3D(1.0,0.0,0.0);
+            D3DXMatrixRotationAxis( (D3DXMATRIX*) &matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nYDiff / 2.0));
             CBackgroundPainter::Instance().RotateSB(&matWorld);
             }
 
@@ -184,8 +184,8 @@ void HandleMouseInputSkyBox( void )
                 matWorldOld = matWorld;
                 }
 
-            aiVector3D v = aiVector3D(0.0f,1.0f,0.0f);
-            D3DXMatrixRotationAxis( (D3DXMATRIX*)&matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nXDiff / 2.0f) );
+            aiVector3D v = aiVector3D(0.0,1.0,0.0);
+            D3DXMatrixRotationAxis( (D3DXMATRIX*)&matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nXDiff / 2.0) );
             matWorld =  matWorldOld * matWorld;
             CBackgroundPainter::Instance().RotateSB(&matWorld);
             }
@@ -208,12 +208,12 @@ void HandleMouseInputLightIntensityAndColor( void )
         int nXDiff = -(g_mousePos.x - g_LastmousePos.x);
         int nYDiff = -(g_mousePos.y - g_LastmousePos.y);
 
-        g_fLightIntensity -= (float)nXDiff / 400.0f;
+        g_fLightIntensity -= (float)nXDiff / 400.0;
         if ((nYDiff > 2 || nYDiff < -2) && (nXDiff < 20 && nXDiff > -20))
         {
             if (!g_bFPSView)
             {
-                g_sCamera.vPos.z += nYDiff / 120.0f;
+                g_sCamera.vPos.z += nYDiff / 120.0;
             }
             else
             {
@@ -247,15 +247,15 @@ void HandleMouseInputLocal( void )
             {
             if( 0 != nYDiff && g_eClick != EClickPos_CircleHor)
                 {
-                aiVector3D v = aiVector3D(1.0f,0.0f,0.0f);
-                D3DXMatrixRotationAxis( (D3DXMATRIX*) &matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nYDiff / 2.0f));
+                aiVector3D v = aiVector3D(1.0,0.0,0.0);
+                D3DXMatrixRotationAxis( (D3DXMATRIX*) &matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nYDiff / 2.0));
                 g_mWorldRotate = g_mWorldRotate * matWorld;
                 }
 
             if( 0 != nXDiff && g_eClick != EClickPos_CircleVert)
                 {
-                aiVector3D v = aiVector3D(0.0f,1.0f,0.0f);
-                D3DXMatrixRotationAxis( (D3DXMATRIX*)&matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nXDiff / 2.0f) );
+                aiVector3D v = aiVector3D(0.0,1.0,0.0);
+                D3DXMatrixRotationAxis( (D3DXMATRIX*)&matWorld, (D3DXVECTOR3*)&v, D3DXToRadian((float)nXDiff / 2.0) );
                 g_mWorldRotate = g_mWorldRotate * matWorld;
                 }
             }
@@ -275,7 +275,7 @@ void HandleMouseInputLocal( void )
                 float fYDist = (float)yPos / sqrtf((float)(yPos * yPos + xPos * xPos));
 
                 bool bSign1;
-                if (fXDist < 0.0f)bSign1 = false;
+                if (fXDist < 0.0)bSign1 = false;
                 else bSign1 = true;
                 float fAngle = asin(fYDist);
 
@@ -286,7 +286,7 @@ void HandleMouseInputLocal( void )
                 fYDist = (float)yPos / sqrtf((float)(yPos * yPos + xPos * xPos));
 
                 bool bSign2;
-                if (fXDist < 0.0f)bSign2 = false;
+                if (fXDist < 0.0)bSign2 = false;
                 else bSign2 = true;
                 float fAngle2 = asin(fYDist);
                 fAngle -= fAngle2;
@@ -295,9 +295,9 @@ void HandleMouseInputLocal( void )
                     {
                     g_bInvert = !g_bInvert;
                     }
-                if (g_bInvert)fAngle *= -1.0f;
+                if (g_bInvert)fAngle *= -1.0;
 
-                aiVector3D v = aiVector3D(0.0f,0.0f,1.0f);
+                aiVector3D v = aiVector3D(0.0,0.0,1.0);
                 D3DXMatrixRotationAxis( (D3DXMATRIX*)&matWorld, (D3DXVECTOR3*)&v, (float) (fAngle * 1.2) );
                 g_mWorldRotate = g_mWorldRotate * matWorld;
                 }
@@ -355,18 +355,18 @@ void HandleKeyboardInputTextureView( void )
 
     // Up Arrow Key
     if( keys[VK_UP] & 0x80 )
-        CDisplay::Instance().SetTextureViewOffsetY ( g_fElpasedTime * 150.0f );
+        CDisplay::Instance().SetTextureViewOffsetY ( g_fElpasedTime * 150.0 );
 
     // Down Arrow Key
     if( keys[VK_DOWN] & 0x80 )
-        CDisplay::Instance().SetTextureViewOffsetY ( -g_fElpasedTime * 150.0f );
+        CDisplay::Instance().SetTextureViewOffsetY ( -g_fElpasedTime * 150.0 );
 
     // Left Arrow Key
     if( keys[VK_LEFT] & 0x80 )
-        CDisplay::Instance().SetTextureViewOffsetX ( g_fElpasedTime * 150.0f );
+        CDisplay::Instance().SetTextureViewOffsetX ( g_fElpasedTime * 150.0 );
 
     // Right Arrow Key
     if( keys[VK_RIGHT] & 0x80 )
-        CDisplay::Instance().SetTextureViewOffsetX ( -g_fElpasedTime * 150.0f );
+        CDisplay::Instance().SetTextureViewOffsetX ( -g_fElpasedTime * 150.0 );
     }
 };

@@ -671,7 +671,7 @@ public final class AiMaterial {
         if (null == p || null == p.getData()) {
             Object def = m_defaults.get(PropertyKey.COLOR_DIFFUSE);
             if (def == null) {
-                return (C) Jassimp.wrapColor4(1.0f, 1.0f, 1.0f, 1.0f);
+                return (C) Jassimp.wrapColor4(1.0, 1.0, 1.0, 1.0);
             }
             
             return (C) def;
@@ -703,7 +703,7 @@ public final class AiMaterial {
         if (null == p || null == p.getData()) {
             Object def = m_defaults.get(PropertyKey.COLOR_AMBIENT);
             if (def == null) {
-                return (C) Jassimp.wrapColor4(1.0f, 1.0f, 1.0f, 1.0f);
+                return (C) Jassimp.wrapColor4(1.0, 1.0, 1.0, 1.0);
             }
             
             return (C) def;
@@ -735,7 +735,7 @@ public final class AiMaterial {
         if (null == p || null == p.getData()) {
             Object def = m_defaults.get(PropertyKey.COLOR_SPECULAR);
             if (def == null) {
-                return (C) Jassimp.wrapColor4(1.0f, 1.0f, 1.0f, 1.0f);
+                return (C) Jassimp.wrapColor4(1.0, 1.0, 1.0, 1.0);
             }
             
             return (C) def;
@@ -767,7 +767,7 @@ public final class AiMaterial {
         if (null == p || null == p.getData()) {
             Object def = m_defaults.get(PropertyKey.COLOR_EMISSIVE);
             if (def == null) {
-                return (C) Jassimp.wrapColor4(1.0f, 1.0f, 1.0f, 1.0f);
+                return (C) Jassimp.wrapColor4(1.0, 1.0, 1.0, 1.0);
             }
             
             return (C) def;
@@ -799,7 +799,7 @@ public final class AiMaterial {
         if (null == p || null == p.getData()) {
             Object def = m_defaults.get(PropertyKey.COLOR_TRANSPARENT);
             if (def == null) {
-                return (C) Jassimp.wrapColor4(1.0f, 1.0f, 1.0f, 1.0f);
+                return (C) Jassimp.wrapColor4(1.0, 1.0, 1.0, 1.0);
             }
             
             return (C) def;
@@ -831,7 +831,7 @@ public final class AiMaterial {
         if (null == p || null == p.getData()) {
             Object def = m_defaults.get(PropertyKey.COLOR_REFLECTIVE);
             if (def == null) {
-                return (C) Jassimp.wrapColor4(1.0f, 1.0f, 1.0f, 1.0f);
+                return (C) Jassimp.wrapColor4(1.0, 1.0, 1.0, 1.0);
             }
             
             return (C) def;
@@ -1141,12 +1141,12 @@ public final class AiMaterial {
         setDefault(PropertyKey.SHADING_MODE,            AiShadingMode.FLAT);
         setDefault(PropertyKey.WIREFRAME,               0);
         setDefault(PropertyKey.BLEND_MODE,              AiBlendMode.DEFAULT);
-        setDefault(PropertyKey.OPACITY,                 1.0f);
-        setDefault(PropertyKey.BUMP_SCALING,            1.0f);
-        setDefault(PropertyKey.SHININESS,               1.0f);
-        setDefault(PropertyKey.REFLECTIVITY,            0.0f);
-        setDefault(PropertyKey.SHININESS_STRENGTH,      0.0f);
-        setDefault(PropertyKey.REFRACTI,                0.0f);
+        setDefault(PropertyKey.OPACITY,                 1.0);
+        setDefault(PropertyKey.BUMP_SCALING,            1.0);
+        setDefault(PropertyKey.SHININESS,               1.0);
+        setDefault(PropertyKey.REFLECTIVITY,            0.0);
+        setDefault(PropertyKey.SHININESS_STRENGTH,      0.0);
+        setDefault(PropertyKey.REFRACTI,                0.0);
         
         /* bypass null checks for colors */
         m_defaults.put(PropertyKey.COLOR_DIFFUSE,       null);
@@ -1161,7 +1161,7 @@ public final class AiMaterial {
         /* texture related values */
         setDefault(PropertyKey.TEX_FILE,                "");
         setDefault(PropertyKey.TEX_UV_INDEX,            0);
-        setDefault(PropertyKey.TEX_BLEND,               1.0f);
+        setDefault(PropertyKey.TEX_BLEND,               1.0);
         setDefault(PropertyKey.TEX_OP,                  AiTextureOp.ADD);
         setDefault(PropertyKey.TEX_MAP_MODE_U,          AiTextureMapMode.CLAMP);
         setDefault(PropertyKey.TEX_MAP_MODE_V,          AiTextureMapMode.CLAMP);

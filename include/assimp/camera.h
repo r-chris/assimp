@@ -146,15 +146,15 @@ struct aiCamera
 
     /** Distance of the near clipping plane from the camera.
      *
-     * The value may not be 0.f (for arithmetic reasons to prevent
-     * a division through zero). The default value is 0.1f.
+     * The value may not be 0.0 (for arithmetic reasons to prevent
+     * a division through zero). The default value is 0.1.
      */
     float mClipPlaneNear;
 
     /** Distance of the far clipping plane from the camera.
      *
      * The far clipping plane must, of course, be further away than the
-     * near clipping plane. The default value is 1000.f. The ratio
+     * near clipping plane. The default value is 1000.0. The ratio
      * between the near and the far plane should not be too
      * large (between 1000-10000 should be ok) to avoid floating-point
      * inaccuracies which could lead to z-fighting.
@@ -174,12 +174,12 @@ struct aiCamera
 #ifdef __cplusplus
 
     aiCamera()
-        : mUp               (0.f,1.f,0.f)
-        , mLookAt           (0.f,0.f,1.f)
+        : mUp               (0.0,1.0,0.0)
+        , mLookAt           (0.0,0.0,1.0)
         , mHorizontalFOV    (0.25f * (float)AI_MATH_PI)
-        , mClipPlaneNear    (0.1f)
-        , mClipPlaneFar     (1000.f)
-        , mAspect           (0.f)
+        , mClipPlaneNear    (0.1)
+        , mClipPlaneFar     (1000.0)
+        , mAspect           (0.0)
     {}
 
     /** @brief Get a *right-handed* camera matrix from me
@@ -210,8 +210,8 @@ struct aiCamera
         out.c2 = zaxis.y;
         out.c3 = zaxis.z;
 
-        out.d1 = out.d2 = out.d3 = 0.f;
-        out.d4 = 1.f;
+        out.d1 = out.d2 = out.d3 = 0.0;
+        out.d4 = 1.0;
     }
 
 #endif // __cplusplus

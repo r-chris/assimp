@@ -59,10 +59,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // ----------------------------------------------------------------------------------------
 template <typename TReal>
 aiMatrix4x4t<TReal> ::aiMatrix4x4t () :
-    a1(1.0f), a2(), a3(), a4(),
-    b1(), b2(1.0f), b3(), b4(),
-    c1(), c2(), c3(1.0f), c4(),
-    d1(), d2(), d3(), d4(1.0f)
+    a1(1.0), a2(), a3(), a4(),
+    b1(), b2(1.0), b3(), b4(),
+    c1(), c2(), c3(1.0), c4(),
+    d1(), d2(), d3(), d4(1.0)
 {
 
 }
@@ -425,10 +425,10 @@ inline bool aiMatrix4x4t<TReal>::IsIdentity() const
             d1 <= epsilon && d1 >= -epsilon &&
             d2 <= epsilon && d2 >= -epsilon &&
             d3 <= epsilon && d3 >= -epsilon &&
-            a1 <= 1.f+epsilon && a1 >= 1.f-epsilon &&
-            b2 <= 1.f+epsilon && b2 >= 1.f-epsilon &&
-            c3 <= 1.f+epsilon && c3 >= 1.f-epsilon &&
-            d4 <= 1.f+epsilon && d4 >= 1.f-epsilon);
+            a1 <= 1.0+epsilon && a1 >= 1.0-epsilon &&
+            b2 <= 1.0+epsilon && b2 >= 1.0-epsilon &&
+            c3 <= 1.0+epsilon && c3 >= 1.0-epsilon &&
+            d4 <= 1.0+epsilon && d4 >= 1.0-epsilon);
 }
 
 // ----------------------------------------------------------------------------------------

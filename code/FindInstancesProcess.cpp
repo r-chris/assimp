@@ -94,7 +94,7 @@ bool CompareBones(const aiMesh* orig, const aiMesh* inst)
         // compare weight per weight ---
         for (unsigned int n = 0; n < aha->mNumWeights;++n) {
             if  (aha->mWeights[n].mVertexId != oha->mWeights[n].mVertexId ||
-                (aha->mWeights[n].mWeight - oha->mWeights[n].mWeight) < 10e-3f) {
+                (aha->mWeights[n].mWeight - oha->mWeights[n].mWeight) < 10e-3) {
                 return false;
             }
         }

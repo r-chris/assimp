@@ -55,7 +55,7 @@ inline aiReturn aiMaterial::GetTexture( aiTextureType type,
    C_STRUCT aiString* path,
    aiTextureMapping* mapping    /*= NULL*/,
    unsigned int* uvindex        /*= NULL*/,
-   float* blend                /*= NULL*/,
+   float* blend                 /*= NULL*/,
    aiTextureOp* op              /*= NULL*/,
    aiTextureMapMode* mapmode    /*= NULL*/) const
 {
@@ -190,12 +190,13 @@ aiReturn aiMaterial::AddProperty (const TYPE* pInput,
 }
 
 // ---------------------------------------------------------------------------
-inline aiReturn aiMaterial::AddProperty(const float* pInput,
+inline aiReturn aiMaterial::AddProperty(const ai_real* pInput,
     const unsigned int pNumValues,
     const char* pKey,
     unsigned int type,
     unsigned int index)
 {
+    // TODO: sizeof(ai_real) ???
     return AddBinaryProperty((const void*)pInput,
         pNumValues * sizeof(float),
         pKey,type,index,aiPTI_Float);
