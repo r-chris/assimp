@@ -154,9 +154,9 @@ static SIBChunk ReadChunk(StreamReaderLE* stream)
 
 static aiColor3D ReadColor(StreamReaderLE* stream)
 {
-    float r = stream->GetF4();
-    float g = stream->GetF4();
-    float b = stream->GetF4();
+    float r = stream->GetF();
+    float g = stream->GetF();
+    float b = stream->GetF();
     stream->GetU4(); // Colors have an unused(?) 4th component.
     return aiColor3D(r, g, b);
 }
@@ -224,9 +224,9 @@ static void ReadVerts(SIBMesh* mesh, StreamReaderLE* stream, uint32_t count)
     mesh->pos.resize(count);
 
     for (uint32_t n=0;n<count;n++) {
-        mesh->pos[n].x = stream->GetF4();
-        mesh->pos[n].y = stream->GetF4();
-        mesh->pos[n].z = stream->GetF4();
+        mesh->pos[n].x = stream->GetF();
+        mesh->pos[n].y = stream->GetF();
+        mesh->pos[n].z = stream->GetF();
     }
 }
 
@@ -286,8 +286,8 @@ static void ReadUVs(SIBMesh* mesh, StreamReaderLE* stream)
         for (uint32_t n=0;n<numPoints;n++,idx+=N)
         {
             uint32_t id = idx[UV];
-            mesh->uv[id].x = stream->GetF4();
-            mesh->uv[id].y = stream->GetF4();
+            mesh->uv[id].x = stream->GetF();
+            mesh->uv[id].y = stream->GetF();
         }
     }
 }
@@ -322,21 +322,21 @@ static void ReadMtls(SIBMesh* mesh, StreamReaderLE* stream)
 // ------------------------------------------------------------------------------------------------
 static void ReadAxis(aiMatrix4x4& axis, StreamReaderLE* stream)
 {
-    axis.a4 = stream->GetF4();
-    axis.b4 = stream->GetF4();
-    axis.c4 = stream->GetF4();
+    axis.a4 = stream->GetF();
+    axis.b4 = stream->GetF();
+    axis.c4 = stream->GetF();
     axis.d4 = 1;
-    axis.a1 = stream->GetF4();
-    axis.b1 = stream->GetF4();
-    axis.c1 = stream->GetF4();
+    axis.a1 = stream->GetF();
+    axis.b1 = stream->GetF();
+    axis.c1 = stream->GetF();
     axis.d1 = 0;
-    axis.a2 = stream->GetF4();
-    axis.b2 = stream->GetF4();
-    axis.c2 = stream->GetF4();
+    axis.a2 = stream->GetF();
+    axis.b2 = stream->GetF();
+    axis.c2 = stream->GetF();
     axis.d2 = 0;
-    axis.a3 = stream->GetF4();
-    axis.b3 = stream->GetF4();
-    axis.c3 = stream->GetF4();
+    axis.a3 = stream->GetF();
+    axis.b3 = stream->GetF();
+    axis.c3 = stream->GetF();
     axis.d3 = 0;
 }
 
@@ -688,20 +688,20 @@ static void ReadLightInfo(aiLight* light, StreamReaderLE* stream)
     default: light->mType = aiLightSource_UNDEFINED; break;
     }
 
-    light->mPosition.x = stream->GetF4();
-    light->mPosition.y = stream->GetF4();
-    light->mPosition.z = stream->GetF4();
-    light->mDirection.x = stream->GetF4();
-    light->mDirection.y = stream->GetF4();
-    light->mDirection.z = stream->GetF4();
+    light->mPosition.x = stream->GetF();
+    light->mPosition.y = stream->GetF();
+    light->mPosition.z = stream->GetF();
+    light->mDirection.x = stream->GetF();
+    light->mDirection.y = stream->GetF();
+    light->mDirection.z = stream->GetF();
     light->mColorDiffuse = ReadColor(stream);
     light->mColorAmbient = ReadColor(stream);
     light->mColorSpecular = ReadColor(stream);
-    ai_real spotExponent = stream->GetF4();
-    ai_real spotCutoff = stream->GetF4();
-    light->mAttenuationConstant = stream->GetF4();
-    light->mAttenuationLinear = stream->GetF4();
-    light->mAttenuationQuadratic = stream->GetF4();
+    ai_real spotExponent = stream->GetF();
+    ai_real spotCutoff = stream->GetF();
+    light->mAttenuationConstant = stream->GetF();
+    light->mAttenuationLinear = stream->GetF();
+    light->mAttenuationQuadratic = stream->GetF();
 
     // Silo uses the OpenGL default lighting model for it's
     // spot cutoff/exponent. AssImp unfortunately, does not.
@@ -747,22 +747,22 @@ static void ReadLight(SIB* sib, StreamReaderLE* stream)
 static void ReadScale(aiMatrix4x4& axis, StreamReaderLE* stream)
 {
     aiMatrix4x4 scale;
-    scale.a1 = stream->GetF4();
-    scale.b1 = stream->GetF4();
-    scale.c1 = stream->GetF4();
-    scale.d1 = stream->GetF4();
-    scale.a2 = stream->GetF4();
-    scale.b2 = stream->GetF4();
-    scale.c2 = stream->GetF4();
-    scale.d2 = stream->GetF4();
-    scale.a3 = stream->GetF4();
-    scale.b3 = stream->GetF4();
-    scale.c3 = stream->GetF4();
-    scale.d3 = stream->GetF4();
-    scale.a4 = stream->GetF4();
-    scale.b4 = stream->GetF4();
-    scale.c4 = stream->GetF4();
-    scale.d4 = stream->GetF4();
+    scale.a1 = stream->GetF();
+    scale.b1 = stream->GetF();
+    scale.c1 = stream->GetF();
+    scale.d1 = stream->GetF();
+    scale.a2 = stream->GetF();
+    scale.b2 = stream->GetF();
+    scale.c2 = stream->GetF();
+    scale.d2 = stream->GetF();
+    scale.a3 = stream->GetF();
+    scale.b3 = stream->GetF();
+    scale.c3 = stream->GetF();
+    scale.d3 = stream->GetF();
+    scale.a4 = stream->GetF();
+    scale.b4 = stream->GetF();
+    scale.c4 = stream->GetF();
+    scale.d4 = stream->GetF();
 
     axis = axis * scale;
 }

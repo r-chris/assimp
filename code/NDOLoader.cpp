@@ -202,9 +202,9 @@ void NDOImporter::InternReadFile( const std::string& pFile,
             Vertex& v = obj.vertices.back();
 
             v.num = file_format >= 12 ? reader.GetU4() : reader.GetU2();
-            v.val.x = reader.GetF4();
-            v.val.y = reader.GetF4();
-            v.val.z = reader.GetF4();
+            v.val.x = reader.GetF();
+            v.val.y = reader.GetF();
+            v.val.z = reader.GetF();
         }
 
         // read UVs

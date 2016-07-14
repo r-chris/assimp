@@ -170,9 +170,9 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
 
                     for (unsigned int i = 0; i < numVerts;++i)
                     {
-                        verts[i].x = stream.GetF4();
-                        verts[i].y = stream.GetF4();
-                        verts[i].z = stream.GetF4();
+                        verts[i].x = stream.GetF();
+                        verts[i].y = stream.GetF();
+                        verts[i].z = stream.GetF();
                     }
 
                     // read all faces
@@ -212,9 +212,9 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
 
                     for (unsigned int i = 0; i < numVerts;++i)
                     {
-                        normals[i].x = stream.GetF4();
-                        normals[i].y = stream.GetF4();
-                        normals[i].z = stream.GetF4();
+                        normals[i].x = stream.GetF();
+                        normals[i].y = stream.GetF();
+                        normals[i].z = stream.GetF();
                     }
 
                     numVerts = (unsigned int)stream.GetI4();
@@ -226,8 +226,8 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
 
                         for (unsigned int i = 0; i < numVerts;++i)
                         {
-                            uv[i].x = stream.GetF4();
-                            uv[i].y = stream.GetF4();
+                            uv[i].x = stream.GetF();
+                            uv[i].y = stream.GetF();
                         }
 
                         // UV indices
@@ -270,22 +270,22 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
                 mat.name.data[mat.name.length] = '\0';
 
                 // read the ambient color
-                mat.ambient.r = stream.GetF4();
-                mat.ambient.g = stream.GetF4();
-                mat.ambient.b = stream.GetF4();
+                mat.ambient.r = stream.GetF();
+                mat.ambient.g = stream.GetF();
+                mat.ambient.b = stream.GetF();
 
                 // read the diffuse color
-                mat.diffuse.r = stream.GetF4();
-                mat.diffuse.g = stream.GetF4();
-                mat.diffuse.b = stream.GetF4();
+                mat.diffuse.r = stream.GetF();
+                mat.diffuse.g = stream.GetF();
+                mat.diffuse.b = stream.GetF();
 
                 // read the ambient color
-                mat.specular.r = stream.GetF4();
-                mat.specular.g = stream.GetF4();
-                mat.specular.b = stream.GetF4();
+                mat.specular.r = stream.GetF();
+                mat.specular.g = stream.GetF();
+                mat.specular.b = stream.GetF();
 
                 // read the transparency
-                mat.transparency = stream.GetF4();
+                mat.transparency = stream.GetF();
 
                 // unknown value here
                 // stream.IncPtr(4);
@@ -340,7 +340,7 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
 
                 for (unsigned int i = 0; i < 4;++i)
                     for (unsigned int a = 0; a < 4;++a)
-                        pScene->mRootNode->mTransformation[i][a] = stream.GetF4();
+                        pScene->mRootNode->mTransformation[i][a] = stream.GetF();
 
                 stream.IncPtr(16);
 
@@ -348,18 +348,18 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
                 pScene->mNumCameras = 1;
                 pScene->mCameras = new aiCamera*[1];
                 aiCamera* cam = pScene->mCameras[0] = new aiCamera();
-                cam->mPosition.x = stream.GetF4();
-                cam->mPosition.y = stream.GetF4();
-                cam->mPosition.z = stream.GetF4();
+                cam->mPosition.x = stream.GetF();
+                cam->mPosition.y = stream.GetF();
+                cam->mPosition.z = stream.GetF();
                 cam->mName.Set("Q3DCamera");
 
                 // skip eye rotation for the moment
                 stream.IncPtr(12);
 
                 // read the default material color
-                fgColor .r = stream.GetF4();
-                fgColor .g = stream.GetF4();
-                fgColor .b = stream.GetF4();
+                fgColor .r = stream.GetF();
+                fgColor .g = stream.GetF();
+                fgColor .b = stream.GetF();
 
                 // skip some unimportant properties
                 stream.IncPtr(29);
@@ -375,9 +375,9 @@ void Q3DImporter::InternReadFile( const std::string& pFile,
                 light->mAttenuationLinear    = 0;
                 light->mAttenuationQuadratic = 0;
 
-                light->mColorDiffuse.r = stream.GetF4();
-                light->mColorDiffuse.g = stream.GetF4();
-                light->mColorDiffuse.b = stream.GetF4();
+                light->mColorDiffuse.r = stream.GetF();
+                light->mColorDiffuse.g = stream.GetF();
+                light->mColorDiffuse.b = stream.GetF();
 
                 light->mColorSpecular = light->mColorDiffuse;
 

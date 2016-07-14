@@ -99,7 +99,7 @@ inline uint32_t OgreBinarySerializer::Read<uint32_t>()
 template<>
 inline float OgreBinarySerializer::Read<float>()
 {
-    return m_reader->GetF4();
+    return m_reader->GetF();
 }
 
 void OgreBinarySerializer::ReadBytes(char *dest, size_t numBytes)

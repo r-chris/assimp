@@ -551,10 +551,10 @@ void LWOImporter::LoadLWO2ImageMap(unsigned int size, LWO::Texture& tex )
             GetS0(tex.mUVChannelIndex,head.length);
             break;
         case AI_LWO_WRPH:
-            tex.wrapAmountH = GetF4();
+            tex.wrapAmountH = GetF();
             break;
         case AI_LWO_WRPW:
-            tex.wrapAmountW = GetF4();
+            tex.wrapAmountW = GetF();
             break;
         }
         mFileBuffer = next;
@@ -610,7 +610,7 @@ void LWOImporter::LoadLWO2TextureHeader(unsigned int size, LWO::Texture& tex )
             break;
         case AI_LWO_OPAC:
             tex.blendType = (Texture::BlendType)GetU2();
-            tex.mStrength = GetF4();
+            tex.mStrength = GetF();
             break;
         }
         mFileBuffer = next;
@@ -767,23 +767,23 @@ void LWOImporter::LoadLWO2Surface(unsigned int size)
         case AI_LWO_COLR:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,COLR,12);
-                surf.mColor.r = GetF4();
-                surf.mColor.g = GetF4();
-                surf.mColor.b = GetF4();
+                surf.mColor.r = GetF();
+                surf.mColor.g = GetF();
+                surf.mColor.b = GetF();
                 break;
             }
             // diffuse strength ... hopefully
         case AI_LWO_DIFF:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,DIFF,4);
-                surf.mDiffuseValue = GetF4();
+                surf.mDiffuseValue = GetF();
                 break;
             }
             // specular strength ... hopefully
         case AI_LWO_SPEC:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,SPEC,4);
-                surf.mSpecularValue = GetF4();
+                surf.mSpecularValue = GetF();
                 break;
             }
             // transparency
@@ -794,14 +794,14 @@ void LWOImporter::LoadLWO2Surface(unsigned int size)
                     break;
 
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,TRAN,4);
-                surf.mTransparency = GetF4();
+                surf.mTransparency = GetF();
                 break;
             }
             // additive transparency
         case AI_LWO_ADTR:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,ADTR,4);
-                surf.mAdditiveTransparency = GetF4();
+                surf.mAdditiveTransparency = GetF();
                 break;
             }
             // wireframe mode
@@ -816,28 +816,28 @@ void LWOImporter::LoadLWO2Surface(unsigned int size)
         case AI_LWO_GLOS:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,GLOS,4);
-                surf.mGlossiness = GetF4();
+                surf.mGlossiness = GetF();
                 break;
             }
             // bump intensity
         case AI_LWO_BUMP:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,BUMP,4);
-                surf.mBumpIntensity = GetF4();
+                surf.mBumpIntensity = GetF();
                 break;
             }
             // color highlights
         case AI_LWO_CLRH:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,CLRH,4);
-                surf.mColorHighlights = GetF4();
+                surf.mColorHighlights = GetF();
                 break;
             }
             // index of refraction
         case AI_LWO_RIND:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,RIND,4);
-                surf.mIOR = GetF4();
+                surf.mIOR = GetF();
                 break;
             }
             // polygon sidedness
@@ -851,14 +851,14 @@ void LWOImporter::LoadLWO2Surface(unsigned int size)
         case AI_LWO_SMAN:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,SMAN,4);
-                surf.mMaximumSmoothAngle = fabs( GetF4() );
+                surf.mMaximumSmoothAngle = fabs( GetF() );
                 break;
             }
             // vertex color channel to be applied to the surface
         case AI_LWO_VCOL:
             {
                 AI_LWO_VALIDATE_CHUNK_LENGTH(head.length,VCOL,12);
-                surf.mDiffuseValue *= GetF4();              // strength
+                surf.mDiffuseValue *= GetF();              // strength
                 ReadVSizedIntLWO2(mFileBuffer);             // skip envelope
                 surf.mVCMapType = GetU4();                  // type of the channel
 

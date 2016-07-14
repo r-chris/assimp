@@ -1124,7 +1124,7 @@ void LWOImporter::LoadLWO2VertexMap(unsigned int length, bool perPoly)
             }
         }
         for (unsigned int l = 0; l < type;++l)
-            temp[l] = GetF4();
+            temp[l] = GetF();
 
         DoRecursiveVMAPAssignment(base,type,idx, temp);
         mFileBuffer += diff;
@@ -1269,8 +1269,8 @@ void LWOImporter::LoadLWO2Envelope(unsigned int length)
             envelope.keys.push_back(LWO::Key());
             LWO::Key& key = envelope.keys.back();
 
-            key.time = GetF4();
-            key.value = GetF4();
+            key.time = GetF();
+            key.value = GetF();
             break;
             }
 
@@ -1361,9 +1361,9 @@ void LWOImporter::LoadLWO2File()
 
                 // pivot point
                 mFileBuffer += 2; /* unknown */
-                mCurLayer->mPivot.x = GetF4();
-                mCurLayer->mPivot.y = GetF4();
-                mCurLayer->mPivot.z = GetF4();
+                mCurLayer->mPivot.x = GetF();
+                mCurLayer->mPivot.y = GetF();
+                mCurLayer->mPivot.z = GetF();
                 GetS0(layer.mName,head.length-16);
 
                 // if the name is empty, generate a default name

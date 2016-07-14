@@ -565,11 +565,8 @@ template <typename T> inline void ConvertDispatcher(T& out, const Structure& in,
     else if (in.name == "char") {
         out = static_cast_silent<T>()(db.reader->GetU1());
     }
-    else if (in.name == "float") {
-        out = static_cast<T>(db.reader->GetF4());
-    }
-    else if (in.name == "double") {
-        out = static_cast<T>(db.reader->GetF8());
+    else if ((in.name == "float") || (in.name == "double")) {
+        out = static_cast<T>(db.reader->GetF());
     }
     else {
         throw DeadlyImportError("Unknown source for conversion to primitive data type: "+in.name);
@@ -586,14 +583,9 @@ template <> inline void Structure :: Convert<int>    (int& dest,const FileDataba
 template <> inline void Structure :: Convert<short>  (short& dest,const FileDatabase& db) const
 {
     // automatic rescaling from short to float and vice versa (seems to be used by normals)
-    if (name == "float") {
-        dest = static_cast<short>(db.reader->GetF4() * 32767.0);
-        //db.reader->IncPtr(-4);
-        return;
-    }
-    else if (name == "double") {
-        dest = static_cast<short>(db.reader->GetF8() * 32767.);
-        //db.reader->IncPtr(-8);
+    if ((name == "float") || (name == "double")) {
+        dest = static_cast<short>(db.reader->GetF() * 32767.0);
+        //db.reader->IncPtr(-4); //db.reader->IncPtr(-8);
         return;
     }
     ConvertDispatcher(dest,*this,db);
@@ -603,12 +595,8 @@ template <> inline void Structure :: Convert<short>  (short& dest,const FileData
 template <> inline void Structure :: Convert<char>   (char& dest,const FileDatabase& db) const
 {
     // automatic rescaling from char to float and vice versa (seems useful for RGB colors)
-    if (name == "float") {
-        dest = static_cast<char>(db.reader->GetF4() * 255.0);
-        return;
-    }
-    else if (name == "double") {
-        dest = static_cast<char>(db.reader->GetF8() * 255.0);
+    if ((name == "float") || (name == "double")) {
+        dest = static_cast<char>(db.reader->GetF() * 255.0);
         return;
     }
     ConvertDispatcher(dest,*this,db);

@@ -117,16 +117,10 @@ public:
     // deprecated, use overloaded operator>> instead
 
     // ---------------------------------------------------------------------
-    /** Read a float from the stream  */
-    float GetF4()
+    /** Read a float or double from the stream  */
+    float GetF()
     {
-        return Get<float>();
-    }
-
-    // ---------------------------------------------------------------------
-    /** Read a double from the stream  */
-    double GetF8()  {
-        return Get<double>();
+        return Get<ai_real>();
     }
 
     // ---------------------------------------------------------------------
@@ -253,7 +247,7 @@ public:
      *
      *  @param limit Maximum number of bytes to be read from
      *    the beginning of the file. Specifying UINT_MAX
-     *    resets the limit to the original end of the stream. 
+     *    resets the limit to the original end of the stream.
      *  Returns the previously set limit. */
     unsigned int SetReadLimit(unsigned int _limit)  {
         unsigned int prev = GetReadLimit();

@@ -120,7 +120,7 @@ private:
     /** Parsing functions used for all file format versions
     */
     inline void GetS0(std::string& out,unsigned int max);
-    inline float GetF4();
+    inline ai_real GetF();
     inline uint32_t GetU4();
     inline uint16_t GetU2();
     inline uint8_t  GetU1();
@@ -402,11 +402,11 @@ protected:
 
 
 // ------------------------------------------------------------------------------------------------
-inline float LWOImporter::GetF4()
+inline ai_real LWOImporter::GetF()
 {
-    float f;
-    ::memcpy(&f, mFileBuffer, 4);
-    mFileBuffer += 4;
+    ai_real f;
+    ::memcpy(&f, mFileBuffer, sizeof(ai_real));
+    mFileBuffer += sizeof(ai_real);
     AI_LSWAP4(f);
     return f;
 }

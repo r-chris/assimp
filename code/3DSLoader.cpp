@@ -378,7 +378,7 @@ void Discreet3DSImporter::ParseObjectChunk()
 
     case Discreet3DS::CHUNK_MASTER_SCALE:
         // Scene master scaling factor
-        mMasterScale = stream->GetF4();
+        mMasterScale = stream->GetF();
         break;
     };
     ASSIMP_3DS_END_CHUNK();
@@ -420,9 +420,9 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         light->mName.Set(std::string(name, num));
 
         // First read the position of the light
-        light->mPosition.x = stream->GetF4();
-        light->mPosition.y = stream->GetF4();
-        light->mPosition.z = stream->GetF4();
+        light->mPosition.x = stream->GetF();
+        light->mPosition.y = stream->GetF();
+        light->mPosition.z = stream->GetF();
 
         light->mColorDiffuse = aiColor3D(1.0,1.0,1.0);
 
@@ -450,14 +450,14 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         camera->mName.Set(std::string(name, num));
 
         // First read the position of the camera
-        camera->mPosition.x = stream->GetF4();
-        camera->mPosition.y = stream->GetF4();
-        camera->mPosition.z = stream->GetF4();
+        camera->mPosition.x = stream->GetF();
+        camera->mPosition.y = stream->GetF();
+        camera->mPosition.z = stream->GetF();
 
         // Then the camera target
-        camera->mLookAt.x = stream->GetF4() - camera->mPosition.x;
-        camera->mLookAt.y = stream->GetF4() - camera->mPosition.y;
-        camera->mLookAt.z = stream->GetF4() - camera->mPosition.z;
+        camera->mLookAt.x = stream->GetF() - camera->mPosition.x;
+        camera->mLookAt.y = stream->GetF() - camera->mPosition.y;
+        camera->mLookAt.z = stream->GetF() - camera->mPosition.z;
         ai_real len = camera->mLookAt.Length();
         if (len < 1e-5) {
 
@@ -469,12 +469,12 @@ void Discreet3DSImporter::ParseChunk(const char* name, unsigned int num)
         else camera->mLookAt /= len;
 
         // And finally - the camera rotation angle, in counter clockwise direction
-        const float angle =  AI_DEG_TO_RAD( stream->GetF4() );
+        const float angle =  AI_DEG_TO_RAD( stream->GetF() );
         aiQuaternion quat(camera->mLookAt,angle);
         camera->mUp = quat.GetMatrix() * aiVector3D(0.0,1.0,0.0);
 
         // Read the lense angle
-        camera->mHorizontalFOV = AI_DEG_TO_RAD ( stream->GetF4() );
+        camera->mHorizontalFOV = AI_DEG_TO_RAD ( stream->GetF() );
         if (camera->mHorizontalFOV < 0.001)  {
             camera->mHorizontalFOV = AI_DEG_TO_RAD(45.0);
         }
@@ -502,34 +502,34 @@ void Discreet3DSImporter::ParseLightChunk()
         light->mType = aiLightSource_SPOT;
 
         // We wouldn't need to normalize here, but we do it
-        light->mDirection.x = stream->GetF4() - light->mPosition.x;
-        light->mDirection.y = stream->GetF4() - light->mPosition.y;
-        light->mDirection.z = stream->GetF4() - light->mPosition.z;
+        light->mDirection.x = stream->GetF() - light->mPosition.x;
+        light->mDirection.y = stream->GetF() - light->mPosition.y;
+        light->mDirection.z = stream->GetF() - light->mPosition.z;
         light->mDirection.Normalize();
 
         // Now the hotspot and falloff angles - in degrees
-        light->mAngleInnerCone = AI_DEG_TO_RAD( stream->GetF4() );
+        light->mAngleInnerCone = AI_DEG_TO_RAD( stream->GetF() );
 
         // FIX: the falloff angle is just an offset
-        light->mAngleOuterCone = light->mAngleInnerCone+AI_DEG_TO_RAD( stream->GetF4() );
+        light->mAngleOuterCone = light->mAngleInnerCone+AI_DEG_TO_RAD( stream->GetF() );
         break;
 
         // intensity multiplier
     case Discreet3DS::CHUNK_DL_MULTIPLIER:
-        light->mColorDiffuse = light->mColorDiffuse * stream->GetF4();
+        light->mColorDiffuse = light->mColorDiffuse * stream->GetF();
         break;
 
         // light color
     case Discreet3DS::CHUNK_RGBF:
     case Discreet3DS::CHUNK_LINRGBF:
-        light->mColorDiffuse.r *= stream->GetF4();
-        light->mColorDiffuse.g *= stream->GetF4();
-        light->mColorDiffuse.b *= stream->GetF4();
+        light->mColorDiffuse.r *= stream->GetF();
+        light->mColorDiffuse.g *= stream->GetF();
+        light->mColorDiffuse.b *= stream->GetF();
         break;
 
         // light attenuation
     case Discreet3DS::CHUNK_DL_ATTENUATE:
-        light->mAttenuationLinear = stream->GetF4();
+        light->mAttenuationLinear = stream->GetF();
         break;
     };
 
@@ -547,8 +547,8 @@ void Discreet3DSImporter::ParseCameraChunk()
     {
         // near and far clip plane
     case Discreet3DS::CHUNK_CAM_RANGES:
-        camera->mClipPlaneNear = stream->GetF4();
-        camera->mClipPlaneFar  = stream->GetF4();
+        camera->mClipPlaneNear = stream->GetF();
+        camera->mClipPlaneFar  = stream->GetF();
         break;
     }
 
@@ -748,9 +748,9 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
         }
 
         // Pivot = origin of rotation and scaling
-        mCurrentNode->vPivot.x = stream->GetF4();
-        mCurrentNode->vPivot.y = stream->GetF4();
-        mCurrentNode->vPivot.z = stream->GetF4();
+        mCurrentNode->vPivot.x = stream->GetF();
+        mCurrentNode->vPivot.y = stream->GetF();
+        mCurrentNode->vPivot.z = stream->GetF();
         break;
 
 
@@ -779,9 +779,9 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
             v.mTime = (double)fidx;
 
             SkipTCBInfo();
-            v.mValue.x = stream->GetF4();
-            v.mValue.y = stream->GetF4();
-            v.mValue.z = stream->GetF4();
+            v.mValue.x = stream->GetF();
+            v.mValue.y = stream->GetF();
+            v.mValue.z = stream->GetF();
 
             // check whether we'll need to sort the keys
             if (!l->empty() && v.mTime <= l->back().mTime)
@@ -823,7 +823,7 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
 
             // This is just a single float
             SkipTCBInfo();
-            v.mValue = stream->GetF4();
+            v.mValue = stream->GetF();
 
             // Check whether we'll need to sort the keys
             if (!l->empty() && v.mTime <= l->back().mTime)
@@ -870,11 +870,11 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
             v.mTime = (double)fidx;
 
             // The rotation keyframe is given as an axis-angle pair
-            const float rad = stream->GetF4();
+            const float rad = stream->GetF();
             aiVector3D axis;
-            axis.x = stream->GetF4();
-            axis.y = stream->GetF4();
-            axis.z = stream->GetF4();
+            axis.x = stream->GetF();
+            axis.y = stream->GetF();
+            axis.z = stream->GetF();
 
             if (!axis.x && !axis.y && !axis.z)
                 axis.y = 1.0;
@@ -917,9 +917,9 @@ void Discreet3DSImporter::ParseHierarchyChunk(uint16_t parent)
             v.mTime = (double)fidx;
 
             // ... and read its value
-            v.mValue.x = stream->GetF4();
-            v.mValue.y = stream->GetF4();
-            v.mValue.z = stream->GetF4();
+            v.mValue.x = stream->GetF();
+            v.mValue.y = stream->GetF();
+            v.mValue.z = stream->GetF();
 
             // check whether we'll need to sort the keys
             if (!l->empty() && v.mTime <= l->back().mTime)
@@ -1023,9 +1023,9 @@ void Discreet3DSImporter::ParseMeshChunk()
         mMesh.mPositions.reserve(num);
         while (num-- > 0)   {
             aiVector3D v;
-            v.x = stream->GetF4();
-            v.y = stream->GetF4();
-            v.z = stream->GetF4();
+            v.x = stream->GetF();
+            v.y = stream->GetF();
+            v.z = stream->GetF();
             mMesh.mPositions.push_back(v);
         }}
         break;
@@ -1033,18 +1033,18 @@ void Discreet3DSImporter::ParseMeshChunk()
         {
         // This is the RLEATIVE transformation matrix of the current mesh. Vertices are
         // pretransformed by this matrix wonder.
-        mMesh.mMat.a1 = stream->GetF4();
-        mMesh.mMat.b1 = stream->GetF4();
-        mMesh.mMat.c1 = stream->GetF4();
-        mMesh.mMat.a2 = stream->GetF4();
-        mMesh.mMat.b2 = stream->GetF4();
-        mMesh.mMat.c2 = stream->GetF4();
-        mMesh.mMat.a3 = stream->GetF4();
-        mMesh.mMat.b3 = stream->GetF4();
-        mMesh.mMat.c3 = stream->GetF4();
-        mMesh.mMat.a4 = stream->GetF4();
-        mMesh.mMat.b4 = stream->GetF4();
-        mMesh.mMat.c4 = stream->GetF4();
+        mMesh.mMat.a1 = stream->GetF();
+        mMesh.mMat.b1 = stream->GetF();
+        mMesh.mMat.c1 = stream->GetF();
+        mMesh.mMat.a2 = stream->GetF();
+        mMesh.mMat.b2 = stream->GetF();
+        mMesh.mMat.c2 = stream->GetF();
+        mMesh.mMat.a3 = stream->GetF();
+        mMesh.mMat.b3 = stream->GetF();
+        mMesh.mMat.c3 = stream->GetF();
+        mMesh.mMat.a4 = stream->GetF();
+        mMesh.mMat.b4 = stream->GetF();
+        mMesh.mMat.c4 = stream->GetF();
         }
         break;
 
@@ -1055,8 +1055,8 @@ void Discreet3DSImporter::ParseMeshChunk()
         mMesh.mTexCoords.reserve(num);
         while (num-- > 0)   {
             aiVector3D v;
-            v.x = stream->GetF4();
-            v.y = stream->GetF4();
+            v.x = stream->GetF();
+            v.y = stream->GetF();
             mMesh.mTexCoords.push_back(v);
         }}
         break;
@@ -1272,7 +1272,7 @@ void Discreet3DSImporter::ParseTextureChunk(D3DS::Texture* pcOut)
 
     case Discreet3DS::CHUNK_PERCENTF:
         // Manually parse the blend factor
-        pcOut->mTextureBlend = stream->GetF4();
+        pcOut->mTextureBlend = stream->GetF();
         break;
 
     case Discreet3DS::CHUNK_PERCENTW:
@@ -1282,7 +1282,7 @@ void Discreet3DSImporter::ParseTextureChunk(D3DS::Texture* pcOut)
 
     case Discreet3DS::CHUNK_MAT_MAP_USCALE:
         // Texture coordinate scaling in the U direction
-        pcOut->mScaleU = stream->GetF4();
+        pcOut->mScaleU = stream->GetF();
         if (0.0 == pcOut->mScaleU)
         {
             DefaultLogger::get()->warn("Texture coordinate scaling in the x direction is zero. Assuming 1.");
@@ -1291,7 +1291,7 @@ void Discreet3DSImporter::ParseTextureChunk(D3DS::Texture* pcOut)
         break;
     case Discreet3DS::CHUNK_MAT_MAP_VSCALE:
         // Texture coordinate scaling in the V direction
-        pcOut->mScaleV = stream->GetF4();
+        pcOut->mScaleV = stream->GetF();
         if (0.0 == pcOut->mScaleV)
         {
             DefaultLogger::get()->warn("Texture coordinate scaling in the y direction is zero. Assuming 1.");
@@ -1301,17 +1301,17 @@ void Discreet3DSImporter::ParseTextureChunk(D3DS::Texture* pcOut)
 
     case Discreet3DS::CHUNK_MAT_MAP_UOFFSET:
         // Texture coordinate offset in the U direction
-        pcOut->mOffsetU = -stream->GetF4();
+        pcOut->mOffsetU = -stream->GetF();
         break;
 
     case Discreet3DS::CHUNK_MAT_MAP_VOFFSET:
         // Texture coordinate offset in the V direction
-        pcOut->mOffsetV = stream->GetF4();
+        pcOut->mOffsetV = stream->GetF();
         break;
 
     case Discreet3DS::CHUNK_MAT_MAP_ANG:
         // Texture coordinate rotation, CCW in DEGREES
-        pcOut->mRotation = -AI_DEG_TO_RAD( stream->GetF4() );
+        pcOut->mRotation = -AI_DEG_TO_RAD( stream->GetF() );
         break;
 
     case Discreet3DS::CHUNK_MAT_MAP_TILING:
@@ -1342,7 +1342,7 @@ ai_real Discreet3DSImporter::ParsePercentageChunk()
     ReadChunk(&chunk);
 
     if (Discreet3DS::CHUNK_PERCENTF == chunk.Flag)
-        return stream->GetF4();
+        return stream->GetF();
     else if (Discreet3DS::CHUNK_PERCENTW == chunk.Flag)
         return (float)((uint16_t)stream->GetI2()) / (float)0xFFFF;
     return get_qnan();
@@ -1372,13 +1372,13 @@ void Discreet3DSImporter::ParseColorChunk(aiColor3D* out,
         bGamma = true;
 
     case Discreet3DS::CHUNK_RGBF:
-        if (sizeof(float) * 3 > diff)   {
+        if (sizeof(ai_real) * 3 > diff)   {
             *out = clrError;
             return;
         }
-        out->r = stream->GetF4();
-        out->g = stream->GetF4();
-        out->b = stream->GetF4();
+        out->r = stream->GetF();
+        out->g = stream->GetF();
+        out->b = stream->GetF();
         break;
 
     case Discreet3DS::CHUNK_LINRGBB:
@@ -1396,7 +1396,7 @@ void Discreet3DSImporter::ParseColorChunk(aiColor3D* out,
     // Percentage chunks are accepted, too.
     case Discreet3DS::CHUNK_PERCENTF:
         if (acceptPercent && 4 <= diff) {
-            out->g = out->b = out->r = stream->GetF4();
+            out->g = out->b = out->r = stream->GetF();
             break;
         }
         *out = clrError;

@@ -80,7 +80,7 @@ void CalcTangentsProcess::SetupProperties(const Importer* pImp)
     ai_assert( NULL != pImp );
 
     // get the current value of the property
-    configMaxAngle = pImp->GetPropertyFloat(AI_CONFIG_PP_CT_MAX_SMOOTHING_ANGLE,45.);
+    configMaxAngle = pImp->GetPropertyFloat(AI_CONFIG_PP_CT_MAX_SMOOTHING_ANGLE,45.0);
     configMaxAngle = std::max(std::min(configMaxAngle,45.0),0.0);
     configMaxAngle = AI_DEG_TO_RAD(configMaxAngle);
 
@@ -236,21 +236,21 @@ bool CalcTangentsProcess::ProcessMesh( aiMesh* pMesh, unsigned int meshIndex)
     // FIX: check whether we can reuse the SpatialSort of a previous step
     SpatialSort* vertexFinder = NULL;
     SpatialSort  _vertexFinder;
-    float posEpsilon;
+    ai_real posEpsilon;
     if (shared)
     {
-        std::vector<std::pair<SpatialSort,float> >* avf;
+        std::vector<std::pair<SpatialSort,ai_real> >* avf;
         shared->GetProperty(AI_SPP_SPATIAL_SORT,avf);
         if (avf)
         {
-            std::pair<SpatialSort,float>& blubb = avf->operator [] (meshIndex);
+            std::pair<SpatialSort,ai_real>& blubb = avf->operator [] (meshIndex);
             vertexFinder = &blubb.first;
             posEpsilon = blubb.second;;
         }
     }
     if (!vertexFinder)
     {
-        _vertexFinder.Fill(pMesh->mVertices, pMesh->mNumVertices, sizeof( aiVector3D));
+        _vertexFinder.Fill(pMesh->mVertices, pMesh->mNumVertices, sizeof( aiVector3D ));
         vertexFinder = &_vertexFinder;
         posEpsilon = ComputePositionEpsilon(pMesh);
     }

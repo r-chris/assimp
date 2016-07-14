@@ -919,7 +919,7 @@ void COBImporter::ReadBasicNodeInfo_Binary(Node& msh, StreamReaderLE& reader, co
     msh.transform = aiMatrix4x4();
     for(unsigned int y = 0; y < 3; ++y) {
         for(unsigned int x =0; x < 4; ++x) {
-            msh.transform[y][x] = reader.GetF4();
+            msh.transform[y][x] = reader.GetF();
         }
     }
 }
@@ -1041,15 +1041,15 @@ void COBImporter::ReadPolH_Binary(COB::Scene& out, StreamReaderLE& reader, const
 
     msh.vertex_positions.resize(reader.GetI4());
     for(aiVector3D& v : msh.vertex_positions) {
-        v.x = reader.GetF4();
-        v.y = reader.GetF4();
-        v.z = reader.GetF4();
+        v.x = reader.GetF();
+        v.y = reader.GetF();
+        v.z = reader.GetF();
     }
 
     msh.texture_coords.resize(reader.GetI4());
     for(aiVector2D& v : msh.texture_coords) {
-        v.x = reader.GetF4();
-        v.y = reader.GetF4();
+        v.x = reader.GetF();
+        v.y = reader.GetF();
     }
 
     const size_t numf = reader.GetI4();
@@ -1157,15 +1157,15 @@ void COBImporter::ReadMat1_Binary(COB::Scene& out, StreamReaderLE& reader, const
     }
     mat.autofacet_angle = static_cast<float>(reader.GetI1());
 
-    mat.rgb.r = reader.GetF4();
-    mat.rgb.g = reader.GetF4();
-    mat.rgb.b = reader.GetF4();
+    mat.rgb.r = reader.GetF();
+    mat.rgb.g = reader.GetF();
+    mat.rgb.b = reader.GetF();
 
-    mat.alpha = reader.GetF4();
-    mat.ka    = reader.GetF4();
-    mat.ks    = reader.GetF4();
-    mat.exp   = reader.GetF4();
-    mat.ior   = reader.GetF4();
+    mat.alpha = reader.GetF();
+    mat.ka    = reader.GetF();
+    mat.ks    = reader.GetF();
+    mat.exp   = reader.GetF();
+    mat.ior   = reader.GetF();
 
     char id[2];
     id[0] = reader.GetI1(),id[1] = reader.GetI1();
@@ -1186,11 +1186,11 @@ void COBImporter::ReadMat1_Binary(COB::Scene& out, StreamReaderLE& reader, const
         reader.GetI1();
         ReadString_Binary(mat.tex_color->path,reader);
 
-        mat.tex_color->transform.mTranslation.x = reader.GetF4();
-        mat.tex_color->transform.mTranslation.y = reader.GetF4();
+        mat.tex_color->transform.mTranslation.x = reader.GetF();
+        mat.tex_color->transform.mTranslation.y = reader.GetF();
 
-        mat.tex_color->transform.mScaling.x = reader.GetF4();
-        mat.tex_color->transform.mScaling.y = reader.GetF4();
+        mat.tex_color->transform.mScaling.x = reader.GetF();
+        mat.tex_color->transform.mScaling.y = reader.GetF();
 
         // advance to next texture-id
         id[0] = reader.GetI1(),id[1] = reader.GetI1();
@@ -1202,14 +1202,14 @@ void COBImporter::ReadMat1_Binary(COB::Scene& out, StreamReaderLE& reader, const
         reader.GetI1();
         ReadString_Binary(mat.tex_bump->path,reader);
 
-        mat.tex_bump->transform.mTranslation.x = reader.GetF4();
-        mat.tex_bump->transform.mTranslation.y = reader.GetF4();
+        mat.tex_bump->transform.mTranslation.x = reader.GetF();
+        mat.tex_bump->transform.mTranslation.y = reader.GetF();
 
-        mat.tex_bump->transform.mScaling.x = reader.GetF4();
-        mat.tex_bump->transform.mScaling.y = reader.GetF4();
+        mat.tex_bump->transform.mScaling.x = reader.GetF();
+        mat.tex_bump->transform.mScaling.y = reader.GetF();
 
         // skip amplitude for I don't know its purpose.
-        reader.GetF4();
+        reader.GetF();
     }
     reader.IncPtr(-2);
 }

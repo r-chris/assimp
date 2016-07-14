@@ -179,14 +179,14 @@ void TerragenImporter::InternReadFile( const std::string& pFile,
         // terrain scaling
         else if (!::strncmp(head,AI_TERR_CHUNK_SCAL,4))
         {
-            root->mTransformation.a1 = reader.GetF4();
-            root->mTransformation.b2 = reader.GetF4();
-            root->mTransformation.c3 = reader.GetF4();
+            root->mTransformation.a1 = reader.GetF();
+            root->mTransformation.b2 = reader.GetF();
+            root->mTransformation.c3 = reader.GetF();
         }
         // mapping == 1: earth radius
         else if (!::strncmp(head,AI_TERR_CHUNK_CRAD,4))
         {
-            rad = reader.GetF4();
+            rad = reader.GetF();
         }
         // mapping mode
         else if (!::strncmp(head,AI_TERR_CHUNK_CRVM,4))
