@@ -86,6 +86,15 @@ configure_file(
   ${CMAKE_CURRENT_BINARY_DIR}/revision.h
 )
 
+OPTION(ASSIMP_DOUBLE_PRECISION
+    "Set to ON to enable double precision processing"
+    OFF
+)
+
+IF(ASSIMP_DOUBLE_PRECISION)
+  ADD_DEFINITIONS(-DAI_DOUBLE_PRECISION)
+ENDIF(ASSIMP_DOUBLE_PRECISION)
+
 include_directories(
     ./
     ${CMAKE_CURRENT_BINARY_DIR}
@@ -155,8 +164,6 @@ IF (NOT TARGET uninstall)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules/cmake_uninstall.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
   add_custom_target(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 ENDIF()
-
-
 
 # cmake configuration files
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/assimp-config.cmake.in"         "${CMAKE_CURRENT_BINARY_DIR}/assimp-config.cmake" @ONLY IMMEDIATE)

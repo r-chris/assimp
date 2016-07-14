@@ -269,8 +269,6 @@ SKIP_FUNCTION_MACROS = YES
  */
 #define AI_MAX_ALLOC(type) ((256U * 1024 * 1024) / sizeof(type))
 
-#define AI_DOUBLE_PRECISION
-
 #ifdef AI_DOUBLE_PRECISION
     typedef double ai_real;
 #else
